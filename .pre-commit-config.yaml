@@ -1,0 +1,116 @@
+---
+ci:
+  skip: [poetry-lock, sourcery, pylint, pytest, coverage-badge]
+
+default_install_hook_types: [pre-commit, post-commit]
+default_stages: [pre-commit]
+
+repos:
+  - repo: meta
+    hooks:
+      - id: identity
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: no-commit-to-branch
+        name: Don't allow commits to the main branch
+        args: ["--branch", "_main"] # Temporarily disable this hook
+      - id: trailing-whitespace
+        name: Remove trailing whitespace
+      - id: end-of-file-fixer
+        name: Ensure files end with a newline character
+      - id: mixed-line-ending
+        name: Align mixed line ending
+      - id: check-added-large-files
+        name: Check for large files
+      - id: check-json
+        name: Check JSON files are valid and parseable
+      - id: check-yaml
+        name: Check YAML files are valid and parseable
+      - id: check-toml
+        name: Check TOML files are valid and parseable
+      - id: check-ast
+        name: Validate Python
+
+  - repo: https://github.com/python-poetry/poetry
+    rev: 1.7.0
+    hooks:
+      - id: poetry-check
+        name: Check that the Poetry configuration is valid
+      - id: poetry-lock
+        name: Check that the lock file is up-to-date
+
+  # Formatting
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v4.0.0-alpha.8
+    hooks:
+      - id: prettier
+        name: Make code pretty
+
+  - repo: https://github.com/asottile/pyupgrade
+    rev: v3.15.0
+    hooks:
+      - id: pyupgrade
+        args: [--py311-plus]
+        name: Align Python code to latest syntax
+
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        name: Check Python formatting
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        name: Sort Python import statements
+        args: ["--filter-files"]
+
+  - repo: https://github.com/hadialqattan/pycln
+    rev: v2.4.0
+    hooks:
+      - id: pycln
+        name: Remove unused imports and variables
+        args: [--config=pyproject.toml]
+
+  # Sourcery (refactoring)
+  - repo: https://github.com/sourcery-ai/sourcery
+    rev: v1.15.0
+    hooks:
+      - id: sourcery
+        name: Check for refactoring opportunities
+        args: [--diff=git diff HEAD, --no-summary]
+        files: src/.*
+        exclude: \.*/__init__\.py
+
+  # Final linting
+  - repo: local
+    hooks:
+      - id: pylint
+        name: Lint Python code with pylint
+        entry: pylint
+        language: system
+        types: [python]
+        args: ["-rn", "--rcfile=pyproject.toml"]
+        exclude: "^.*$" # Exclude everything for now
+
+  # Testing and coverage
+  - repo: local
+    hooks:
+      - id: pytest
+        name: Run unit tests
+        entry: pytest tests
+        language: system
+        pass_filenames: false
+        always_run: true
+        exclude: "^.*$" # Exclude everything for now
+      - id: coverage-badge
+        name: Generate coverage badge
+        entry: coverage-badge -o coverage.svg -f
+        language: system
+        pass_filenames: false
+        stages: [post-commit]
+        always_run: true
+        exclude: "^.*$" # Exclude everything for now
