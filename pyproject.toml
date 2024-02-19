@@ -28,6 +28,7 @@ test.optional = true
 docs.optional = true
 
 [tool.poetry.group.dev.dependencies]
+coverage-badge = "^1.1.0"
 pre-commit = "^3.4"
 db-query-profiler = "^0.0.4"
 
