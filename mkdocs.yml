@@ -1,0 +1,75 @@
+---
+site_name: SQL Learning Materials
+site_url: https://github.com/Bilbottom/sql-learning-materials/docs/
+site_description: SQL scripts that demonstrate various features and concepts.
+site_author: Bilbottom
+repo_url: https://github.com/Bilbottom/sql-learning-materials/
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.footer
+  palette:
+    - accent: default
+      primary: default
+      scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - accent: default
+      primary: default
+      scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - From Excel to SQL:
+      - from-excel-to-sql/from-excel-to-sql.md
+      - Getting Started:
+          - from-excel-to-sql/getting-started/setting-the-context.md
+          - from-excel-to-sql/getting-started/sql-syntax.md
+      - Main Concepts:
+          - from-excel-to-sql/main-concepts/select-and-from.md
+          - from-excel-to-sql/main-concepts/where.md
+          - from-excel-to-sql/main-concepts/order-by.md
+          - from-excel-to-sql/main-concepts/comments.md
+          - from-excel-to-sql/main-concepts/top-and-distinct.md
+          - from-excel-to-sql/main-concepts/data-types.md
+          - from-excel-to-sql/main-concepts/operators.md
+          - from-excel-to-sql/main-concepts/conditionals.md
+          - from-excel-to-sql/main-concepts/date-formatting.md
+          - from-excel-to-sql/main-concepts/group-by.md
+          - from-excel-to-sql/main-concepts/rollup.md
+          - from-excel-to-sql/main-concepts/join.md
+          - from-excel-to-sql/main-concepts/union.md
+          - from-excel-to-sql/main-concepts/subqueries.md
+          - from-excel-to-sql/main-concepts/window-functions.md
+          - from-excel-to-sql/main-concepts/logical-processing-order.md
+          - from-excel-to-sql/main-concepts/style-guide.md
+      - Advanced Concepts:
+          - from-excel-to-sql/advanced-concepts/advanced-aggregations.md
+          - from-excel-to-sql/advanced-concepts/correlated-subqueries.md
+          - from-excel-to-sql/advanced-concepts/recursive-ctes.md
+  - 60 Days of SQL:
+      - 60-days-of-sql/60-days-of-sql.md
+  - SQL Reference:
+      - sql-reference/sql-reference.md
+
+markdown_extensions:
+  - admonition
+  - callouts # https://github.com/oprypin/markdown-callouts
+  - mdx_truly_sane_lists # Support nested lists
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.superfences:
+      custom_fences:
+        - { name: mermaid, class: mermaid }
+
+plugins:
+  - search
+  - callouts # https://github.com/sondregronas/mkdocs-callouts
