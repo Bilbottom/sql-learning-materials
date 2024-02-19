@@ -1,0 +1,35 @@
+
+[[databases]]
+name = "PostgreSQL"
+engine = "postgres"
+
+[databases.details]
+host = "postgresql"
+port = "5432"
+user = "postgres"
+password = "Test@12345"
+db = "postgres"
+
+
+[[databases]]
+name = "AdventureWorks"
+engine = "sqlserver"
+
+[databases.details]
+host = "mssql"
+port = "1433"
+user = "SA"
+password = "Test@12345"
+db = "AdventureWorks2022"
+
+
+[[databases]]
+name = "AdventureWorksDW"
+engine = "sqlserver"
+
+[databases.details]
+host = "mssql"
+port = "1433"
+user = "SA"
+password = "Test@12345"
+db = "AdventureWorksDW2022"

@@ -1,0 +1,41 @@
+###
+# The format of these resources should be:
+#
+# [database-name.resource-name]
+# url = ""
+# destination = ""
+# database = ""  (optional)
+#
+# The `destination` and `database` are relative to the project root.
+#
+# If this format isn't followed, things will break.
+###
+
+[mssql.AdventureWorks2022]
+url = "https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorks2022.bak"
+destination = "src/resources/data/mssql/AdventureWorks2022.bak"
+
+[mssql.AdventureWorksDW2022]
+url = "https://github.com/Microsoft/sql-server-samples/releases/download/adventureworks/AdventureWorksDW2022.bak"
+destination = "src/resources/data/mssql/AdventureWorksDW2022.bak"
+
+
+[postgres.schema]
+url = "https://raw.githubusercontent.com/jOOQ/sakila/38c2e4ef53cf7ef2eec873d42c5a1e2c7afa0231/postgres-sakila-db/postgres-sakila-schema.sql"
+destination = "src/resources/data/postgres/postgres-sakila-schema.sql"
+
+[postgres.insert]
+url = "https://raw.githubusercontent.com/jOOQ/sakila/38c2e4ef53cf7ef2eec873d42c5a1e2c7afa0231/postgres-sakila-db/postgres-sakila-insert-data-using-copy.sql"
+destination = "src/resources/data/postgres/postgres-sakila-insert-data-using-copy.sql"
+
+
+[sqlite.loans]
+url = "https://raw.githubusercontent.com/Bilbottom/sql-schema-models/2db2d75318a468671b3ee2adb5ea6d42d67507c9/loans/simple-loan-database.sql"
+destination = "src/resources/data/sqlite/simple-loan-database.sql"
+database = "src/resources/data/sqlite/loan.db"
+
+
+[duckdb.loans]
+url = "https://raw.githubusercontent.com/Bilbottom/sql-schema-models/2db2d75318a468671b3ee2adb5ea6d42d67507c9/loans/simple-loan-database.sql"
+destination = "src/resources/data/duckdb/simple-loan-database.sql"
+database = "src/resources/data/duckdb/loan.db"

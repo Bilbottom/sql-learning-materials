@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "resources",
+  "description": "Resource specification for database resources.",
+  "type": "object",
+  "propertyNames": {
+    "enum": ["mssql", "postgres", "duckdb", "sqlite"]
+  },
+  "patternProperties": {
+    ".*": {
+      "type": "object",
+      "patternProperties": {
+        ".*": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "URL to download the resource from.",
+              "format": "uri"
+            },
+            "destination": {
+              "type": "string",
+              "description": "Path to save the resource to."
+            },
+            "database": {
+              "type": "string",
+              "description": "Location of the database file."
+            }
+          },
+          "required": ["url", "destination"],
+          "additionalProperties": false
+        }
+      }
+    }
+  }
+}

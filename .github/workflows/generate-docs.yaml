@@ -1,0 +1,25 @@
+---
+name: 📝 Generate Docs
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: docs
+  cancel-in-progress: false
+
+jobs:
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with: { python-version: 3.11, cache: poetry }
+      - run: poetry install --with docs
+      - run: poetry run mkdocs gh-deploy --force
