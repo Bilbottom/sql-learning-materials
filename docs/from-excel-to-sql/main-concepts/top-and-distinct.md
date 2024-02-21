@@ -14,40 +14,38 @@
 
 ```sql
 SELECT TOP 5
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
+    DepartmentID,
+    Name
+FROM HumanResources.Department
 ;
 ```
 
-| BusinessEntityID | FirstName | LastName    |
-| ---------------: | :-------- | :---------- |
-|              285 | Syed      | Abbas       |
-|              293 | Catherine | Abel        |
-|              295 | Kim       | Abercrombie |
-|             2170 | Kim       | Abercrombie |
-|               38 | Kim       | Abercrombie |
+| DepartmentID | Name                       |
+| -----------: | :------------------------- |
+|           12 | Document Control           |
+|            1 | Engineering                |
+|           16 | Executive                  |
+|           14 | Facilities and Maintenance |
+|           10 | Finance                    |
 
 If you use `TOP` with an `ORDER BY` clause, the rows will be ordered first and then the `TOP` will be applied:
 
 ```sql
 SELECT TOP 5
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
-ORDER BY BusinessEntityID
+    DepartmentID,
+    Name
+FROM HumanResources.Department
+ORDER BY DepartmentID
 ;
 ```
 
-| BusinessEntityID | FirstName | LastName   |
-| ---------------: | :-------- | :--------- |
-|                1 | Ken       | Sánchez    |
-|                2 | Terri     | Duffy      |
-|                3 | Roberto   | Tamburello |
-|                4 | Rob       | Walters    |
-|                5 | Gail      | Erickson   |
+| DepartmentID | Name        |
+| -----------: | :---------- |
+|            1 | Engineering |
+|            2 | Tool Design |
+|            3 | Sales       |
+|            4 | Marketing   |
+|            5 | Purchasing  |
 
 ### Other SQL flavours might use `LIMIT` instead of `TOP`
 
@@ -55,11 +53,10 @@ This is just an FYI! Although Microsoft SQL Server (and a few other SQL flavours
 
 ```sql
 SELECT
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
-ORDER BY BusinessEntityID
+    DepartmentID,
+    Name
+FROM HumanResources.Department
+ORDER BY DepartmentID
 LIMIT 5
 ;
 ```
@@ -78,73 +75,68 @@ For example, this output has rows that are the same:
 
 ```sql
 SELECT
-    FirstName,
-    LastName
-FROM Person.Person
-WHERE FirstName = 'Rob'
+    GroupName,
+    ModifiedDate
+FROM HumanResources.Department
+WHERE GroupName = 'Research and Development'
 ;
 ```
 
-| FirstName | LastName |
-| :-------- | :------- |
-| Rob       | Caron    |
-| Rob       | Caron    |
-| Rob       | Verhoff  |
-| Rob       | Walters  |
-| Rob       | Young    |
+| GroupName                | ModifiedDate            |
+| :----------------------- | :---------------------- |
+| Research and Development | 2008-04-30 00:00:00.000 |
+| Research and Development | 2008-04-30 00:00:00.000 |
+| Research and Development | 2008-04-30 00:00:00.000 |
 
 Adding `DISTINCT` will remove the duplicates, keeping only the unique rows:
 
 ```sql
 SELECT DISTINCT
-    FirstName,
-    LastName
-FROM Person.Person
-WHERE FirstName = 'Rob'
+    GroupName,
+    ModifiedDate
+FROM HumanResources.Department
+WHERE GroupName = 'Research and Development'
 ;
 ```
 
-| FirstName | LastName |
-| :-------- | :------- |
-| Rob       | Caron    |
-| Rob       | Verhoff  |
-| Rob       | Walters  |
-| Rob       | Young    |
+| GroupName                | ModifiedDate            |
+| :----------------------- | :---------------------- |
+| Research and Development | 2008-04-30 00:00:00.000 |
 
 This keyword is particularly useful when you're interested in the unique values of a column, such as:
 
 ```sql
-SELECT DISTINCT PersonType
-FROM Person.Person
+SELECT DISTINCT GroupName
+FROM HumanResources.Department
 ;
 ```
 
-| PersonType |
-| :--------- |
-| IN         |
-| EM         |
-| SP         |
-| SC         |
-| VC         |
-| GC         |
+| GroupName                            |
+| :----------------------------------- |
+| Executive General and Administration |
+| Inventory Management                 |
+| Manufacturing                        |
+| Quality Assurance                    |
+| Research and Development             |
+| Sales and Marketing                  |
 
 ## `TOP` and `DISTINCT` can be used together
 
 Although it might not be super helpful, you can use `TOP` and `DISTINCT` together to get the first few unique rows from a result:
 
 ```sql
-SELECT DISTINCT TOP 2
-    FirstName,
-    LastName
-FROM Person.Person
-WHERE FirstName = 'Rob'
+SELECT DISTINCT TOP 3
+    GroupName,
+    ModifiedDate
+FROM HumanResources.Department
 ;
 ```
 
-| FirstName | LastName |
-| :-------- | :------- |
-| Rob       | Caron    |
-| Rob       | Verhoff  |
+| GroupName                            | ModifiedDate            |
+| :----------------------------------- | :---------------------- |
+| Executive General and Administration | 2008-04-30 00:00:00.000 |
+| Inventory Management                 | 2008-04-30 00:00:00.000 |
+| Manufacturing                        | 2008-04-30 00:00:00.000 |
 
 The keyword order is important here -- `DISTINCT` has to be written before `TOP`.
 
@@ -154,6 +146,10 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/queries/top-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/queries/top-transact-sql)
 - [https://learn.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql#c-using-distinct-with-select](https://learn.microsoft.com/en-us/sql/t-sql/queries/select-transact-sql#c-using-distinct-with-select)
+
+The video version of this content is also available at:
+
+- https://youtu.be/-0M-kEkoDqw
 
 ### Additional modifiers
 
@@ -165,7 +161,7 @@ The `TOP` keyword also has additional modifiers which are outside the scope of t
 
 > [!ERROR]
 >
-> This is a contrived example to show the additional modifiers.
+> This is a contrived example (using a larger table) to show the additional modifiers.
 >
 > ```sql
 > SELECT TOP (10 * RAND()) PERCENT WITH TIES

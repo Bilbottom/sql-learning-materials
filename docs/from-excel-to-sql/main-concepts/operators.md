@@ -90,3 +90,7 @@ SELECT
 Check out the [official Microsoft documentation](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/operators-transact-sql) for more information on operators at:
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/language-elements/operators-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/operators-transact-sql)
+
+The video version of this content is also available at:
+
+- https://youtu.be/bxZeIkcxYQA

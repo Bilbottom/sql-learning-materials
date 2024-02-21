@@ -55,30 +55,22 @@ We'll just call out a few of the most common ones here so that you can get a fee
 > - `DECIMAL(10, 2)` would be a number with 10 total digits and 2 decimal places (so 8 digits before the decimal place).
 > - `VARCHAR(50)` would be a string of text with a maximum length of 50 characters.
 
-If you're not sure what data type the column you're working with is, you can check the `INFORMATION_SCHEMA.COLUMNS` table to see the data types of the columns in a table. For example, the query below shows the data types of the columns in the `Person.Person` table:
+If you're not sure what data type the column you're working with is, you can check the `INFORMATION_SCHEMA.COLUMNS` table to see the data types of the columns in a table. For example, the query below shows the data types of the columns in the `HumanResources.Department` table:
 
 ```sql
 SELECT COLUMN_NAME, DATA_TYPE
 FROM INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_NAME = 'Person'
+WHERE TABLE_SCHEMA = 'HumanResources'
+  AND TABLE_NAME = 'Department'
 ;
 ```
 
-| COLUMN_NAME           | DATA_TYPE        |
-| :-------------------- | :--------------- |
-| BusinessEntityID      | int              |
-| PersonType            | nchar            |
-| NameStyle             | bit              |
-| Title                 | nvarchar         |
-| FirstName             | nvarchar         |
-| MiddleName            | nvarchar         |
-| LastName              | nvarchar         |
-| Suffix                | nvarchar         |
-| EmailPromotion        | int              |
-| AdditionalContactInfo | xml              |
-| Demographics          | xml              |
-| rowguid               | uniqueidentifier |
-| ModifiedDate          | datetime         |
+| COLUMN_NAME  | DATA_TYPE |
+| :----------- | :-------- |
+| DepartmentID | smallint  |
+| Name         | nvarchar  |
+| GroupName    | nvarchar  |
+| ModifiedDate | datetime  |
 
 ## Use the `CAST` function to change data types
 
@@ -92,24 +84,24 @@ When you want (or need) to be explicit about the data type of a column, use the 
 
 This function looks a bit different to the functions that we'll have seen so far or in Excel. To use it, we write the column that we want to change the data type of, then the `AS` keyword, then the new data type that we want to change it to.
 
-For example, if we want to change the `BusinessEntityID` column to text or to a number with decimal places, we could use the following query:
+For example, if we want to change the `DepartmentID` column to text or to a number with decimal places, we could use the following query:
 
 ```sql
 SELECT TOP 5
-    BusinessEntityID,
-    CAST(BusinessEntityID AS VARCHAR(10)) AS BusinessEntityID_VARCHAR,
-    CAST(BusinessEntityID AS DECIMAL(8, 2)) AS BusinessEntityID_DECIMAL
-FROM Person.Person
+    DepartmentID,
+    CAST(DepartmentID AS VARCHAR(10)) AS DepartmentID_VARCHAR,
+    CAST(DepartmentID AS DECIMAL(8, 2)) AS DepartmentID_DECIMAL
+FROM HumanResources.Department
 ;
 ```
 
-| BusinessEntityID | BusinessEntityID_VARCHAR | BusinessEntityID_DECIMAL |
-| ---------------: | :----------------------- | -----------------------: |
-|            16496 | 16496                    |                 16496.00 |
-|            12506 | 12506                    |                 12506.00 |
-|            11390 | 11390                    |                 11390.00 |
-|            10798 | 10798                    |                 10798.00 |
-|              963 | 963                      |                   963.00 |
+| DepartmentID | DepartmentID_VARCHAR | DepartmentID_DECIMAL |
+| -----------: | :------------------- | -------------------: |
+|           12 | 12                   |                12.00 |
+|            1 | 1                    |                 1.00 |
+|           16 | 16                   |                16.00 |
+|           14 | 14                   |                14.00 |
+|           10 | 10                   |                10.00 |
 
 The text version looks the same, but I can guarantee that it's not a number any more! 😝
 
@@ -171,3 +163,7 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 The docs for `NULL` are at:
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/language-elements/null-and-unknown-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/null-and-unknown-transact-sql)
+
+The video version of this content is also available at:
+
+- https://youtu.be/Vp40VH4_OX8

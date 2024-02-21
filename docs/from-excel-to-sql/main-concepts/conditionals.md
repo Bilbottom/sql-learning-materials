@@ -242,3 +242,7 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/functions/logical-functions-iif-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/functions/logical-functions-iif-transact-sql)
 - [https://learn.microsoft.com/en-us/sql/t-sql/language-elements/case-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/case-transact-sql)
+
+The video version of this content is also available at:
+
+- https://youtu.be/4admV4I3fMU

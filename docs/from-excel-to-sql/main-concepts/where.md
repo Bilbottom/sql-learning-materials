@@ -23,51 +23,47 @@ Excel is convenient and gives us a pop-up box to select the values we want to fi
 - `=` (equals)
 - `<>` (does not equal), also written as `!=`
 
-For example, we could filter the `Person.Person` table for people who have the first name `Rob` using:
+For example, we could filter the `HumanResources.Department` table for people who have the first name `Rob` using:
 
 ```sql
 SELECT
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
-WHERE FirstName = 'Rob'
+    DepartmentID,
+    Name,
+    GroupName
+FROM HumanResources.Department
+WHERE DepartmentID = 5
 ;
 ```
 
-| BusinessEntityID | FirstName | LastName |
-| ---------------: | :-------- | :------- |
-|                4 | Rob       | Walters  |
-|              130 | Rob       | Caron    |
-|              637 | Rob       | Caron    |
-|             2071 | Rob       | Young    |
-|            14673 | Rob       | Verhoff  |
+| DepartmentID | Name       | GroupName            |
+| -----------: | :--------- | :------------------- |
+|            5 | Purchasing | Inventory Management |
 
 > [!TIP]
 >
 > The `WHERE` clause "sounds like" English, so the query above can be read as:
 >
-> > "**Select** the **business entity ID**, **first name**, and **last name from** the **`Person.Person`** table **where** the **first name is Rob**".
+> > "**Select** the **department ID**, **name**, and **group name from** the **`HumanResources.Department`** table **where** the **department ID is 5**".
 
-Similarly, we could filter the `Person.Person` table for people whose ID is less than or equal to `5` using:
+Similarly, we could filter the `HumanResources.Department` table for departments whose ID is less than or equal to `5` using:
 
 ```sql
 SELECT
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
-WHERE BusinessEntityID <= 5
+    DepartmentID,
+    Name,
+    GroupName
+FROM HumanResources.Department
+WHERE DepartmentID <= 5
 ;
 ```
 
-| BusinessEntityID | FirstName | LastName   |
-| ---------------: | :-------- | :--------- |
-|                1 | Ken       | Sánchez    |
-|                2 | Terri     | Duffy      |
-|                3 | Roberto   | Tamburello |
-|                4 | Rob       | Walters    |
-|                5 | Gail      | Erickson   |
+| DepartmentID | Name        | GroupName                |
+| -----------: | :---------- | :----------------------- |
+|            1 | Engineering | Research and Development |
+|            2 | Tool Design | Research and Development |
+|            3 | Sales       | Sales and Marketing      |
+|            4 | Marketing   | Sales and Marketing      |
+|            5 | Purchasing  | Inventory Management     |
 
 ## Conditions can be combined with `AND` and `OR`
 
@@ -79,81 +75,81 @@ If you wanted to have multiple conditions in an `IF` statement in Excel, you'd n
 
 In SQL, `AND` and `OR` aren't functions; they're keywords that you use to combine conditions in the `WHERE` clause.
 
-For example, we could filter the `Person.Person` table for people whose first name is `Rob` _and_ whose ID is less than or equal to `5` using:
+For example, we could filter the `HumanResources.Department` table for departments whose ID is less than or equal to `5` _and_ the department group name is `Research and Development` with:
 
 ```sql
 SELECT
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
-WHERE FirstName = 'Rob' AND BusinessEntityID <= 5
+    DepartmentID,
+    Name,
+    GroupName
+FROM HumanResources.Department
+WHERE DepartmentID <= 5 AND GroupName = 'Research and Development'
 ;
 ```
 
-| BusinessEntityID | FirstName | LastName |
-| ---------------: | :-------- | :------- |
-|                4 | Rob       | Walters  |
+| DepartmentID | Name        | GroupName                |
+| -----------: | :---------- | :----------------------- |
+|            1 | Engineering | Research and Development |
+|            2 | Tool Design | Research and Development |
 
 > [!TIP]
 >
 > Combining conditions "sounds like" English, so the query above can be read as:
 >
-> > "**Select** the **business entity ID**, **first name**, and **last name from** the **`Person.Person`** table **where** the **first name is Rob and the business entity ID is less than 5**".
+> > "**Select** the **department ID**, **name**, and **group name from** the **`HumanResources.Department`** table **where** the **department ID is less than or equal to 5 and** the **group name is `Research and Development`**".
 
-Similarly, we could filter the `Person.Person` table for people whose first name is either `Rob` or `Ken` using:
+Similarly, we could filter the `HumanResources.Department` table for departments whose group name is either `Sales and Marketing` or `Research and Development` using:
 
 ```sql
 SELECT
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
-WHERE FirstName = 'Rob' OR FirstName = 'Ken'
+    DepartmentID,
+    Name,
+    GroupName
+FROM HumanResources.Department
+WHERE GroupName = 'Sales and Marketing' OR GroupName = 'Research and Development'
 ;
 ```
 
-| BusinessEntityID | FirstName | LastName |
-| ---------------: | :-------- | :------- |
-|                1 | Ken       | Sánchez  |
-|                4 | Rob       | Walters  |
-|              130 | Rob       | Caron    |
-|              203 | Ken       | Myer     |
-|              637 | Rob       | Caron    |
+| DepartmentID | Name                     | GroupName                |
+| -----------: | :----------------------- | :----------------------- |
+|            1 | Engineering              | Research and Development |
+|            2 | Tool Design              | Research and Development |
+|            3 | Sales                    | Sales and Marketing      |
+|            4 | Marketing                | Sales and Marketing      |
+|            6 | Research and Development | Research and Development |
 
 It's common to use `IN` (and `NOT IN`) to streamline multiple `OR` conditions. For example, the previous query could be written as:
 
 ```sql
 SELECT
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
-WHERE FirstName IN ('Rob', 'Ken')
+    DepartmentID,
+    Name,
+    GroupName
+FROM HumanResources.Department
+WHERE GroupName IN ('Sales and Marketing', 'Research and Development')
 ;
 ```
 
 Note that the `IN` keyword is followed by a list of values _in brackets separated by commas_.
 
-You can combine `AND` and `OR` in the same `WHERE` clause, but it's a good idea to use brackets to make the order of operations clear. For example, the following query filters the `Person.Person` table for people whose first name is `Rob` _and_ whose ID is less than or equal to `5`, _or_ whose first name is `Ken`:
+You can combine `AND` and `OR` in the same `WHERE` clause, but it's a good idea to use brackets to make the order of operations clear. For example, the following query filters the `HumanResources.Department` table for departments whose ID is less than or equal to `5` _and_ the department group name is `Research and Development`, _or_ the department group name is ``:
 
 ```sql
 SELECT
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
-WHERE (FirstName = 'Rob' AND BusinessEntityID <= 5) OR FirstName = 'Ken'
+    DepartmentID,
+    Name,
+    GroupName
+FROM HumanResources.Department
+WHERE (DepartmentID <= 5 AND GroupName = 'Research and Development')
+   OR DepartmentID = 10
 ;
 ```
 
-| BusinessEntityID | FirstName | LastName |
-| ---------------: | :-------- | :------- |
-|                1 | Ken       | Sánchez  |
-|                4 | Rob       | Walters  |
-|              203 | Ken       | Myer     |
-|             1525 | Ken       | Myer     |
-|             1726 | Ken       | Sánchez  |
+| DepartmentID | Name        | GroupName                            |
+| -----------: | :---------- | :----------------------------------- |
+|            1 | Engineering | Research and Development             |
+|            2 | Tool Design | Research and Development             |
+|           10 | Finance     | Executive General and Administration |
 
 ## Use `IS` (`NOT`) `NULL` to filter `NULL` values
 
@@ -163,31 +159,35 @@ WHERE (FirstName = 'Rob' AND BusinessEntityID <= 5) OR FirstName = 'Ken'
 
 Instead of using `=` or `!=` to filter `NULL` values, you need to use the special `IS NULL` or `IS NOT NULL` keywords.
 
-For example, we could filter the `Person.Person` table for people whose middle name is missing using:
+For example, we could filter the `HumanResources.EmployeeDepartmentHistory` table for employees whose department end date is missing using:
 
 ```sql
 SELECT
     BusinessEntityID,
-    FirstName,
-    MiddleName,
-    LastName
-FROM Person.Person
-WHERE MiddleName IS NULL
+    DepartmentID,
+    StartDate,
+    EndDate
+FROM HumanResources.EmployeeDepartmentHistory
+WHERE EndDate IS NULL
 ```
 
-| BusinessEntityID | FirstName | MiddleName | LastName   |
-| ---------------: | :-------- | :--------- | :--------- |
-|                3 | Roberto   | _null_     | Tamburello |
-|                4 | Rob       | _null_     | Walters    |
-|               10 | Michael   | _null_     | Raheem     |
-|               41 | Bryan     | _null_     | Baker      |
-|               94 | Russell   | _null_     | Hunter     |
+| BusinessEntityID | DepartmentID | StartDate  | EndDate |
+| ---------------: | -----------: | :--------- | :------ |
+|                1 |           16 | 2009-01-14 | _null_  |
+|                2 |            1 | 2008-01-31 | _null_  |
+|                3 |            1 | 2007-11-11 | _null_  |
+|                4 |            2 | 2010-05-31 | _null_  |
+|                5 |            1 | 2008-01-06 | _null_  |
 
 ## Further reading
 
 Check out the [official Microsoft documentation](https://learn.microsoft.com/en-us/sql/t-sql/queries/where-transact-sql) for more information on the `WHERE` clause at:
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/queries/where-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/queries/where-transact-sql)
+
+The video version of this content is also available at:
+
+- https://youtu.be/g_5OxUYPx7E
 
 ### Additional comparison operators
 
@@ -203,11 +203,11 @@ There are additional comparison operators that you can use in the `WHERE` clause
 >
 > ```sql
 > SELECT
->     BusinessEntityID,
->     FirstName,
->     LastName
-> FROM Person.Person
-> WHERE BusinessEntityID BETWEEN 1 AND 5
->   AND FirstName LIKE 'R%'
+>     DepartmentID,
+>     Name,
+>     GroupName
+> FROM HumanResources.Department
+> WHERE DepartmentID BETWEEN 1 AND 5
+>    OR GroupName NOT LIKE '%and%'
 > ;
 > ```

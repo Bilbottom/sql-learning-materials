@@ -38,11 +38,11 @@ The AdventureWorks database has several of these folders/schemas, which each con
 
 Each of these folders/schemas contains a bunch of tables, and we will need to specify both the folder/schema _and_ the table in the `FROM` clause.
 
-For example, the `Person` folder/schema contains a `Person` table (yes, the folder/schema and table are called the same thing 😝), so we would write `Person.Person` in the `FROM` clause to "open that file":
+For example, the `HumanResources` folder/schema contains a `Department` table, so we would write `HumanResources.Department` in the `FROM` clause to "open that file":
 
 ```sql
-SELECT BusinessEntityID, FirstName, LastName
-FROM Person.Person
+SELECT DepartmentID, Name
+FROM HumanResources.Department
 ;
 ```
 
@@ -50,19 +50,19 @@ Writing the query is the first part -- to actually get some data, we then need t
 
 The first few rows from the result of this query are:
 
-| BusinessEntityID | FirstName | LastName   |
-| ---------------: | :-------- | :--------- |
-|                1 | Ken       | Sánchez    |
-|                2 | Terri     | Duffy      |
-|                3 | Roberto   | Tamburello |
-|                4 | Rob       | Walters    |
-|                5 | Gail      | Erickson   |
+| DepartmentID | Name                       |
+| -----------: | :------------------------- |
+|           12 | Document Control           |
+|            1 | Engineering                |
+|           16 | Executive                  |
+|           14 | Facilities and Maintenance |
+|           10 | Finance                    |
 
 > [!TIP]
 >
 > Remember that SQL "sounds like" English, so the query above can be read as:
 >
-> > "**Select** the **business entity ID**, **first name**, and **last name from** the **`Person.Person`** table".
+> > "**Select** the **department ID** and **name from** the **`HumanResources.Department`** table".
 
 > [!NOTE]
 >
@@ -70,35 +70,33 @@ The first few rows from the result of this query are:
 
 ## Specify `*` or column names in the `SELECT` clause
 
-The `Person.Person` table has a bunch of columns, but we only asked for three of them in the `SELECT` clause.
+The `HumanResources.Department` table has a bunch of columns, but we only asked for two of them in the `SELECT` clause.
 
 To see more columns, we would just add them to the `SELECT` clause:
 
 ```sql
 SELECT
-    BusinessEntityID,
-    PersonType,
-    Title,
-    FirstName,
-    MiddleName,
-    LastName
-FROM Person.Person
+    DepartmentID,
+    Name,
+    GroupName,
+    ModifiedDate
+FROM HumanResources.Department
 ;
 ```
 
-| BusinessEntityID | PersonType | Title  | FirstName | MiddleName | LastName   |
-| ---------------: | :--------- | :----- | :-------- | :--------- | :--------- |
-|                1 | EM         | _null_ | Ken       | J          | Sánchez    |
-|                2 | EM         | _null_ | Terri     | Lee        | Duffy      |
-|                3 | EM         | _null_ | Roberto   | _null_     | Tamburello |
-|                4 | EM         | _null_ | Rob       | _null_     | Walters    |
-|                5 | EM         | Ms.    | Gail      | A          | Erickson   |
+| DepartmentID | Name        | GroupName                | ModifiedDate            |
+| -----------: | :---------- | :----------------------- | :---------------------- |
+|            1 | Engineering | Research and Development | 2008-04-30 00:00:00.000 |
+|            2 | Tool Design | Research and Development | 2008-04-30 00:00:00.000 |
+|            3 | Sales       | Sales and Marketing      | 2008-04-30 00:00:00.000 |
+|            4 | Marketing   | Sales and Marketing      | 2008-04-30 00:00:00.000 |
+|            5 | Purchasing  | Inventory Management     | 2008-04-30 00:00:00.000 |
 
 To see _all_ the columns without listing them all explicitly, we can use the `*` character in the `SELECT` clause. The `*` character is a wildcard that means "all columns":
 
 ```sql
 SELECT *
-FROM Person.Person
+FROM HumanResources.Department
 ;
 ```
 
@@ -106,9 +104,9 @@ FROM Person.Person
 >
 > We read `*` as "all columns" or "everything", so the query above can be read as:
 >
-> > "**Select all columns from** the **`Person.Person`** table".
+> > "**Select all columns from** the **`HumanResources.Department`** table".
 
-There are lots of columns in the `Person.Person` table, so we won't show the result here. If you're following along, you can run the query on the [dbfiddle](https://dbfiddle.uk/rKIFRoNm) site to see the result.
+Since this table only has the 4 columns that we used previously, the result is the same as the previous query!
 
 - ✅ The advantage of using the `*` character is that you don't need to know the names of the columns in the table
 - ❌ The disadvantage is that you might get _more_ columns than you need, which can make the result harder to read and use.
@@ -119,20 +117,20 @@ Note that you can also specify the same column multiple times in the `SELECT` cl
 
 ```sql
 SELECT
-    BusinessEntityID,
-    BusinessEntityID,
-    BusinessEntityID
-FROM Person.Person
+    DepartmentID,
+    DepartmentID,
+    DepartmentID
+FROM HumanResources.Department
 ;
 ```
 
-| BusinessEntityID | BusinessEntityID | BusinessEntityID |
-| ---------------: | ---------------: | ---------------: |
-|                1 |                1 |                1 |
-|                2 |                2 |                2 |
-|                3 |                3 |                3 |
-|                4 |                4 |                4 |
-|                5 |                5 |                5 |
+| DepartmentID | DepartmentID | DepartmentID |
+| -----------: | -----------: | -----------: |
+|           12 |           12 |           12 |
+|            1 |            1 |            1 |
+|           16 |           16 |           16 |
+|           14 |           14 |           14 |
+|           10 |           10 |           10 |
 
 ## Use `AS` to "rename" columns
 
@@ -140,20 +138,19 @@ The `AS` keyword is used to rename/alias columns in the `SELECT` clause. Just wr
 
 ```sql
 SELECT
-    BusinessEntityID AS ID,
-    FirstName AS Forename,
-    LastName AS Surname
-FROM Person.Person
+    DepartmentID AS ID,
+    Name
+FROM HumanResources.Department
 ;
 ```
 
-|  ID | Forename | Surname    |
-| --: | :------- | :--------- |
-|   1 | Ken      | Sánchez    |
-|   2 | Terri    | Duffy      |
-|   3 | Roberto  | Tamburello |
-|   4 | Rob      | Walters    |
-|   5 | Gail     | Erickson   |
+|  ID | Name                       |
+| --: | :------------------------- |
+|  12 | Document Control           |
+|   1 | Engineering                |
+|  16 | Executive                  |
+|  14 | Facilities and Maintenance |
+|  10 | Finance                    |
 
 The `AS` keyword should also be used after any calculations to give the calculated column a name. We'll see examples of this later.
 
@@ -161,11 +158,11 @@ The `AS` keyword should also be used after any calculations to give the calculat
 >
 > The `AS` keyword continues to "sound like" English -- the query above can be read as:
 >
-> > "**Select** the **business entity ID as id**, the **first name as forename**, and the **last name as surname from** the **`Person.Person`** table".
+> > "**Select** the **department ID as id** and the **name from** the **`HumanResources.Department`** table".
 
 > [!INFO]
 >
-> The `AS` keyword is optional when you're renaming columns, but it's a good idea to use it for clarity. It's clearer and easier to read `BusinessEntityID AS ID` than `BusinessEntityID ID`!
+> The `AS` keyword is optional when you're renaming columns, but it's a good idea to use it for clarity. It's clearer and easier to read `DepartmentID AS ID` than `DepartmentID ID`!
 
 ## `FROM` is optional
 
@@ -243,3 +240,7 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/queries/select-clause-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/queries/select-clause-transact-sql)
 - [https://learn.microsoft.com/en-us/sql/t-sql/queries/select-examples-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/queries/select-examples-transact-sql)
+
+The video version of this content is also available at:
+
+- https://youtu.be/ZbzYKMHKvdw
