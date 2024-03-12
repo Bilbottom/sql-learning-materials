@@ -3,6 +3,7 @@ Stolen from:
 
 - https://dev.to/bowmanjd/http-calls-in-python-without-requests-or-other-external-dependencies-5aj1
 """
+
 from __future__ import annotations
 
 import json
