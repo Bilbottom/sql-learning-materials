@@ -1,6 +1,7 @@
 """
 Time the queries in the queries directory.
 """
+
 import sqlite3
 
 import db_query_profiler

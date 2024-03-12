@@ -1,6 +1,7 @@
 """
 Pull the resources from the web and store them locally.
 """
+
 from __future__ import annotations
 
 import enum

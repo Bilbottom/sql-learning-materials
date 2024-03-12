@@ -1,6 +1,7 @@
 """
 Unit tests for the ``src/resources`` package.
 """
+
 import gzip
 import pathlib
 
