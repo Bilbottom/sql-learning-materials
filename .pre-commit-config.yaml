@@ -34,7 +34,7 @@ repos:
         name: Validate Python
 
   - repo: https://github.com/python-poetry/poetry
-    rev: 1.7.0
+    rev: 1.8.0
     hooks:
       - id: poetry-check
         name: Check that the Poetry configuration is valid
@@ -49,14 +49,14 @@ repos:
         name: Make code pretty
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.0
+    rev: v3.15.1
     hooks:
       - id: pyupgrade
         args: [--py311-plus]
         name: Align Python code to latest syntax
 
   - repo: https://github.com/psf/black
-    rev: 23.12.1
+    rev: 24.2.0
     hooks:
       - id: black
         name: Check Python formatting
@@ -77,7 +77,7 @@ repos:
 
   # Sourcery (refactoring)
   - repo: https://github.com/sourcery-ai/sourcery
-    rev: v1.15.0
+    rev: v1.15.1b41
     hooks:
       - id: sourcery
         name: Check for refactoring opportunities
