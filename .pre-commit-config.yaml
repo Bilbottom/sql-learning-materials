@@ -1,6 +1,7 @@
 ---
 ci:
   skip: [poetry-lock, sourcery, pylint, pytest, coverage-badge]
+  autoupdate_schedule: quarterly
 
 default_install_hook_types: [pre-commit, post-commit]
 default_stages: [pre-commit]
