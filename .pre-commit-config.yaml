@@ -1,10 +1,7 @@
 ---
 ci:
-  skip: [poetry-lock, sourcery, pylint, pytest, coverage-badge]
   autoupdate_schedule: quarterly
-
-default_install_hook_types: [pre-commit, post-commit]
-default_stages: [pre-commit]
+  skip: [poetry-lock, sourcery, pylint, pytest, coverage-badge]
 
 repos:
   - repo: meta
@@ -112,6 +109,5 @@ repos:
         entry: coverage-badge -o coverage.svg -f
         language: system
         pass_filenames: false
-        stages: [post-commit]
         always_run: true
         exclude: "^.*$" # Exclude everything for now
