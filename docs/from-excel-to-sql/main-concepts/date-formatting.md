@@ -93,7 +93,7 @@ Similar to Excel, there are pre-defined characters which correspond to different
 
 These pre-defined characters are different to Excel's characters and, unlike Excel's, are case-sensitive -- you can find the SQL characters in the Microsoft SQL Server documentation:
 
-- https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#table-of-format-specifiers
+- [https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#table-of-format-specifiers](https://learn.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#table-of-format-specifiers)
 
 Here's an example of using `FORMAT` to format some order dates:
 
@@ -164,14 +164,14 @@ FROM (
 
 ## Further reading
 
-Check out the [official Microsoft documentation]() for more information on [`CONVERT`](https://learn.microsoft.com/en-us/sql/t-sql/functions/cast-and-convert-transact-sql) and [`FORMAT`](https://learn.microsoft.com/en-us/sql/t-sql/functions/format-transact-sql) at:
+Check out the official Microsoft documentation for more information on [`CONVERT`](https://learn.microsoft.com/en-us/sql/t-sql/functions/cast-and-convert-transact-sql) and [`FORMAT`](https://learn.microsoft.com/en-us/sql/t-sql/functions/format-transact-sql) at:
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/functions/cast-and-convert-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/functions/cast-and-convert-transact-sql)
 - [https://learn.microsoft.com/en-us/sql/t-sql/functions/format-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/functions/format-transact-sql)
 
 The video version of this content is also available at:
 
-- https://youtu.be/gYjYLL99jaQ
+- [https://youtu.be/gYjYLL99jaQ](https://youtu.be/gYjYLL99jaQ)
 
 ### Additional date functions
 
