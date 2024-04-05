@@ -178,7 +178,7 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 
 The video version of this content is also available at:
 
-- https://youtu.be/65EFEtjYL9E
+- [https://youtu.be/65EFEtjYL9E](https://youtu.be/65EFEtjYL9E)
 
 ### Additional grouping functions
 

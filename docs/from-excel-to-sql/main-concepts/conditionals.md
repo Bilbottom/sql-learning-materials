@@ -245,4 +245,4 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 
 The video version of this content is also available at:
 
-- https://youtu.be/4admV4I3fMU
+- [https://youtu.be/4admV4I3fMU](https://youtu.be/4admV4I3fMU)

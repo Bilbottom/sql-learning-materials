@@ -187,7 +187,7 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 
 The video version of this content is also available at:
 
-- https://youtu.be/g_5OxUYPx7E
+- [https://youtu.be/g_5OxUYPx7E](https://youtu.be/g_5OxUYPx7E)
 
 ### Additional comparison operators
 

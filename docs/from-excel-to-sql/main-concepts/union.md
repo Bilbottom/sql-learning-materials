@@ -110,7 +110,7 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 
 The video version of this content is also available at:
 
-- https://youtu.be/OQSLOGelJv0
+- [https://youtu.be/OQSLOGelJv0](https://youtu.be/OQSLOGelJv0)
 
 ### Additional set operators
 

@@ -8,7 +8,7 @@
 >
 > Prefer videos? Check out the corresponding YouTube playlist:
 >
-> - https://www.youtube.com/playlist?list=PLEiRgvTilK5rhnVPQ_Tj3Q-CI0rGn_uiD
+> - [https://www.youtube.com/playlist?list=PLEiRgvTilK5rhnVPQ_Tj3Q-CI0rGn_uiD](https://www.youtube.com/playlist?list=PLEiRgvTilK5rhnVPQ_Tj3Q-CI0rGn_uiD)
 
 There are _loads_ of resources online for learning SQL, such as:
 

@@ -455,4 +455,4 @@ Microsoft SQL Server splits the window functions into two categories (other than
 
 The video version of this content is also available at:
 
-- https://youtu.be/8e4mQfEDJDk
+- [https://youtu.be/8e4mQfEDJDk](https://youtu.be/8e4mQfEDJDk)

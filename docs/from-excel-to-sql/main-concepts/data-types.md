@@ -166,4 +166,4 @@ The docs for `NULL` are at:
 
 The video version of this content is also available at:
 
-- https://youtu.be/Vp40VH4_OX8
+- [https://youtu.be/Vp40VH4_OX8](https://youtu.be/Vp40VH4_OX8)
