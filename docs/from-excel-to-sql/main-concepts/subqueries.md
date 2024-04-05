@@ -229,3 +229,7 @@ ORDER BY OrderMonth
 Check out the [official Microsoft documentation](https://learn.microsoft.com/en-us/sql/relational-databases/performance/subqueries) for more information on subqueries at:
 
 - [https://learn.microsoft.com/en-us/sql/relational-databases/performance/subqueries](https://learn.microsoft.com/en-us/sql/relational-databases/performance/subqueries)
+
+The video version of this content is also available at:
+
+- https://youtu.be/pcD_7n7zKFw

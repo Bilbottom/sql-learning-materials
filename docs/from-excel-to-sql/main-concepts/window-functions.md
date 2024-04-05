@@ -452,3 +452,7 @@ Microsoft SQL Server splits the window functions into two categories (other than
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/functions/ranking-functions-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/functions/ranking-functions-transact-sql)
 - [https://learn.microsoft.com/en-us/sql/t-sql/functions/analytic-functions-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/functions/analytic-functions-transact-sql)
+
+The video version of this content is also available at:
+
+- https://youtu.be/8e4mQfEDJDk
