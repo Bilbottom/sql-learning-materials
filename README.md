@@ -1,14 +1,14 @@
 <div align="center">
 
 [![Poetry](https://img.shields.io/endpoint?url=https://python-poetry.org/badge/v0.json)](https://python-poetry.org/)
-[![Python 3.11](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
+[![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 [![Docker](https://img.shields.io/badge/Docker-24.0.5-blue.svg)](https://www.docker.com/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Bilbottom/sql-learning-materials)](https://shields.io/badges/git-hub-last-commit-by-committer)
 
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-2022-teal.svg)](https://www.microsoft.com/en-gb/sql-server/sql-server-downloads)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.4-teal.svg)](https://www.postgresql.org/download/)
 [![SQLite](https://img.shields.io/badge/SQLite-3.43-teal.svg)](https://www.sqlite.org/index.html)
-[![DuckDB](https://img.shields.io/badge/DuckDB-0.7-teal.svg)](https://duckdb.org/)
+[![DuckDB](https://img.shields.io/badge/DuckDB-0.10-teal.svg)](https://duckdb.org/)
 
 </div>
 
