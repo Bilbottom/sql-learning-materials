@@ -671,6 +671,10 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql#join-type](https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql#join-type)
 
+The video version of this content is also available at:
+
+- https://youtu.be/xG5CqLICKcY
+
 ### Additional join modifiers in other SQL flavours
 
 Microsoft SQL Server has a fairly limited number of join features, but other SQL flavours add _loads_ of additional modifiers to the `JOIN` clause.

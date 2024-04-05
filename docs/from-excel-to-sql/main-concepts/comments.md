@@ -28,14 +28,14 @@ Writing comments is super easy, for example:
 ```sql
 -- This is a title
 SELECT *
-FROM Person.Person
+FROM HumanResources.Department
 ;
 
 /*
 This query won't run
 
 SELECT *
-FROM Person.Person
+FROM HumanResources.Department
 ;
 */
 ```
@@ -54,3 +54,7 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/language-elements/comment-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/comment-transact-sql)
 - [https://learn.microsoft.com/en-us/sql/t-sql/language-elements/slash-star-comment-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/slash-star-comment-transact-sql)
+
+The video version of this content is also available at:
+
+- https://youtu.be/H6SfeXFWWmg

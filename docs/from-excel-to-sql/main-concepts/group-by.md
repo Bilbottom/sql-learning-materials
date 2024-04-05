@@ -322,6 +322,10 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 - [https://learn.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql)
 - [https://learn.microsoft.com/en-us/sql/t-sql/functions/aggregate-functions-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/functions/aggregate-functions-transact-sql)
 
+The video version of this content is also available at:
+
+- https://youtu.be/Tlckp6UbmQE
+
 ### Additional modifiers
 
 The `GROUP BY` clause also has additional modifiers including `ROLLUP`, `GROUPING SETS`, and `CUBE`. We'll see `ROLLUP` in [the next section](rollup.md) and both `GROUPING SETS` and `CUBE` and [the advanced aggregations section](../advanced-concepts/advanced-aggregations.md).

@@ -169,6 +169,10 @@ Check out the [official Microsoft documentation]() for more information on [`CON
 - [https://learn.microsoft.com/en-us/sql/t-sql/functions/cast-and-convert-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/functions/cast-and-convert-transact-sql)
 - [https://learn.microsoft.com/en-us/sql/t-sql/functions/format-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/functions/format-transact-sql)
 
+The video version of this content is also available at:
+
+- https://youtu.be/gYjYLL99jaQ
+
 ### Additional date functions
 
 Manipulating dates in SQL is fairly different to Excel, but it's outside the scope of this course. However, it's recommended that you check some out to see what options are available:

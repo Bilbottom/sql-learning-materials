@@ -108,6 +108,10 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/language-elements/set-operators-union-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/language-elements/set-operators-union-transact-sql)
 
+The video version of this content is also available at:
+
+- https://youtu.be/OQSLOGelJv0
+
 ### Additional set operators
 
 The `UNION` clause combines the results of two `SELECT` statements into a single result set.

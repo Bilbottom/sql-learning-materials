@@ -21,71 +21,71 @@ In Excel, there are two ways to sort data:
 
 Sorting in SQL is more like the second option, where you can specify the columns to sort by and the direction to sort in (ascending or descending).
 
-For example, we could sort the `Person.Person` table by the `LastName` column in ascending order using:
+For example, we could sort the `HumanResources.Department` table by the `Name` column in ascending order using:
 
 ```sql
 SELECT
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
-ORDER BY LastName
+    DepartmentID,
+    Name,
+    GroupName
+FROM HumanResources.Department
+ORDER BY Name
 ;
 ```
 
-| BusinessEntityID | FirstName | LastName    |
-| ---------------: | :-------- | :---------- |
-|              285 | Syed      | Abbas       |
-|              293 | Catherine | Abel        |
-|              295 | Kim       | Abercrombie |
-|             2170 | Kim       | Abercrombie |
-|               38 | Kim       | Abercrombie |
+| DepartmentID | Name                       | GroupName                            |
+| -----------: | :------------------------- | :----------------------------------- |
+|           12 | Document Control           | Quality Assurance                    |
+|            1 | Engineering                | Research and Development             |
+|           16 | Executive                  | Executive General and Administration |
+|           14 | Facilities and Maintenance | Executive General and Administration |
+|           10 | Finance                    | Executive General and Administration |
 
 > [!TIP]
 >
 > The `ORDER BY` clause "sounds like" English, so the query above can be read as:
 >
-> > "**Select** the **business entity ID**, **first name**, and **last name from** the **`Person.Person`** table and **order by** the **last name**".
+> > "**Select** the **department ID**, **name**, and **group name from** the **`HumanResources.Department`** table and **order by** the **name**".
 
 To sort in descending order, use the `DESC` keyword:
 
 ```sql
 SELECT
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
-ORDER BY LastName DESC
+    DepartmentID,
+    Name,
+    GroupName
+FROM HumanResources.Department
+ORDER BY Name DESC
 ;
 ```
 
-| BusinessEntityID | FirstName | LastName |
-| ---------------: | :-------- | :------- |
-|             2089 | Michael   | Zwilling |
-|               64 | Michael   | Zwilling |
-|            12079 | Jake      | Zukowski |
-|             2088 | Judy      | Zugelder |
-|             2087 | Patricia  | Zubaty   |
+| DepartmentID | Name                     | GroupName                |
+| -----------: | :----------------------- | :----------------------- |
+|            2 | Tool Design              | Research and Development |
+|           15 | Shipping and Receiving   | Inventory Management     |
+|            3 | Sales                    | Sales and Marketing      |
+|            6 | Research and Development | Research and Development |
+|           13 | Quality Assurance        | Quality Assurance        |
 
 To sort by multiple columns, separate the columns with a comma:
 
 ```sql
 SELECT
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
-ORDER BY LastName DESC, BusinessEntityID
+    DepartmentID,
+    Name,
+    GroupName
+FROM HumanResources.Department
+ORDER BY GroupName, DepartmentID
 ;
 ```
 
-| BusinessEntityID | FirstName | LastName |
-| ---------------: | :-------- | :------- |
-|               64 | Michael   | Zwilling |
-|             2089 | Michael   | Zwilling |
-|            12079 | Jake      | Zukowski |
-|             2088 | Judy      | Zugelder |
-|             2086 | Carla     | Zubaty   |
+| DepartmentID | Name                       | GroupName                            |
+| -----------: | :------------------------- | :----------------------------------- |
+|            9 | Human Resources            | Executive General and Administration |
+|           10 | Finance                    | Executive General and Administration |
+|           11 | Information Services       | Executive General and Administration |
+|           14 | Facilities and Maintenance | Executive General and Administration |
+|           16 | Executive                  | Executive General and Administration |
 
 > [!WARNING]
 >
@@ -101,21 +101,13 @@ If you rename/use an alias for a column in the `SELECT` clause, you can use that
 
 ```sql
 SELECT
-    BusinessEntityID AS ID,
-    FirstName AS Forename,
-    LastName AS Surname
-FROM Person.Person
-ORDER BY Forename, Surname, ID
+    DepartmentID AS ID,
+    Name,
+    GroupName
+FROM HumanResources.Department
+ORDER BY GroupName, ID
 ;
 ```
-
-|    ID | Forename | Surname   |
-| ----: | :------- | :-------- |
-|  1305 | A.       | Leonetti  |
-|  2321 | A.       | Wright    |
-|   222 | A. Scott | Wright    |
-| 16867 | Aaron    | Adams     |
-|  5508 | Aaron    | Alexander |
 
 ## You can sort by column numbers, but don't
 
@@ -123,14 +115,14 @@ ORDER BY Forename, Surname, ID
 >
 > This is just a FYI in case you see this out in the wild.
 
-Instead of using the column names in the `ORDER BY` clause, you can use their position in the query (starting at 1). For example, the following query sorts the `Person.Person` table by the `LastName` column:
+Instead of using the column names in the `ORDER BY` clause, you can use their position in the query (starting at 1). For example, the following query sorts the `HumanResources.Department` table by the `GroupName` column:
 
 ```sql
 SELECT
-    BusinessEntityID,
-    FirstName,
-    LastName
-FROM Person.Person
+    DepartmentID,
+    Name,
+    GroupName
+FROM HumanResources.Department
 ORDER BY 3
 ;
 ```
@@ -145,6 +137,10 @@ Check out the [official Microsoft documentation](https://learn.microsoft.com/en-
 
 - [https://learn.microsoft.com/en-us/sql/t-sql/queries/select-order-by-clause-transact-sql](https://learn.microsoft.com/en-us/sql/t-sql/queries/select-order-by-clause-transact-sql)
 
+The video version of this content is also available at:
+
+- https://youtu.be/yaomCldxZi4
+
 ### Additional modifiers
 
 The `ORDER BY` clause also has additional modifiers which are outside the scope of this course. These include `COLLATE`, `OFFSET`, and `FETCH`:
@@ -158,11 +154,11 @@ The `ORDER BY` clause also has additional modifiers which are outside the scope 
 >
 > ```sql
 > SELECT
->     BusinessEntityID,
->     FirstName,
->     LastName
-> FROM Person.Person
-> ORDER BY BusinessEntityID
+>     DepartmentID,
+>     Name,
+>     GroupName
+> FROM HumanResources.Department
+> ORDER BY DepartmentID
 >   OFFSET 10 ROWS
 >   FETCH NEXT 5 ROWS ONLY
 > ;
