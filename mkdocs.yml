@@ -56,12 +56,12 @@ nav:
   - Everything about joins:
       - everything-about-joins/everything-about-joins.md
       - Syntax:
-          - everything-about-joins/syntax/sql-92-rant.md
           - everything-about-joins/syntax/join-fundamentals.md
           - everything-about-joins/syntax/more-fundamentals.md
           - everything-about-joins/syntax/timestamp-joins.md
           - everything-about-joins/syntax/filtering-joins.md
           - everything-about-joins/syntax/glue-joins.md
+          - everything-about-joins/syntax/sql-92-rant.md
 
 markdown_extensions:
   - admonition
