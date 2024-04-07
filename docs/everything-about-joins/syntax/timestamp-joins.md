@@ -1,4 +1,4 @@
-# The "timestamp" join (`ASOF`)
+# The "timestamp" join (`ASOF`) ⏱
 
 > [!SUCCESS]
 >
@@ -376,7 +376,7 @@ order by
 
 Note that, since this _specific_ example, is only using the `rate` column from the `exchange_rates` table, we could have evaluated the subquery in the `SELECT` clause instead of the `FROM` clause. However, this would not work if we needed to use more than one column from the `exchange_rates` table, hence sticking to approaches that cater for multiple columns.
 
-## Conclusion
+## Wrap up
 
 Like with most SQL problems, there are multiple ways to get the output that we want. The `ASOF` join is just a great way to solve this particular problem, and it significantly reduces the complexity of our SQL code!
 
