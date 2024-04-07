@@ -58,6 +58,7 @@ nav:
       - Syntax:
           - everything-about-joins/syntax/timestamp-joins.md
           - everything-about-joins/syntax/filtering-joins.md
+          - everything-about-joins/syntax/glue-joins.md
 
 markdown_extensions:
   - admonition
