@@ -19,5 +19,6 @@ The data will be made up for the examples.
    2. Join fundamentals: `INNER`, `LEFT` (`RIGHT`), `FULL`, `CROSS`
    3. More fundamentals: `USING`, `NATURAL`
    4. [The "timestamp" join: `ASOF`](syntax/timestamp-joins.md)
+   5. [The "filtering" joins: `SEMI`, `ANTI`](syntax/filtering-joins.md)
 2. **Under the hood**
    1. ...
