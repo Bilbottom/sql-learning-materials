@@ -237,7 +237,21 @@ Note the `NULL` values for the first transaction -- this is because there is no 
 <summary>Expand for the Snowflake equivalent</summary>
 
 ```sql
-
+select
+    transactions.date,
+    transactions.account,
+    transactions.amount,
+    exchange_rates.rate,
+    transactions.amount * exchange_rates.rate as amount_usd,
+from transactions
+    asof join exchange_rates
+        match_condition (transactions.date >= exchange_rates.date)
+        on transactions.currency = exchange_rates.from_currency
+/* Currently not allowed in `ASOF` join conditions */
+where coalesce(exchange_rates.to_currency, 'USD') = 'USD'
+order by
+    transactions.date,
+    transactions.amount
 ```
 
 </details>
