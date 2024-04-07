@@ -8,7 +8,7 @@
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-2022-teal.svg)](https://www.microsoft.com/en-gb/sql-server/sql-server-downloads)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.4-teal.svg)](https://www.postgresql.org/download/)
 [![SQLite](https://img.shields.io/badge/SQLite-3.43-teal.svg)](https://www.sqlite.org/index.html)
-[![DuckDB](https://img.shields.io/badge/DuckDB-0.10-teal.svg)](https://duckdb.org/)
+[![DuckDB](https://img.shields.io/badge/DuckDB-0.9-teal.svg)](https://duckdb.org/)
 
 </div>
 

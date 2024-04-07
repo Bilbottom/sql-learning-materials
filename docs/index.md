@@ -26,5 +26,4 @@ All credit for the data goes to the respective owners, and these sources should 
 This project has a few different series:
 
 - [From Excel to SQL](from-excel-to-sql/from-excel-to-sql.md), which is aimed at Excel users who want to learn SQL
-- [60 Days of SQL](60-days-of-sql/60-days-of-sql.md), which is a collection of samples for daily [LinkedIn](https://www.linkedin.com/) posts
-- [SQL Reference](sql-reference/sql-reference.md), which is a collection of SQL scripts that demonstrate various features and concepts
+- [Everything About Joins](everything-about-joins/everything-about-joins.md), which is a comprehensive guide to SQL joins
