@@ -53,6 +53,8 @@ nav:
           - from-excel-to-sql/advanced-concepts/advanced-aggregations.md
           - from-excel-to-sql/advanced-concepts/correlated-subqueries.md
           - from-excel-to-sql/advanced-concepts/recursive-ctes.md
+  - Everything about joins:
+      - everything-about-joins/everything-about-joins.md
   - 60 Days of SQL:
       - 60-days-of-sql/60-days-of-sql.md
   - SQL Reference:
