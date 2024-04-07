@@ -53,11 +53,11 @@ It has an added restriction that the `MATCH_CONDITION` clause _must_ reference t
 
 At the time of writing (2024-04-07), the `ASOF` join has the following availability:
 
-- DuckDB: ✅
+- DuckDB: ✅ ([>=0.6](https://duckdb.org/docs/archive/0.6/sql/query_syntax/from))
 - SQLite: ❌
 - PostgreSQL: ❌
 - SQL Server: ❌
-- Snowflake: ✅
+- Snowflake: ✅ ([February 28, 2024](https://docs.snowflake.com/en/release-notes/2024/other/2024-02-28))
 
 Are you aware of any other databases that support the `ASOF` join?
 

@@ -33,7 +33,7 @@ FROM left_table
 
 At the time of writing (2024-04-07), the `SEMI` and `ANTI` joins (as explicit join types) have the following availability:
 
-- DuckDB: ✅
+- DuckDB: ✅ ([>=0.8](https://duckdb.org/docs/archive/0.8/sql/query_syntax/from#semi-and-anti-joins))
 - SQLite: ❌
 - PostgreSQL: ❌
 - SQL Server: ❌
