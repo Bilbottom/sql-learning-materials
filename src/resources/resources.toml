@@ -30,12 +30,12 @@ destination = "src/resources/data/postgres/postgres-sakila-insert-data-using-cop
 
 
 [sqlite.loans]
-url = "https://raw.githubusercontent.com/Bilbottom/sql-schema-models/2db2d75318a468671b3ee2adb5ea6d42d67507c9/loans/simple-loan-database.sql"
+url = "https://raw.githubusercontent.com/Bilbottom/sql-models/11adc789e76f2b9b530c8c43adb13843b94006ce/sql_models/loans/simple-loan-database.sql"
 destination = "src/resources/data/sqlite/simple-loan-database.sql"
 database = "src/resources/data/sqlite/loan.db"
 
 
 [duckdb.loans]
-url = "https://raw.githubusercontent.com/Bilbottom/sql-schema-models/2db2d75318a468671b3ee2adb5ea6d42d67507c9/loans/simple-loan-database.sql"
+url = "https://raw.githubusercontent.com/Bilbottom/sql-models/11adc789e76f2b9b530c8c43adb13843b94006ce/sql_models/loans/simple-loan-database.sql"
 destination = "src/resources/data/duckdb/simple-loan-database.sql"
 database = "src/resources/data/duckdb/loan.db"
