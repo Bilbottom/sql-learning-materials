@@ -20,6 +20,7 @@ The data will be made up for the examples.
    3. [The "timestamp" join: `ASOF`](syntax/timestamp-joins.md)
    4. [The "filtering" joins: `SEMI`, `ANTI`](syntax/filtering-joins.md)
    5. [The "glue" join: `POSITIONAL`](syntax/glue-joins.md)
-   6. [SQL-92 rant (ANSI-SQL join syntax)](syntax/sql-92-rant.md)
+   6. [The "explosive" join: `LATERAL`](syntax/explosive-joins.md)
+   7. [SQL-92 rant (ANSI-SQL join syntax)](syntax/sql-92-rant.md)
 2. **Under the hood**
    1. ...
