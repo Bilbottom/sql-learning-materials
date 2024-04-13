@@ -7,7 +7,10 @@ repo_url: https://github.com/Bilbottom/sql-learning-materials/
 
 theme:
   name: material
-  features: ["navigation.instant", "navigation.footer"]
+  features:
+    - navigation.instant
+    - navigation.footer
+    - content.code.copy
   palette:
     - accent: default
       primary: default
@@ -70,12 +73,37 @@ nav:
           - everything-about-joins/under-the-hood/range-intersection-joins.md
   - Challenging SQL problems:
       - challenging-sql-problems/challenging-sql-problems.md
+      - Problems:
+          - 🟤 Bronze Tier:
+              - challenging-sql-problems/problems/bronze/fibonacci-sequence.md # recursive CTE
+              - challenging-sql-problems/problems/bronze/temperature-anomaly-detection.md # window functions
+              - challenging-sql-problems/problems/bronze/uk-bank-holidays.md #  unpivot and unnest
+          - ⚪ Silver Tier:
+              - challenging-sql-problems/problems/silver/suspicious-login-activity.md # window function (gaps and islands)
+              - challenging-sql-problems/problems/silver/funnel-analytics.md # custom axis (TODO: this might be bronze tier)
+              - challenging-sql-problems/problems/silver/customer-sales-running-totals.md # window functions
+          - 🟡 Gold Tier:
+              - challenging-sql-problems/problems/gold/loan-repayment-schedule.md # recursive CTE
+              - challenging-sql-problems/problems/gold/travel-plans.md # recursive CTEs
+      - Solutions:
+          - 🟤 Bronze Tier:
+              - challenging-sql-problems/solutions/bronze/fibonacci-sequence.md
+              - challenging-sql-problems/solutions/bronze/temperature-anomaly-detection.md
+              - challenging-sql-problems/solutions/bronze/uk-bank-holidays.md
+          - ⚪ Silver Tier:
+              - challenging-sql-problems/solutions/silver/suspicious-login-activity.md
+              - challenging-sql-problems/solutions/silver/funnel-analytics.md
+              - challenging-sql-problems/solutions/silver/customer-sales-running-totals.md
+          - 🟡 Gold Tier:
+              - challenging-sql-problems/solutions/gold/loan-repayment-schedule.md
+              - challenging-sql-problems/solutions/gold/travel-plans.md
 
 markdown_extensions:
   - admonition
   - callouts # https://github.com/oprypin/markdown-callouts
   - mdx_truly_sane_lists # Support nested lists
   - pymdownx.details # Support collapsible sections with ???
+  - pymdownx.snippets
   - pymdownx.superfences:
       custom_fences:
         - { name: mermaid, class: mermaid }
