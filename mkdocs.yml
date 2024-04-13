@@ -63,6 +63,13 @@ nav:
           - everything-about-joins/syntax/glue-joins.md
           - everything-about-joins/syntax/explosive-joins.md
           - everything-about-joins/syntax/sql-92-rant.md
+      - Under the hood:
+          - everything-about-joins/under-the-hood/joins-with-an-index.md
+          - everything-about-joins/under-the-hood/join-order.md
+          - everything-about-joins/under-the-hood/loop-joins.md
+          - everything-about-joins/under-the-hood/hash-joins.md
+          - everything-about-joins/under-the-hood/merge-joins.md
+          - everything-about-joins/under-the-hood/range-intersection-joins.md
 
 markdown_extensions:
   - admonition
