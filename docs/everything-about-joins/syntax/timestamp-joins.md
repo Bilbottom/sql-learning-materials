@@ -53,15 +53,15 @@ It has an added restriction that the `MATCH_CONDITION` clause _must_ reference t
 
 At the time of writing (2024-04-07), the `ASOF` join has the following availability:
 
-- DuckDB: ✅
+- DuckDB: ✅ ([>=0.6](https://duckdb.org/docs/archive/0.6/sql/query_syntax/from))
 - SQLite: ❌
 - PostgreSQL: ❌
 - SQL Server: ❌
-- Snowflake: ✅
+- Snowflake: ✅ ([February 28, 2024](https://docs.snowflake.com/en/release-notes/2024/other/2024-02-28))
 
 Are you aware of any other databases that support the `ASOF` join?
 
-## Example: finding the USD amount for each transaction (DuckDB)
+## Examples
 
 ### Sample data
 
@@ -179,7 +179,9 @@ insert into exchange_rates
 
 </details>
 
-### Solution
+### Finding the USD amount for each transaction (DuckDB)
+
+#### Solution
 
 To find the USD amount for each transaction, we can use the `ASOF` join to find the closest exchange rate to the transaction date:
 
@@ -256,11 +258,11 @@ order by
 
 </details>
 
-### "Traditional" solutions
+#### "Traditional" solutions
 
 For comparison, here are a few solutions that illustrate how you might solve this problem without the `ASOF` join.
 
-#### Using a lateral join
+##### Using a lateral join
 
 If your database supports [lateral "joins"](https://duckdb.org/docs/sql/query_syntax/from.html#lateral-joins) (like DuckDB), you can [use a lateral join](https://github.com/timescale/timescaledb/issues/271#issuecomment-865231568) to find the closest exchange rate to the transaction date:
 
@@ -289,7 +291,7 @@ order by
 
 Note that this approach would _drop_ the first transaction from the result set because there is no exchange rate for the date of that transaction in our `exchange_rates` table. We'll "fix" this in the next example.
 
-#### Using a left lateral join
+##### Using a left lateral join
 
 To keep the first transaction in the result set when using lateral, we can move the lateral subquery to a left join:
 
@@ -316,7 +318,7 @@ order by
     transactions.amount
 ```
 
-#### Using left join and qualify
+##### Using left join and qualify
 
 If your database doesn't have `ASOF` _or_ lateral joins, you can use a left join and the `QUALIFY` clause to find the closest exchange rate to the transaction date:
 
@@ -343,7 +345,7 @@ order by
 
 If you're using a database that doesn't support the `QUALIFY` clause, you can wrap the query in a subquery with the `ROW_NUMBER()` calculation saved to a column and filter on the column in the outer query.
 
-#### Using a left join and correlated subquery
+##### Using a left join and correlated subquery
 
 If your database doesn't have `ASOF` joins, lateral joins, _or_ the `QUALIFY` clause (and you don't want to use `ROW_NUMBER()` in a subquery), you can use a correlated subquery:
 
