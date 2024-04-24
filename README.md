@@ -9,6 +9,7 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.4-teal.svg)](https://www.postgresql.org/download/)
 [![SQLite](https://img.shields.io/badge/SQLite-3.43-teal.svg)](https://www.sqlite.org/index.html)
 [![DuckDB](https://img.shields.io/badge/DuckDB-0.9-teal.svg)](https://duckdb.org/)
+[![Metabase](https://img.shields.io/badge/Metabase-0.47-teal.svg)](https://www.metabase.com/)
 
 </div>
 
@@ -79,6 +80,8 @@ The SQLite and DuckDB databases are just files, so using Docker for these is ove
 | -------- | ----------------------------------- |
 | SQLite   | `src/resources/data/sqlite/loan.db` |
 | DuckDB   | `src/resources/data/duckdb/loan.db` |
+
+The Metabase instance will be launched on [`localhost:3000`](http://localhost:3000) and you will have to configure your own login details.
 
 ## On an M1 mac...
 
