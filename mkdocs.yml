@@ -7,9 +7,7 @@ repo_url: https://github.com/Bilbottom/sql-learning-materials/
 
 theme:
   name: material
-  features:
-    - navigation.instant
-    - navigation.footer
+  features: ["navigation.instant", "navigation.footer"]
   palette:
     - accent: default
       primary: default
@@ -75,10 +73,7 @@ markdown_extensions:
   - admonition
   - callouts # https://github.com/oprypin/markdown-callouts
   - mdx_truly_sane_lists # Support nested lists
-  - pymdownx.caret
-  - pymdownx.details
-  - pymdownx.mark
-  - pymdownx.tilde
+  - pymdownx.details # Support collapsible sections with ???
   - pymdownx.superfences:
       custom_fences:
         - { name: mermaid, class: mermaid }

@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/postgres.Dockerfile
-    image: postgresql
+    image: postgres
     container_name: PostgreSQL
     environment:
       POSTGRES_PASSWORD: Test@12345

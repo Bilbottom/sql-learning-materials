@@ -1,7 +1,7 @@
 ---
 ci:
   autoupdate_schedule: quarterly
-  skip: [poetry-lock, sourcery, pylint, pytest, coverage-badge]
+  skip: ["poetry-lock", "sourcery", "pylint", "pytest", "coverage-badge"]
 
 repos:
   - repo: meta
@@ -50,11 +50,11 @@ repos:
     rev: v3.15.2
     hooks:
       - id: pyupgrade
-        args: [--py311-plus]
+        args: ["--py311-plus"]
         name: Align Python code to latest syntax
 
   - repo: https://github.com/psf/black
-    rev: 24.4.0
+    rev: 24.4.2
     hooks:
       - id: black
         name: Check Python formatting
@@ -71,7 +71,7 @@ repos:
     hooks:
       - id: pycln
         name: Remove unused imports and variables
-        args: [--config=pyproject.toml]
+        args: ["--config=pyproject.toml"]
 
   # Sourcery (refactoring)
   - repo: https://github.com/sourcery-ai/sourcery
@@ -79,7 +79,7 @@ repos:
     hooks:
       - id: sourcery
         name: Check for refactoring opportunities
-        args: [--diff=git diff HEAD, --no-summary]
+        args: ["--diff=git diff HEAD", "--no-summary"]
         files: src/.*
         exclude: \.*/__init__\.py
 
@@ -90,7 +90,7 @@ repos:
         name: Lint Python code with pylint
         entry: pylint
         language: system
-        types: [python]
+        types: ["python"]
         args: ["-rn", "--rcfile=pyproject.toml"]
         exclude: "^.*$" # Exclude everything for now
 
