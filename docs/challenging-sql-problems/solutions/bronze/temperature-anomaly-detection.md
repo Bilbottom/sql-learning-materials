@@ -31,6 +31,11 @@ Some SQL solutions per database are provided below.
 --8<-- "docs/challenging-sql-problems/solutions/bronze/temperature-anomaly-detection--duckdb.sql"
 
 <!-- prettier-ignore -->
+> SUCCESS: **Snowflake**
+>
+--8<-- "docs/challenging-sql-problems/solutions/bronze/temperature-anomaly-detection--snowflake.sql"
+
+<!-- prettier-ignore -->
 > SUCCESS: **SQL Server**
 >
 --8<-- "docs/challenging-sql-problems/solutions/bronze/temperature-anomaly-detection--sql-server.sql"
