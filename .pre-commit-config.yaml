@@ -1,7 +1,7 @@
 ---
 ci:
   autoupdate_schedule: quarterly
-  skip: ["poetry-lock", "sourcery", "pylint", "pytest", "coverage-badge"]
+  skip: ["poetry-lock", "sourcery", "pylint"]
 
 repos:
   - repo: meta
@@ -92,22 +92,4 @@ repos:
         language: system
         types: ["python"]
         args: ["-rn", "--rcfile=pyproject.toml"]
-        exclude: "^.*$" # Exclude everything for now
-
-  # Testing and coverage
-  - repo: local
-    hooks:
-      - id: pytest
-        name: Run unit tests
-        entry: pytest tests
-        language: system
-        pass_filenames: false
-        always_run: true
-        exclude: "^.*$" # Exclude everything for now
-      - id: coverage-badge
-        name: Generate coverage badge
-        entry: coverage-badge -o coverage.svg -f
-        language: system
-        pass_filenames: false
-        always_run: true
         exclude: "^.*$" # Exclude everything for now
