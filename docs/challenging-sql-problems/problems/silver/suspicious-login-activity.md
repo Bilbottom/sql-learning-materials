@@ -44,4 +44,4 @@ The solution can be found at:
 <!-- prettier-ignore -->
 >? TIP: **Hint 2**
 >
-> Use the difference between two `ROW_NUMBER()` functions to create a group for each user and event type. Partition on `user_id` for one and partitioning on both `user_id` and `event_id` for the other, ordering both by `event_id`.
+> Use the difference between two `ROW_NUMBER()` functions to create a group for each user and event type. Partition on `user_id` for one and partition on both `user_id` and `event_type` for the other, ordering both by `event_id`.
