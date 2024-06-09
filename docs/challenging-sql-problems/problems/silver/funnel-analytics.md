@@ -1,19 +1,21 @@
 # Funnel analytics ⏬
 
-> [!QUESTION]
+> [!SUCCESS] Scenario
 >
-> A prominent UK bank is interested in understanding the conversion rates of their mortgage application process.
+> A bank is interested in understanding the conversion rates of their mortgage application process.
 >
 > Their application funnel consists of the following stages, in order:
 >
-> 1. full application
-> 2. decision
-> 3. documentation
-> 4. valuation inspection
-> 5. valuation made
-> 6. valuation submitted
-> 7. solicitation
-> 8. funds released
+> 1. Full application
+> 2. Decision
+> 3. Documentation
+> 4. Valuation inspection
+> 5. Valuation made
+> 6. Valuation submitted
+> 7. Solicitation
+> 8. Funds released
+
+> [!QUESTION]
 >
 > The table `applications` tracks the dates that each mortgage application reached each stage.
 >
@@ -21,7 +23,7 @@
 >
 > The output should have a row per cohort and stage, with the columns:
 >
-> - `cohort` as the month that the applications were started; e.g., an application started on `2024-01-15` would be cohort `2024-01-01`.
+> - `cohort` as the month that the applications were started; e.g., an application started on `2024-01-15` would be cohort `2024-01`.
 > - `stage`
 > - `mortgages` as the number of mortgages that reached the stage
 > - `step_rate` as the percentage of mortgages that reached the stage compared to the previous stage
@@ -29,7 +31,7 @@
 >
 > Note that each cohort should have _all_ the stages, even if there are no mortgages that reached that stage -- the `mortgages` column should be `0` in that case.
 >
-> The output should be ordered by `cohort` and _the `stage` order_ (e.g. `full application` should come before `decision`, and so on).
+> Order the output by `cohort` and _the `stage` order_ (e.g. `full application` should come before `decision`, and so on).
 
 <details>
 <summary>Expand for the DDL</summary>
@@ -45,17 +47,17 @@ The solution can be found at:
 <!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
-| cohort     | stage                | mortgages | step_rate | total_rate |
-|:-----------|:---------------------|----------:|----------:|-----------:|
-| 2024-01-01 | full application     |         4 |    100.00 |     100.00 |
-| 2024-01-01 | decision             |         4 |    100.00 |     100.00 |
-| 2024-01-01 | documentation        |         3 |     75.00 |      75.00 |
-| 2024-01-01 | valuation inspection |         3 |    100.00 |      75.00 |
-| 2024-01-01 | valuation made       |         3 |    100.00 |      75.00 |
-| 2024-01-01 | valuation submitted  |         3 |    100.00 |      75.00 |
-| 2024-01-01 | solicitation         |         1 |     33.33 |      25.00 |
-| 2024-01-01 | funds released       |         1 |    100.00 |      25.00 |
-| ...        | ...                  |       ... |       ... |        ... |
+| cohort  | stage                | mortgages | step_rate | total_rate |
+|:--------|:---------------------|----------:|----------:|-----------:|
+| 2024-01 | full application     |         4 |    100.00 |     100.00 |
+| 2024-01 | decision             |         4 |    100.00 |     100.00 |
+| 2024-01 | documentation        |         3 |     75.00 |      75.00 |
+| 2024-01 | valuation inspection |         3 |    100.00 |      75.00 |
+| 2024-01 | valuation made       |         3 |    100.00 |      75.00 |
+| 2024-01 | valuation submitted  |         3 |    100.00 |      75.00 |
+| 2024-01 | solicitation         |         1 |     33.33 |      25.00 |
+| 2024-01 | funds released       |         1 |    100.00 |      25.00 |
+| ...     | ...                  |       ... |       ... |        ... |
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**

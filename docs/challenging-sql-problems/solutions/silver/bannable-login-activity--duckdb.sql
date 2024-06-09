@@ -5,18 +5,22 @@ with event_groups as (
         (0
             + row_number() over (partition by user_id             order by event_id)
             - row_number() over (partition by user_id, event_type order by event_id)
-        ) as event_group
+        ) as event_group,
     from events
 )
 
 select
     user_id,
-    count(*) as consecutive_failures
+    event_datetime::date as ban_date
 from event_groups
-group by user_id, event_group
-having 1=1
-    and consecutive_failures >= 5
-    and any_value(event_type) = 'login failed'
-qualify consecutive_failures = max(consecutive_failures) over (partition by user_id)
+where event_type = 'login failed'
+group by
+    user_id,
+    ban_date,
+    event_group
+qualify 3 = sum((count(*) >= 3)::int) over (
+    partition by user_id
+    order by ban_date range interval '2 days' preceding
+)
 order by user_id
 ```

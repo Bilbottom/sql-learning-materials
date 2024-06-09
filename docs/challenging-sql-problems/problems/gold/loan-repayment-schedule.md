@@ -1,5 +1,11 @@
 # Loan repayment schedule 💰
 
+> [!SUCCESS] Scenario
+>
+> A bank is trying to generate statements and forecasts for their loan customers.
+>
+> They need to know the repayment schedules for each loan so they can accurately communicate to their customers, as well as track the repayments and forecast their cash flow.
+
 > [!QUESTION]
 >
 > For the loan details below, generate the loan repayment schedules for the loans.

@@ -1,10 +1,14 @@
 # Suspicious login activity 🤔
 
+> [!SUCCESS] Scenario
+>
+> A company is investigating suspicious login activity on their platform.
+>
+> Consecutive failed login attempts are considered suspicious once they reach a certain threshold, and the company wants to identify users who have reached this threshold.
+>
+> Their platform logs `login`, `logout`, and `login failed` events for each user.
+
 > [!QUESTION]
->
-> The `event` table captures `login`, `logout`, and `login failed` events for users.
->
-> Consecutive failed login attempts are considered suspicious once they reach a certain threshold.
 >
 > For the events below, identify the users who have `login failed` events at least five times in a row.
 >
@@ -15,16 +19,16 @@
 > - `user_id`
 > - `consecutive_failures` as the greatest number of consecutive failed login attempts for the user
 >
-> Order by `user_id`.
+> Order the output by `user_id`.
 
 <details>
 <summary>Expand for the DDL</summary>
---8<-- "docs/challenging-sql-problems/problems/silver/suspicious-login-activity.sql"
+--8<-- "docs/challenging-sql-problems/problems/bronze/suspicious-login-activity.sql"
 </details>
 
 The solution can be found at:
 
-- [suspicious-login-activity.md](../../solutions/silver/suspicious-login-activity.md)
+- [suspicious-login-activity.md](../../solutions/bronze/suspicious-login-activity.md)
 
 ---
 

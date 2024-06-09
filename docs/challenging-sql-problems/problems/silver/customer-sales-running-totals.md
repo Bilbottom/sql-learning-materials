@@ -1,5 +1,9 @@
 # Customer sales running totals 📈
 
+> [!SUCCESS] Scenario
+>
+> A retail company is interested in understanding the sales performance of some specific customers throughout June 2014.
+
 > [!QUESTION]
 >
 > Using _only_ the `Sales.SalesOrderHeader` table in the [AdventureWorks](https://learn.microsoft.com/en-us/sql/samples/adventureworks-install-configure) database, calculate the running total of `TotalDue` per customer for the customers with `CustomerID` values of `11176`, `11091`, and `11287`.
@@ -28,7 +32,7 @@ Since the rows corresponding to 2014-06-01 should include the historic sales, th
 | 2014-06-01  |      11176 |    1222.8820 |
 | 2014-06-01  |      11287 |    1115.2109 |
 
-However, you should calculate this yourself (don't just copy the above values).
+However, you should calculate this yourself (don't copy the above values).
 
 The solution can be found at:
 

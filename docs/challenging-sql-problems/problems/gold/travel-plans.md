@@ -1,19 +1,23 @@
-# Travel Plans 🚂
+# Travel plans 🚂
 
-> [!QUESTION]
+> [!SUCCESS] Scenario
 >
-> Journey information has been collected into two tables:
+> You're helping a client plan a trip from New York to Paris, and they want you to find the fastest and cheapest route.
+>
+> They have collected journey information into two tables:
 >
 > - `routes_timetable`
 > - `routes_schedule`
 >
 > The timetable table records individual routes with their full departure/arrival timestamps and cost. The schedule table records the _schedule_ of repeated routes with their schedule definition.
 >
-> You need to get from New York to Paris, and the earliest you can leave from New York is 2024-01-01 12:00:00-05:00.
+> The earliest they can leave from New York is `2024-01-01 12:00:00-05:00`.
+
+> [!QUESTION]
 >
-> Give a minimum of 30 minutes and a maximum of 2 hours for "interchange" time (the time between arrival and departure at the same location). All costs are in the same currency (with no currency specified).
+> Given the tables that your client has provided, find the fastest and cheapest route from New York to Paris, leaving after `2024-01-01 12:00:00-05:00`.
 >
-> What's the fastest route, and what's the cheapest route?
+> Give a minimum of 30 minutes and a maximum of 2 hours for "interchange" time (the time between arrival and departure at the same location). All costs are in the same currency (with no currency specified by the client).
 >
 > The output should have the columns:
 >

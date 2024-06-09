@@ -1,8 +1,14 @@
 # UK bank holidays 📅
 
+> [!NOTE]
+>
+> This question is specific to [DuckDB](https://duckdb.org/):
+>
+> - [https://duckdb.org/](https://duckdb.org/)
+
 > [!QUESTION]
 >
-> Using [DuckDB](https://duckdb.org/), parse the [UK bank holiday endpoint](https://www.gov.uk/bank-holidays.json) into a table.
+> Using [DuckDB](https://duckdb.org/), parse the [UK bank holiday endpoint](https://www.gov.uk/bank-holidays.json) into an SQL table.
 >
 > - [https://www.gov.uk/bank-holidays.json](https://www.gov.uk/bank-holidays.json)
 >

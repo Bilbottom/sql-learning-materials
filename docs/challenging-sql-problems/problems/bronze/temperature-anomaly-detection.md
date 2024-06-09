@@ -1,5 +1,11 @@
 # Temperature anomaly detection 🔍
 
+> [!SUCCESS] Scenario
+>
+> Some scientists are studying temperature data from various sites.
+>
+> They are interested in identifying temperature readings that are significantly higher than the surrounding readings.
+
 > [!QUESTION]
 >
 > Given the temperature data below, identify the temperature readings that are at least 10% higher than the average of the previous 2 and following 2 readings.
@@ -16,7 +22,7 @@
 > - `average_temperature` as the average of the 4 readings around the current reading (2 each side), rounded to 4 decimal places
 > - `percentage_increase` as the percentage increase of the current reading over the `average_temperature`, rounded to 4 decimal places
 >
-> Order the output by `site_id` then `reading_datetime`.
+> Order the output by `site_id` and `reading_datetime`.
 
 <details>
 <summary>Expand for the DDL</summary>
