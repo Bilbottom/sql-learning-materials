@@ -75,16 +75,16 @@ nav:
       - challenging-sql-problems/challenging-sql-problems.md
       - Problems:
           - 🟤 Bronze Tier:
-              - challenging-sql-problems/problems/bronze/fibonacci-sequence.md # recursive CTE
-              - challenging-sql-problems/problems/bronze/temperature-anomaly-detection.md # window functions
+              - challenging-sql-problems/problems/bronze/fibonacci-sequence.md #  recursive CTE
+              - challenging-sql-problems/problems/bronze/temperature-anomaly-detection.md #  window functions
               - challenging-sql-problems/problems/bronze/uk-bank-holidays.md #  unpivot and unnest
           - ⚪ Silver Tier:
-              - challenging-sql-problems/problems/silver/suspicious-login-activity.md # window function (gaps and islands)
-              - challenging-sql-problems/problems/silver/funnel-analytics.md # custom axis (TODO: this might be bronze tier)
-              - challenging-sql-problems/problems/silver/customer-sales-running-totals.md # window functions
+              - challenging-sql-problems/problems/silver/funnel-analytics.md #  custom axis (TODO: this might be bronze tier)
+              - challenging-sql-problems/problems/silver/suspicious-login-activity.md #  window functions (gaps and islands)
+              - challenging-sql-problems/problems/silver/customer-sales-running-totals.md #  window functions
           - 🟡 Gold Tier:
-              - challenging-sql-problems/problems/gold/loan-repayment-schedule.md # recursive CTE
-              - challenging-sql-problems/problems/gold/travel-plans.md # recursive CTEs
+              - challenging-sql-problems/problems/gold/loan-repayment-schedule.md #  recursive CTE
+              - challenging-sql-problems/problems/gold/travel-plans.md #  recursive CTEs
       - Solutions:
           - 🟤 Bronze Tier:
               - challenging-sql-problems/solutions/bronze/fibonacci-sequence.md

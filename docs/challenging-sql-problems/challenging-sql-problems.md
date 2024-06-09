@@ -8,7 +8,7 @@
 
 ### 🟤 Bronze Tier
 
-As long as you know your database features, these are straightforward.
+As long as you know your database features, these are fairly straightforward.
 
 1. [Fibonacci sequence](problems/bronze/fibonacci-sequence.md)
 2. [Temperature anomaly detection](problems/bronze/temperature-anomaly-detection.md)

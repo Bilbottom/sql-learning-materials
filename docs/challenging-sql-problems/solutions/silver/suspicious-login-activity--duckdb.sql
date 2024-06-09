@@ -13,10 +13,9 @@ select
     user_id,
     count(*) as consecutive_failures
 from event_groups
+where event_type = 'login failed'
 group by user_id, event_group
-having 1=1
-    and consecutive_failures >= 5
-    and any_value(event_type) = 'login failed'
+having consecutive_failures >= 5
 qualify consecutive_failures = max(consecutive_failures) over (partition by user_id)
 order by user_id
 ```

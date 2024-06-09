@@ -12,7 +12,7 @@ Regardless of the database, the result set should look like:
 
 | user_id | consecutive_failures |
 | ------: | -------------------: |
-|       1 |                    5 |
+|       1 |                    7 |
 |       3 |                    8 |
 
 <details>
@@ -28,3 +28,8 @@ Some SQL solutions per database are provided below.
 > SUCCESS: **DuckDB**
 >
 --8<-- "docs/challenging-sql-problems/solutions/silver/suspicious-login-activity--duckdb.sql"
+
+<!-- prettier-ignore -->
+> SUCCESS: **SQL Server**
+>
+--8<-- "docs/challenging-sql-problems/solutions/silver/suspicious-login-activity--sql-server.sql"

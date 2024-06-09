@@ -62,7 +62,7 @@ funnel as (
 )
 
 select
-    cohort,
+    strftime(cohort, '%Y-%m') as cohort,
     stage,
     mortgages,
     round(100.0 * coalesce(mortgages / lag(mortgages, 1, mortgages) over cohort_by_step, 0), 2) as step_rate,
@@ -72,5 +72,7 @@ window cohort_by_step as (
     partition by cohort
     order by step
 )
-order by cohort, step
+order by
+    cohort,
+    step
 ```

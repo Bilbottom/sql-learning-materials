@@ -1,4 +1,4 @@
-# Travel Plans 🚂
+# Travel plans 🚂
 
 > [!TIP]
 >
