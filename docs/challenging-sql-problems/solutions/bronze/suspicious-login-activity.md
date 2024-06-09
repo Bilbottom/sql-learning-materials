@@ -4,7 +4,7 @@
 >
 > Solution to the following problem:
 >
-> - [suspicious-login-activity.md](../../problems/silver/suspicious-login-activity.md)
+> - [suspicious-login-activity.md](../../problems/bronze/suspicious-login-activity.md)
 
 ## Result Set
 
@@ -17,7 +17,7 @@ Regardless of the database, the result set should look like:
 
 <details>
 <summary>Expand for the DDL</summary>
---8<-- "docs/challenging-sql-problems/solutions/silver/suspicious-login-activity.sql"
+--8<-- "docs/challenging-sql-problems/solutions/bronze/suspicious-login-activity.sql"
 </details>
 
 ## Solution
@@ -27,9 +27,9 @@ Some SQL solutions per database are provided below.
 <!-- prettier-ignore -->
 > SUCCESS: **DuckDB**
 >
---8<-- "docs/challenging-sql-problems/solutions/silver/suspicious-login-activity--duckdb.sql"
+--8<-- "docs/challenging-sql-problems/solutions/bronze/suspicious-login-activity--duckdb.sql"
 
 <!-- prettier-ignore -->
 > SUCCESS: **SQL Server**
 >
---8<-- "docs/challenging-sql-problems/solutions/silver/suspicious-login-activity--sql-server.sql"
+--8<-- "docs/challenging-sql-problems/solutions/bronze/suspicious-login-activity--sql-server.sql"

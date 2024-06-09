@@ -23,12 +23,12 @@
 
 <details>
 <summary>Expand for the DDL</summary>
---8<-- "docs/challenging-sql-problems/problems/silver/suspicious-login-activity.sql"
+--8<-- "docs/challenging-sql-problems/problems/bronze/suspicious-login-activity.sql"
 </details>
 
 The solution can be found at:
 
-- [suspicious-login-activity.md](../../solutions/silver/suspicious-login-activity.md)
+- [suspicious-login-activity.md](../../solutions/bronze/suspicious-login-activity.md)
 
 ---
 
