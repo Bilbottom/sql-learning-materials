@@ -30,7 +30,8 @@ These require a bit more thinking.
 2. [Bannable login activity](problems/silver/bannable-login-activity.md)
 3. [Bus routes](problems/silver/bus-routes.md)
 4. [Region precipitation](problems/silver/region-precipitation.md)
-5. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
+5. [Predicting values](problems/silver/predicting-values.md)
+6. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
 
 ### 🟡 Gold Tier
 
