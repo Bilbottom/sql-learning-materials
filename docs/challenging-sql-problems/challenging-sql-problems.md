@@ -4,6 +4,12 @@
 >
 > These questions are not for people new to SQL! These expect you to use advanced SQL techniques that most people don't know.
 
+> [!NOTE]
+>
+> The database versions used for the solutions can be found at the top of the following page:
+>
+> - https://github.com/Bilbottom/sql-learning-materials/blob/main/README.md
+
 ## Problems
 
 ### 🟤 Bronze Tier
@@ -24,7 +30,8 @@ These require a bit more thinking.
 2. [Bannable login activity](problems/silver/bannable-login-activity.md)
 3. [Bus routes](problems/silver/bus-routes.md)
 4. [Region precipitation](problems/silver/region-precipitation.md)
-5. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
+5. [Predicting values](problems/silver/predicting-values.md)
+6. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
 
 ### 🟡 Gold Tier
 
