@@ -47,17 +47,17 @@ The solution can be found at:
 <!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
-| cohort  | stage                | mortgages | step_rate | total_rate |
-|:--------|:---------------------|----------:|----------:|-----------:|
-| 2024-01 | full application     |         4 |    100.00 |     100.00 |
-| 2024-01 | decision             |         4 |    100.00 |     100.00 |
-| 2024-01 | documentation        |         3 |     75.00 |      75.00 |
-| 2024-01 | valuation inspection |         3 |    100.00 |      75.00 |
-| 2024-01 | valuation made       |         3 |    100.00 |      75.00 |
-| 2024-01 | valuation submitted  |         3 |    100.00 |      75.00 |
-| 2024-01 | solicitation         |         1 |     33.33 |      25.00 |
-| 2024-01 | funds released       |         1 |    100.00 |      25.00 |
-| ...     | ...                  |       ... |       ... |        ... |
+> | cohort  | stage                | mortgages | step_rate | total_rate |
+> |:--------|:---------------------|----------:|----------:|-----------:|
+> | 2024-01 | full application     |         4 |    100.00 |     100.00 |
+> | 2024-01 | decision             |         4 |    100.00 |     100.00 |
+> | 2024-01 | documentation        |         3 |     75.00 |      75.00 |
+> | 2024-01 | valuation inspection |         3 |    100.00 |      75.00 |
+> | 2024-01 | valuation made       |         3 |    100.00 |      75.00 |
+> | 2024-01 | valuation submitted  |         3 |    100.00 |      75.00 |
+> | 2024-01 | solicitation         |         1 |     33.33 |      25.00 |
+> | 2024-01 | funds released       |         1 |    100.00 |      25.00 |
+> | ...     | ...                  |       ... |       ... |        ... |
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**

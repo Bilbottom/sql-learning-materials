@@ -26,9 +26,14 @@ Regardless of the database, the result set should look like:
 Some SQL solutions per database are provided below.
 
 <!-- prettier-ignore -->
-> SUCCESS: **DuckDB, SQLite, PostgreSQL**
+> SUCCESS: **DuckDB**
 >
 --8<-- "docs/challenging-sql-problems/solutions/bronze/temperature-anomaly-detection--duckdb.sql"
+
+<!-- prettier-ignore -->
+> SUCCESS: **SQLite, PostgreSQL**
+>
+--8<-- "docs/challenging-sql-problems/solutions/bronze/temperature-anomaly-detection--sqlite.sql"
 
 <!-- prettier-ignore -->
 > SUCCESS: **Snowflake**

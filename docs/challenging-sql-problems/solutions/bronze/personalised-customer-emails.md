@@ -35,4 +35,6 @@ Some SQL solutions per database are provided below.
 <!-- prettier-ignore -->
 > SUCCESS: **SQL Server**
 >
+> This SQL Server solution uses the Soundex differences with a 3 (out of 4) match threshold, but this isn't the only way to solve this problem.
+>
 --8<-- "docs/challenging-sql-problems/solutions/bronze/personalised-customer-emails--sql-server.sql"

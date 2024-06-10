@@ -6,9 +6,9 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/Bilbottom/sql-learning-materials)](https://shields.io/badges/git-hub-last-commit-by-committer)
 
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-2022-teal.svg)](https://www.microsoft.com/en-gb/sql-server/sql-server-downloads)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15.4-teal.svg)](https://www.postgresql.org/download/)
-[![SQLite](https://img.shields.io/badge/SQLite-3.43-teal.svg)](https://www.sqlite.org/index.html)
-[![DuckDB](https://img.shields.io/badge/DuckDB-0.9-teal.svg)](https://duckdb.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16.2-teal.svg)](https://www.postgresql.org/download/)
+[![SQLite](https://img.shields.io/badge/SQLite-3.45-teal.svg)](https://www.sqlite.org/index.html)
+[![DuckDB](https://img.shields.io/badge/DuckDB-1.0-teal.svg)](https://duckdb.org/)
 [![Metabase](https://img.shields.io/badge/Metabase-0.47-teal.svg)](https://www.metabase.com/)
 
 </div>
@@ -21,7 +21,7 @@ SQL scripts that demonstrate various features and concepts.
 
 This project contains a bunch of SQL learning materials aimed at different levels of experience and covering a variety of topics. It focuses on just writing `SELECT` statements so there will be very few resources for anything else.
 
-Jump into [`docs/index.md`](docs/index.md) to see the summary of what's covered in this project, and continue below for instructions on how to set up the databases.
+Jump into [https://bilbottom.github.io/sql-learning-materials/](https://bilbottom.github.io/sql-learning-materials/) to see the summary of what's covered in this project, and continue below for instructions on how to set up the databases.
 
 ## Acknowledgements
 
