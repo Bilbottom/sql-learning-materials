@@ -31,7 +31,8 @@ These require a bit more thinking.
 3. [Bus routes](problems/silver/bus-routes.md)
 4. [Region precipitation](problems/silver/region-precipitation.md)
 5. [Predicting values](problems/silver/predicting-values.md)
-6. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
+6. [Mandelbrot set](problems/silver/mandelbrot-set.md)
+7. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
 
 ### 🟡 Gold Tier
 

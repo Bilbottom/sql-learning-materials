@@ -78,7 +78,7 @@ A worked example is provided below to help illustrate the average calculations.
 
 ---
 
-### Worked example
+### Worked examples
 
 To help illustrate the average calculations, consider the following grids:
 

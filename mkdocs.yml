@@ -87,6 +87,7 @@ nav:
               - challenging-sql-problems/problems/silver/bus-routes.md #  recursive CTE
               - challenging-sql-problems/problems/silver/region-precipitation.md #  unpivot and rollup
               - challenging-sql-problems/problems/silver/predicting-values.md #  unpivot, regr, and pivot
+              - challenging-sql-problems/problems/silver/mandelbrot-set.md #  recursive CTE
               - challenging-sql-problems/problems/silver/customer-sales-running-totals.md #  window functions
           - 🟡 Gold Tier:
               - challenging-sql-problems/problems/gold/loan-repayment-schedule.md #  recursive CTE
@@ -104,6 +105,7 @@ nav:
               - challenging-sql-problems/solutions/silver/bus-routes.md
               - challenging-sql-problems/solutions/silver/region-precipitation.md
               - challenging-sql-problems/solutions/silver/predicting-values.md
+              - challenging-sql-problems/solutions/silver/mandelbrot-set.md
               - challenging-sql-problems/solutions/silver/customer-sales-running-totals.md
           - 🟡 Gold Tier:
               - challenging-sql-problems/solutions/gold/loan-repayment-schedule.md
