@@ -2,13 +2,13 @@
 
 > [!WARNING]
 >
-> These questions are not for people new to SQL! These expect you to use advanced SQL techniques that most people don't know.
+> These questions are not for people new to SQL! Most of them expect you to use advanced SQL techniques that aren't widely known.
 
 > [!NOTE]
 >
 > The database versions used for the solutions can be found at the top of the following page:
 >
-> - https://github.com/Bilbottom/sql-learning-materials/blob/main/README.md
+> - [https://github.com/Bilbottom/sql-learning-materials/blob/main/README.md](https://github.com/Bilbottom/sql-learning-materials/blob/main/README.md)
 
 ## Problems
 

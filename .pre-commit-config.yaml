@@ -13,7 +13,7 @@ repos:
     hooks:
       - id: no-commit-to-branch
         name: Don't allow commits to the main branch
-        args: ["--branch", "_main"] # Temporarily disable this hook
+        args: ["--branch", "main"]
       - id: trailing-whitespace
         name: Remove trailing whitespace
       - id: end-of-file-fixer

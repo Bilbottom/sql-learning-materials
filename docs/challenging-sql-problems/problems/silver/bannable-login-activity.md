@@ -12,7 +12,7 @@
 >
 > Determine the users who should be banned based on the above criteria.
 >
-> The output should have the columns:
+> The output should have a row for each user who meets this criterion, with the columns:
 >
 > - `user_id`
 > - `ban_date` as the date of the third day of consecutive failed login attempts

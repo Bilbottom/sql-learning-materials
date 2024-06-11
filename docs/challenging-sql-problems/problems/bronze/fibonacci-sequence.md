@@ -4,7 +4,7 @@
 >
 > Generate the first 45 terms of the [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_sequence).
 >
-> The output should have one row per term in the sequence and the columns:
+> The output should have one row per term in the sequence, with the columns:
 >
 > - `n` as the term number
 > - `f_n` as the corresponding Fibonacci number
