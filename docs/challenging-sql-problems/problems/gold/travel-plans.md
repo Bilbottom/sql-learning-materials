@@ -19,7 +19,7 @@
 >
 > Give a minimum of 30 minutes and a maximum of 2 hours for "interchange" time (the time between arrival and departure at the same location). All costs are in the same currency (with no currency specified by the client).
 >
-> The output should have the columns:
+> The output should have at most two rows (the fastest/cheapest routes, which may be the same route), with the columns:
 >
 > - `route` which is each location in the route separated by a hyphen, e.g. `New York - London - Paris`
 > - `departure_datetime_utc` as the departure time (UTC) from New York

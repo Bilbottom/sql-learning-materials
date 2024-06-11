@@ -14,7 +14,7 @@
 >
 > Keep only the user ID and their _greatest_ number of consecutive failed login attempts.
 >
-> The output should have the columns:
+> The output should have a row for each user who meets this criterion, with the columns:
 >
 > - `user_id`
 > - `consecutive_failures` as the greatest number of consecutive failed login attempts for the user

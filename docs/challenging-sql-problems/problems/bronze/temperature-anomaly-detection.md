@@ -8,13 +8,13 @@
 
 > [!QUESTION]
 >
-> Given the temperature data below, identify the temperature readings that are at least 10% higher than the average of the previous 2 and following 2 readings.
+> Given the temperature data below, return the temperature readings that are at least 10% higher than the average of the previous 2 and following 2 readings.
 >
 > Do _not_ include the current reading in the average calculation, and use the calculated average temperature as the denominator for the 10% calculation.
 >
 > If there are fewer than 2 readings before or 2 after the current reading, do not include the reading in the output.
 >
-> The output should have the columns:
+> The output should only have the temperature readings above the threshold, with the columns:
 >
 > - `site_id`
 > - `reading_datetime`

@@ -10,6 +10,7 @@ theme:
   features:
     - navigation.instant
     - navigation.footer
+    - navigation.tabs
     - content.code.copy
   palette:
     - accent: default

@@ -12,7 +12,7 @@
 >
 > Given the customer details and relationships below, write a query to determine which first name to use in the email salutation for each company. If none of the contacts' names seem to be a good fit, use `NULL` instead.
 >
-> The output should have the columns:
+> The output should have one row for each company, with the columns:
 >
 > - `company_name` as the name of the company
 > - `company_email_address` as the email address of the company

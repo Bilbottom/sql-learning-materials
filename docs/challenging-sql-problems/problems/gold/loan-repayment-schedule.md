@@ -10,7 +10,7 @@
 >
 > For the loan details below, generate the loan repayment schedules for the loans.
 >
-> The output should have a row per loan per repayment and the columns:
+> The output should have a row per loan per repayment, with the columns:
 >
 > - `loan_id`
 > - `repayment_number` as the repayment number
