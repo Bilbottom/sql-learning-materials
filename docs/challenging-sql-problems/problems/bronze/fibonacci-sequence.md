@@ -1,5 +1,9 @@
 # Fibonacci sequence 🔢
 
+> [!INFO]
+>
+> This is just for fun, there's no real-world application for this (as far as I know) 😝
+
 > [!QUESTION]
 >
 > Generate the first 45 terms of the [Fibonacci sequence](https://en.wikipedia.org/wiki/Fibonacci_sequence).

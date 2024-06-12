@@ -16,11 +16,11 @@
 
 As long as you know your database features and query patterns, these are fairly straightforward.
 
-1. [Fibonacci sequence](problems/bronze/fibonacci-sequence.md)
-2. [Temperature anomaly detection](problems/bronze/temperature-anomaly-detection.md)
-3. [Personalised customer emails](problems/bronze/personalised-customer-emails.md)
-4. [Suspicious login activity](problems/bronze/suspicious-login-activity.md)
-5. [UK bank holidays](problems/bronze/uk-bank-holidays.md)
+1. [Temperature anomaly detection](problems/bronze/temperature-anomaly-detection.md)
+2. [Personalised customer emails](problems/bronze/personalised-customer-emails.md)
+3. [Suspicious login activity](problems/bronze/suspicious-login-activity.md)
+4. [UK bank holidays](problems/bronze/uk-bank-holidays.md)
+5. [Fibonacci sequence](problems/bronze/fibonacci-sequence.md)
 
 ### ⚪ Silver Tier
 
@@ -31,7 +31,8 @@ These require a bit more thinking.
 3. [Bus routes](problems/silver/bus-routes.md)
 4. [Region precipitation](problems/silver/region-precipitation.md)
 5. [Predicting values](problems/silver/predicting-values.md)
-6. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
+6. [Mandelbrot set](problems/silver/mandelbrot-set.md)
+7. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
 
 ### 🟡 Gold Tier
 
