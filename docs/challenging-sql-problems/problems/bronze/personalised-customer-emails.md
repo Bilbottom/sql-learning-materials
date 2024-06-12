@@ -10,7 +10,7 @@
 
 > [!QUESTION]
 >
-> Given the customer details and relationships below, write a query to determine which first name to use in the email salutation for each company. If none of the contacts' names seem to be a good fit, use `NULL` instead.
+> Given the customer details and relationships below, determine which first name to use in the email salutation for each company. If none of the contacts' names seem to be a good fit, use `NULL` instead.
 >
 > The output should have one row for each company, with the columns:
 >
@@ -51,4 +51,4 @@ The solution can be found at:
 <!-- prettier-ignore -->
 >? TIP: **Hint 2**
 >
-> Only compare the part of the email addresses before the `@` symbol.
+> Rank the contacts by similarity to the company email address and use the most similar one (above some threshold) as the salutation name.

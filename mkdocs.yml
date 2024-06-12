@@ -76,11 +76,11 @@ nav:
       - challenging-sql-problems/challenging-sql-problems.md
       - Problems:
           - 🟤 Bronze Tier:
-              - challenging-sql-problems/problems/bronze/fibonacci-sequence.md #  recursive CTE
               - challenging-sql-problems/problems/bronze/temperature-anomaly-detection.md #  window functions
               - challenging-sql-problems/problems/bronze/personalised-customer-emails.md #  string similarity
               - challenging-sql-problems/problems/bronze/suspicious-login-activity.md #  window functions (gaps and islands)
               - challenging-sql-problems/problems/bronze/uk-bank-holidays.md #  unpivot and unnest
+              - challenging-sql-problems/problems/bronze/fibonacci-sequence.md #  recursive CTE
           - ⚪ Silver Tier:
               - challenging-sql-problems/problems/silver/funnel-analytics.md #  custom axis
               - challenging-sql-problems/problems/silver/bannable-login-activity.md #  window functions (gaps and islands, range between)

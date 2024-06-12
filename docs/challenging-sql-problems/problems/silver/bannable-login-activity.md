@@ -2,7 +2,7 @@
 
 > [!SUCCESS] Scenario
 >
-> The same company from the [Suspicious login activity](../bronze/suspicious-login-activity.md) question have decided to take a more proactive approach to their security.
+> The same company from the [suspicious login activity](../bronze/suspicious-login-activity.md) question have decided to take a more proactive approach to their security.
 >
 > If a user has at least 3 consecutive `login failed` attempts in a day for 3 consecutive days, they are automatically banned.
 >
@@ -21,7 +21,7 @@
 
 <details>
 <summary>Expand for the DDL</summary>
---8<-- "docs/challenging-sql-problems/problems/silver/suspicious-login-activity.sql"
+--8<-- "docs/challenging-sql-problems/problems/bronze/suspicious-login-activity.sql"
 </details>
 
 The solution can be found at:

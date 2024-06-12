@@ -19,7 +19,7 @@
 >
 > The table `applications` tracks the dates that each mortgage application reached each stage.
 >
-> Write a query that calculates the conversion rates between each stage for each cohort (defined below).
+> Calculate the conversion rates between each stage for each cohort (defined below).
 >
 > The output should have a row per cohort and stage, with the columns:
 >
