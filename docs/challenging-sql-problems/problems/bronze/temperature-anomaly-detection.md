@@ -8,7 +8,7 @@
 
 > [!QUESTION]
 >
-> Given the temperature data below, select the temperature readings that are at least 10% higher than the average of the previous 2 and following 2 readings.
+> Given the temperature data below, select the temperature readings that are at least 10% higher than the average of the previous 2 and following 2 readings for the same site.
 >
 > Do _not_ include the current reading in the average calculation, and use the calculated average temperature as the denominator for the 10% calculation.
 >
