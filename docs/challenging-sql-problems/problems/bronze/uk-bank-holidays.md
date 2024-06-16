@@ -33,14 +33,23 @@ The solution can be found at:
 ---
 
 <!-- prettier-ignore -->
+>? INFO: **Sample input**
+>
+--8<-- "docs/challenging-sql-problems/problems/bronze/uk-bank-holidays--sample-input.sql"
+
+<!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
-> | division          | title          | date       | notes | bunting |
-> |:------------------|:---------------|:-----------|:------|:--------|
-> | england-and-wales | New Year’s Day | 2018-01-01 |       | true    |
-> | england-and-wales | Good Friday    | 2018-03-30 |       | false   |
-> | england-and-wales | Easter Monday  | 2018-04-02 |       | true    |
-> | ...               | ...            | ...        | ...   | ...     |
+> | division          | date       | notes          | bunting | title            |
+> |:------------------|:-----------|:---------------|:--------|:-----------------|
+> | england-and-wales | 2018-01-01 |                | true    | New Year’s Day   |
+> | england-and-wales | 2018-03-30 |                | false   | Good Friday      |
+> | scotland          | 2018-01-01 |                | true    | New Year’s Day   |
+> | scotland          | 2018-01-02 |                | true    | 2nd January      |
+> | northern-ireland  | 2018-01-01 |                | true    | New Year’s Day   |
+> | northern-ireland  | 2018-03-19 | Substitute day | true    | St Patrick’s Day |
+>
+--8<-- "docs/challenging-sql-problems/problems/bronze/uk-bank-holidays--sample-output.sql"
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**

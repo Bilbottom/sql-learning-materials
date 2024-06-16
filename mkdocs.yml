@@ -94,11 +94,11 @@ nav:
               - challenging-sql-problems/problems/gold/travel-plans.md #  recursive CTEs
       - Solutions:
           - 🟤 Bronze Tier:
-              - challenging-sql-problems/solutions/bronze/fibonacci-sequence.md
               - challenging-sql-problems/solutions/bronze/temperature-anomaly-detection.md
               - challenging-sql-problems/solutions/bronze/personalised-customer-emails.md
               - challenging-sql-problems/solutions/bronze/suspicious-login-activity.md
               - challenging-sql-problems/solutions/bronze/uk-bank-holidays.md
+              - challenging-sql-problems/solutions/bronze/fibonacci-sequence.md
           - ⚪ Silver Tier:
               - challenging-sql-problems/solutions/silver/funnel-analytics.md
               - challenging-sql-problems/solutions/silver/bannable-login-activity.md

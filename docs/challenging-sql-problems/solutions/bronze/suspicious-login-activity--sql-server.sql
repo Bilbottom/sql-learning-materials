@@ -8,7 +8,7 @@ event_groups as (
             + row_number() over (partition by user_id             order by event_id)
             - row_number() over (partition by user_id, event_type order by event_id)
         ) as event_group
-    from #events
+    from events
 ),
 
 consecutive_failures as (

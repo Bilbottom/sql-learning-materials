@@ -36,12 +36,27 @@ The solution can be found at:
 ---
 
 <!-- prettier-ignore -->
+>? INFO: **Sample input**
+>
+> | site_id | reading_datetime    | temperature |
+> |--------:|:--------------------|------------:|
+> |       1 | 2021-06-01 02:12:31 |       26.17 |
+> |       1 | 2021-06-01 21:17:12 |       26.32 |
+> |       1 | 2021-06-02 01:19:56 |       29.58 |
+> |       1 | 2021-06-02 19:35:32 |       27.06 |
+> |       1 | 2021-06-03 03:14:53 |       26.26 |
+> |       1 | 2021-06-03 20:47:42 |       28.37 |
+>
+--8<-- "docs/challenging-sql-problems/problems/bronze/temperature-anomaly-detection--sample-input.sql"
+
+<!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
 > | site_id | reading_datetime    | temperature | average_temperature | percentage_increase |
 > |--------:|:--------------------|------------:|--------------------:|--------------------:|
-> |       1 | 2021-01-02 02:01:17 |       22.43 |             20.0525 |             11.8564 |
-> |     ... | ...                 |         ... |                 ... |                 ... |
+> |       1 | 2021-06-02 01:19:56 |       29.58 |             26.4525 |             11.8231 |
+>
+--8<-- "docs/challenging-sql-problems/problems/bronze/temperature-anomaly-detection--sample-output.sql"
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**

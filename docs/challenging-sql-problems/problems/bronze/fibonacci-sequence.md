@@ -31,15 +31,27 @@ The solution can be found at:
 ---
 
 <!-- prettier-ignore -->
+>? INFO: **Sample input**
+>
+> Generate the first 10 terms of the Fibonacci sequence.
+
+<!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
-> |   n | f_n |
-> | --: | --: |
-> |   1 |   1 |
-> |   2 |   1 |
-> |   3 |   2 |
-> |   4 |   3 |
-> | ... | ... |
+> |  n | f_n |
+> |---:|----:|
+> |  1 |   1 |
+> |  2 |   1 |
+> |  3 |   2 |
+> |  4 |   3 |
+> |  5 |   5 |
+> |  6 |   8 |
+> |  7 |  13 |
+> |  8 |  21 |
+> |  9 |  34 |
+> | 10 |  55 |
+>
+--8<-- "docs/challenging-sql-problems/problems/bronze/fibonacci-sequence--sample-output.sql"
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**

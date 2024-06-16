@@ -36,12 +36,33 @@ The solution can be found at:
 ---
 
 <!-- prettier-ignore -->
+>? INFO: **Sample input**
+>
+> **Customers**
+>
+> | customer_id | full_name         | first_name | last_name | email_address            |
+> |------------:|:------------------|:-----------|:----------|:-------------------------|
+> |           1 | Straw Hat Pirates | _null_     | _null_    | king.luffy@strawhats.com |
+> |           2 | Monkey D Luffy    | Luffy      | Monkey    | _null_                   |
+> |           3 | Roronoa Zoro      | Zoro       | Roronoa   | _null_                   |
+>
+> **Customer Relationships**
+>
+> | parent_customer_id | child_customer_id | relationship_type |
+> |-------------------:|------------------:|:------------------|
+> |                  1 |                 2 | Director          |
+> |                  1 |                 3 | Director          |
+>
+--8<-- "docs/challenging-sql-problems/problems/bronze/personalised-customer-emails--sample-input.sql"
+
+<!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
-> | company_name    | company_email_address         | salutation_name |
-> |:----------------|:------------------------------|:----------------|
-> | Fractal Factory | billiam@fractal-factory.co.uk | William         |
-> | ...             | ...                           | ...             |
+> | company_name      | company_email_address    | salutation_name |
+> |:------------------|:-------------------------|:----------------|
+> | Straw Hat Pirates | king.luffy@strawhats.com | Luffy           |
+>
+--8<-- "docs/challenging-sql-problems/problems/bronze/personalised-customer-emails--sample-output.sql"
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**

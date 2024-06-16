@@ -56,16 +56,15 @@ A worked example is provided below to help illustrate the loan calculations.
 ---
 
 <!-- prettier-ignore -->
+>? INFO: **Sample input**
+>
+> Plot an image of the Mandelbrot set on a 21x21 grid.
+
+<!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
-> The 21x21 version of the set is:
 >
 > ```
->
->
->
->
->
 >           •
 >          •
 >          ••
@@ -77,12 +76,9 @@ A worked example is provided below to help illustrate the loan calculations.
 >          ••
 >          •
 >           •
->
->
->
->
->
 > ```
+>
+--8<-- "docs/challenging-sql-problems/problems/silver/mandelbrot-set--sample-output.sql"
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**
