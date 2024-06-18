@@ -16,7 +16,7 @@
 >
 > The output should have one row for each churned user, with the columns:
 >
-> - `user_id` as the name of the company
+> - `user_id`
 > - `days_active_last_week` as the number of days the user was active in the last week
 >
 > Order the output by `user_id`.
@@ -28,7 +28,7 @@
 
 The solution can be found at:
 
-- [personalised-customer-emails.md](../../solutions/bronze/personalised-customer-emails.md)
+- [customer-churn.md](../../solutions/bronze/customer-churn.md)
 
 A worked example is provided below to help illustrate the datelist int encoding.
 

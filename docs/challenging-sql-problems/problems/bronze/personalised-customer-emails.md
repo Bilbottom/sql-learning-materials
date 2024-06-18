@@ -50,8 +50,8 @@ The solution can be found at:
 >
 > | parent_customer_id | child_customer_id | relationship_type |
 > |-------------------:|------------------:|:------------------|
-> |                  1 |                 2 | Director          |
-> |                  1 |                 3 | Director          |
+> |                  1 |                 2 | Captain           |
+> |                  1 |                 3 | Swordsman         |
 >
 --8<-- "docs/challenging-sql-problems/problems/bronze/personalised-customer-emails--sample-input.sql"
 

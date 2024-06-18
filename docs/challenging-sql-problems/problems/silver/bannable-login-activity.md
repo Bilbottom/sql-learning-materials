@@ -49,7 +49,7 @@ The solution can be found at:
 > |       12 |       1 | 2024-01-03 03:01:00 | login failed |
 > |       13 |       1 | 2024-01-03 03:02:00 | login failed |
 >
---8<-- "docs/challenging-sql-problems/problems/silver/funnel-analytics--sample-input.sql"
+--8<-- "docs/challenging-sql-problems/problems/silver/bannable-login-activity--sample-input.sql"
 
 <!-- prettier-ignore -->
 >? INFO: **Sample output**
@@ -58,7 +58,7 @@ The solution can be found at:
 > |--------:|:-----------|
 > |       1 | 2024-01-03 |
 >
---8<-- "docs/challenging-sql-problems/problems/silver/funnel-analytics--sample-output.sql"
+--8<-- "docs/challenging-sql-problems/problems/silver/bannable-login-activity--sample-output.sql"
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**
