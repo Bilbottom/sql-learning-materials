@@ -20,7 +20,8 @@ As long as you know your database features and query patterns, these are fairly 
 2. [Personalised customer emails](problems/bronze/personalised-customer-emails.md)
 3. [Suspicious login activity](problems/bronze/suspicious-login-activity.md)
 4. [UK bank holidays](problems/bronze/uk-bank-holidays.md)
-5. [Fibonacci sequence](problems/bronze/fibonacci-sequence.md)
+5. [Customer churn](problems/bronze/customer-churn.md)
+6. [Fibonacci sequence](problems/bronze/fibonacci-sequence.md)
 
 ### ⚪ Silver Tier
 
@@ -29,10 +30,11 @@ These require a bit more thinking.
 1. [Funnel analytics](problems/silver/funnel-analytics.md)
 2. [Bannable login activity](problems/silver/bannable-login-activity.md)
 3. [Bus routes](problems/silver/bus-routes.md)
-4. [Region precipitation](problems/silver/region-precipitation.md)
-5. [Predicting values](problems/silver/predicting-values.md)
-6. [Mandelbrot set](problems/silver/mandelbrot-set.md)
-7. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
+4. [Decoding datelist ints](problems/silver/decoding-datelist-ints.md)
+5. [Region precipitation](problems/silver/region-precipitation.md)
+6. [Predicting values](problems/silver/predicting-values.md)
+7. [Mandelbrot set](problems/silver/mandelbrot-set.md)
+8. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
 
 ### 🟡 Gold Tier
 

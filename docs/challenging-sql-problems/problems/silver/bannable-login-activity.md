@@ -31,13 +31,34 @@ The solution can be found at:
 ---
 
 <!-- prettier-ignore -->
+>? INFO: **Sample input**
+>
+> | event_id | user_id | event_datetime      | event_type   |
+> |---------:|--------:|:--------------------|:-------------|
+> |        1 |       1 | 2024-01-01 03:00:00 | login failed |
+> |        2 |       1 | 2024-01-01 03:01:00 | login failed |
+> |        3 |       1 | 2024-01-01 03:02:00 | login failed |
+> |        4 |       1 | 2024-01-01 11:00:00 | login        |
+> |        5 |       1 | 2024-01-01 12:00:00 | logout       |
+> |        6 |       2 | 2024-01-01 15:00:00 | login        |
+> |        7 |       2 | 2024-01-01 18:00:00 | logout       |
+> |        8 |       1 | 2024-01-02 03:00:00 | login failed |
+> |        9 |       1 | 2024-01-02 03:01:00 | login failed |
+> |       10 |       1 | 2024-01-02 03:02:00 | login failed |
+> |       11 |       1 | 2024-01-03 03:00:00 | login failed |
+> |       12 |       1 | 2024-01-03 03:01:00 | login failed |
+> |       13 |       1 | 2024-01-03 03:02:00 | login failed |
+>
+--8<-- "docs/challenging-sql-problems/problems/silver/bannable-login-activity--sample-input.sql"
+
+<!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
-> The row below is an example to show what the output should look like, but it _is not_ in the solution.
+> | user_id | ban_date   |
+> |--------:|:-----------|
+> |       1 | 2024-01-03 |
 >
-> | user_id |   ban_date |
-> |:--------|-----------:|
-> | 4       | 2024-01-01 |
+--8<-- "docs/challenging-sql-problems/problems/silver/bannable-login-activity--sample-output.sql"
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**

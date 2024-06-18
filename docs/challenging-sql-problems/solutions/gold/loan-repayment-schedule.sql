@@ -1,6 +1,6 @@
 ```sql
-select *
-from values
+solution(loan_id, repayment_number, repayment_date, interest, principal, total, balance) as (
+    values
     (1,  1, '2024-02-01', 1600.00, 12682.06, 14282.06, 67317.94),
     (1,  2, '2024-03-01', 1346.36, 12935.70, 14282.06, 54382.24),
     (1,  3, '2024-04-01', 1087.64, 13194.42, 14282.06, 41187.82),
@@ -43,5 +43,5 @@ from values
     (3, 22, '2025-11-03',  138.44,  4568.91,  4707.35,  9275.28),
     (3, 23, '2025-12-03',   92.75,  4614.60,  4707.35,  4660.68),
     (3, 24, '2026-01-03',   46.61,  4660.68,  4707.29,     0.00)
-as solution(loan_id, repayment_number, repayment_date, interest, principal, total, balance)
+)
 ```

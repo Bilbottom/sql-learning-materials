@@ -45,19 +45,35 @@ The solution can be found at:
 ---
 
 <!-- prettier-ignore -->
+>? INFO: **Sample input**
+>
+> | event_id | event_date | mortgage_id | stage                |
+> |---------:|:-----------|------------:|:---------------------|
+> |        1 | 2024-01-02 |           1 | full application     |
+> |        2 | 2024-01-06 |           1 | decision             |
+> |        3 | 2024-01-12 |           1 | documentation        |
+> |        4 | 2024-01-14 |           1 | valuation inspection |
+> |        5 | 2024-01-27 |           1 | valuation made       |
+> |        6 | 2024-02-02 |           1 | valuation submitted  |
+> |        7 | 2024-04-26 |           1 | solicitation         |
+>
+--8<-- "docs/challenging-sql-problems/problems/silver/funnel-analytics--sample-input.sql"
+
+<!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
 > | cohort  | stage                | mortgages | step_rate | total_rate |
 > |:--------|:---------------------|----------:|----------:|-----------:|
-> | 2024-01 | full application     |         4 |    100.00 |     100.00 |
-> | 2024-01 | decision             |         4 |    100.00 |     100.00 |
-> | 2024-01 | documentation        |         3 |     75.00 |      75.00 |
-> | 2024-01 | valuation inspection |         3 |    100.00 |      75.00 |
-> | 2024-01 | valuation made       |         3 |    100.00 |      75.00 |
-> | 2024-01 | valuation submitted  |         3 |    100.00 |      75.00 |
-> | 2024-01 | solicitation         |         1 |     33.33 |      25.00 |
-> | 2024-01 | funds released       |         1 |    100.00 |      25.00 |
-> | ...     | ...                  |       ... |       ... |        ... |
+> | 2024-01 | full application     |         1 |       100 |        100 |
+> | 2024-01 | decision             |         1 |       100 |        100 |
+> | 2024-01 | documentation        |         1 |       100 |        100 |
+> | 2024-01 | valuation inspection |         1 |       100 |        100 |
+> | 2024-01 | valuation made       |         1 |       100 |        100 |
+> | 2024-01 | valuation submitted  |         1 |       100 |        100 |
+> | 2024-01 | solicitation         |         1 |       100 |        100 |
+> | 2024-01 | funds released       |         0 |         0 |          0 |
+>
+--8<-- "docs/challenging-sql-problems/problems/silver/funnel-analytics--sample-output.sql"
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**

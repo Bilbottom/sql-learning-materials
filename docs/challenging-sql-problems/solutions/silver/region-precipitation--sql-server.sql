@@ -25,7 +25,7 @@ region_by_month as (
         precipitation,
         substring(grid_id, 1, -1 + charindex('-', grid_id)) as region,
         substring(grid_id, 1 + charindex('-', grid_id), 99) as location
-    from #precipitation
+    from precipitation
     unpivot (
         precipitation
         for month_name in (

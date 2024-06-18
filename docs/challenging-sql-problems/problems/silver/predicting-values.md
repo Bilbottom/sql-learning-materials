@@ -34,12 +34,28 @@ The solution can be found at:
 ---
 
 <!-- prettier-ignore -->
+>? INFO: **Sample input**
+>
+> Use linear regression to predict the `y` values for `x` values `6` and `8`, using the following datasets:
+>
+> | dataset_1__x | dataset_1__y | dataset_2__x | dataset_2__y |
+> |:-------------|:-------------|:-------------|:-------------|
+> | 1            | 2.00         | 1            | 9.12         |
+> | 2            | 4.00         | 3            | 31.18        |
+> | 3            | 6.00         | 5            | 55.27        |
+> | 4            | 8.00         | 7            | 61.12        |
+>
+--8<-- "docs/challenging-sql-problems/problems/silver/predicting-values--sample-input.sql"
+
+<!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
-> |   x | dataset_1 | dataset_2 | dataset_3 | dataset_4 |
-> |----:|----------:|----------:|----------:|----------:|
-> |  16 |      11.0 |      11.0 |      11.0 |      11.0 |
-> | ... |       ... |       ... |       ... |       ... |
+> |    x | dataset_1 | dataset_2 |
+> |-----:|----------:|----------:|
+> |    6 |        12 |      57.2 |
+> |    8 |        16 |      75.2 |
+>
+--8<-- "docs/challenging-sql-problems/problems/silver/predicting-values--sample-output.sql"
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**

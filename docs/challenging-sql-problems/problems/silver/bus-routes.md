@@ -33,12 +33,33 @@ The solution can be found at:
 ---
 
 <!-- prettier-ignore -->
+>? INFO: **Sample input**
+>
+> Compute the full route for each bus, using the following stops as the first stop for each bus:
+>
+> - `Stop A` for `bus_id = 1`
+> - `First Stop` for `bus_id = 2`
+>
+> | bus_id | from_stop     | to_stop       |
+> |-------:|:--------------|:--------------|
+> |      1 | Stop A        | Stop B        |
+> |      1 | Stop B        | Stop C        |
+> |      1 | Stop C        | Stop A        |
+> |      2 | First Street  | Second Street |
+> |      2 | Second Street | Third Street  |
+> |      2 | Third Street  | First Street  |
+>
+--8<-- "docs/challenging-sql-problems/problems/silver/bus-routes--sample-input.sql"
+
+<!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
-> | bus_id | route                                                                                                   |
-> |-------:|:--------------------------------------------------------------------------------------------------------|
-> |      1 | Old Street - Cavendish Road - Bakers March - West Quay Stop - Goose Green - Crown Street - Leather Lane |
-> |    ... | ...                                                                                                     |
+> |  bus_id | route                                       |
+> |--------:|:--------------------------------------------|
+> |       1 | Stop A - Stop B - Stop C                    |
+> |       2 | First Street - Second Street - Third Street |
+>
+--8<-- "docs/challenging-sql-problems/problems/silver/bus-routes--sample-output.sql"
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**

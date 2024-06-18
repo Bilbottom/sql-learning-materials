@@ -41,12 +41,33 @@ The solution can be found at:
 ---
 
 <!-- prettier-ignore -->
+>? INFO: **Sample input**
+>
+> **Routes Schedule**
+>
+> | schedule_id | mode_of_transport | from_location  | to_location       | earliest_departure | latest_departure | frequency  | duration |  cost |
+> |------------:|:------------------|:---------------|:------------------|:-------------------|:-----------------|:-----------|:---------|------:|
+> |           1 | train             | London Gatwick | London St Pancras | 09:00:00 +00:00    | 21:00:00 +00:00  | 01:00:00   | 00:30:00 | 12.25 |
+> |           2 | bus               | London Gatwick | London St Pancras | 06:00:00 +00:00    | 06:00:00 +00:00  | _null_     | 03:30:00 |  8.50 |
+>
+> **Routes Schedule**
+>
+> | route_id | mode_of_transport | from_location     | to_location    | departure_datetime | arrival_datetime  |   cost |
+> |---------:|:------------------|:------------------|:---------------|:-------------------|:------------------|-------:|
+> |        1 | boat              | New York          | London Gatwick | 2024-01-01T09:30Z  | 2024-01-01T22:00Z | 179.00 |
+> |        2 | plane             | New York          | London Gatwick | 2024-01-01T23:00Z  | 2024-01-02T10:45Z | 125.00 |
+> |        3 | boat              | London St Pancras | Paris          | 2024-01-02T13:00Z  | 2024-01-02T13:30Z |  75.00 |
+>
+--8<-- "docs/challenging-sql-problems/problems/gold/travel-plans--sample-input.sql"
+
+<!-- prettier-ignore -->
 >? INFO: **Sample output**
 >
-> | route            | departure_datetime_utc | arrival_datetime_utc | duration |   cost |
-> |:-----------------|:-----------------------|:---------------------|:---------|-------:|
-> | New York - Paris | 2024-01-01 23:00:00    | 2024-01-02 16:45:00  | 17:45:00 | 279.00 |
-> | ...              | ...                    | ...                  | ...      |    ... |
+> | route                                                 | departure_datetime_utc | arrival_datetime_utc | duration |   cost |
+> |:------------------------------------------------------|:-----------------------|:---------------------|:---------|-------:|
+> | New York - London Gatwick - London St Pancras - Paris | 2024-01-01 23:00:00    | 2024-01-02 13:30:00  | 14:30:00 | 212.25 |
+>
+--8<-- "docs/challenging-sql-problems/problems/gold/travel-plans--sample-output.sql"
 
 <!-- prettier-ignore -->
 >? TIP: **Hint 1**

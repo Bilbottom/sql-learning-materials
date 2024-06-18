@@ -80,11 +80,13 @@ nav:
               - challenging-sql-problems/problems/bronze/personalised-customer-emails.md #  string similarity
               - challenging-sql-problems/problems/bronze/suspicious-login-activity.md #  window functions (gaps and islands)
               - challenging-sql-problems/problems/bronze/uk-bank-holidays.md #  unpivot and unnest
+              - challenging-sql-problems/problems/bronze/customer-churn.md #  bit-shifting
               - challenging-sql-problems/problems/bronze/fibonacci-sequence.md #  recursive CTE
           - ⚪ Silver Tier:
               - challenging-sql-problems/problems/silver/funnel-analytics.md #  custom axis
               - challenging-sql-problems/problems/silver/bannable-login-activity.md #  window functions (gaps and islands, range between)
               - challenging-sql-problems/problems/silver/bus-routes.md #  recursive CTE
+              - challenging-sql-problems/problems/silver/decoding-datelist-ints.md #  recursive CTE, bit-shifting
               - challenging-sql-problems/problems/silver/region-precipitation.md #  unpivot and rollup
               - challenging-sql-problems/problems/silver/predicting-values.md #  unpivot, regr, and pivot
               - challenging-sql-problems/problems/silver/mandelbrot-set.md #  recursive CTE
@@ -94,18 +96,20 @@ nav:
               - challenging-sql-problems/problems/gold/travel-plans.md #  recursive CTEs
       - Solutions:
           - 🟤 Bronze Tier:
-              - challenging-sql-problems/solutions/bronze/fibonacci-sequence.md
               - challenging-sql-problems/solutions/bronze/temperature-anomaly-detection.md
               - challenging-sql-problems/solutions/bronze/personalised-customer-emails.md
               - challenging-sql-problems/solutions/bronze/suspicious-login-activity.md
               - challenging-sql-problems/solutions/bronze/uk-bank-holidays.md
+              - challenging-sql-problems/solutions/bronze/fibonacci-sequence.md
           - ⚪ Silver Tier:
               - challenging-sql-problems/solutions/silver/funnel-analytics.md
               - challenging-sql-problems/solutions/silver/bannable-login-activity.md
               - challenging-sql-problems/solutions/silver/bus-routes.md
+              - challenging-sql-problems/solutions/silver/decoding-datelist-ints.md
               - challenging-sql-problems/solutions/silver/region-precipitation.md
               - challenging-sql-problems/solutions/silver/predicting-values.md
               - challenging-sql-problems/solutions/silver/mandelbrot-set.md
+              - challenging-sql-problems/solutions/silver/customer-churn.md
               - challenging-sql-problems/solutions/silver/customer-sales-running-totals.md
           - 🟡 Gold Tier:
               - challenging-sql-problems/solutions/gold/loan-repayment-schedule.md
