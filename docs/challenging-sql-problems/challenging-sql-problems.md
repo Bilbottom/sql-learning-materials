@@ -19,9 +19,10 @@ As long as you know your database features and query patterns, these are fairly 
 1. [Temperature anomaly detection](problems/bronze/temperature-anomaly-detection.md)
 2. [Personalised customer emails](problems/bronze/personalised-customer-emails.md)
 3. [Suspicious login activity](problems/bronze/suspicious-login-activity.md)
-4. [Customer churn](problems/bronze/customer-churn.md)
-5. [Fibonacci sequence](problems/bronze/fibonacci-sequence.md)
-6. [UK bank holidays](problems/bronze/uk-bank-holidays.md)
+4. [Combining dimensions](problems/bronze/combining-dimensions.md)
+5. [Customer churn](problems/bronze/customer-churn.md)
+6. [Fibonacci sequence](problems/bronze/fibonacci-sequence.md)
+7. [UK bank holidays](problems/bronze/uk-bank-holidays.md)
 
 ### ⚪ Silver Tier
 
