@@ -29,6 +29,8 @@
 > - `step_rate` as the percentage of mortgages that reached the stage compared to the previous stage
 > - `total_rate` as the percentage of mortgages that reached the stage compared to the first stage
 >
+> Round the `step_rate` and `total_rate` to two decimal places.
+>
 > Note that each cohort should have _all_ the stages, even if there are no mortgages that reached that stage -- the `mortgages` column should be `0` in that case.
 >
 > Order the output by `cohort` and _the `stage` order_ (e.g. `full application` should come before `decision`, and so on).
@@ -64,14 +66,14 @@ The solution can be found at:
 >
 > | cohort  | stage                | mortgages | step_rate | total_rate |
 > |:--------|:---------------------|----------:|----------:|-----------:|
-> | 2024-01 | full application     |         1 |       100 |        100 |
-> | 2024-01 | decision             |         1 |       100 |        100 |
-> | 2024-01 | documentation        |         1 |       100 |        100 |
-> | 2024-01 | valuation inspection |         1 |       100 |        100 |
-> | 2024-01 | valuation made       |         1 |       100 |        100 |
-> | 2024-01 | valuation submitted  |         1 |       100 |        100 |
-> | 2024-01 | solicitation         |         1 |       100 |        100 |
-> | 2024-01 | funds released       |         0 |         0 |          0 |
+> | 2024-01 | full application     |         1 |    100.00 |     100.00 |
+> | 2024-01 | decision             |         1 |    100.00 |     100.00 |
+> | 2024-01 | documentation        |         1 |    100.00 |     100.00 |
+> | 2024-01 | valuation inspection |         1 |    100.00 |     100.00 |
+> | 2024-01 | valuation made       |         1 |    100.00 |     100.00 |
+> | 2024-01 | valuation submitted  |         1 |    100.00 |     100.00 |
+> | 2024-01 | solicitation         |         1 |    100.00 |     100.00 |
+> | 2024-01 | funds released       |         0 |      0.00 |       0.00 |
 >
 --8<-- "docs/challenging-sql-problems/problems/silver/funnel-analytics--sample-output.sql"
 

@@ -6,7 +6,7 @@
 
 > [!QUESTION]
 >
-> Plot an image of the Mandelbrot set.
+> Plot an image of the [Mandelbrot set](https://en.wikipedia.org/wiki/Mandelbrot_set).
 >
 > Start with a 51x51 grid of points ranging from -2 to 2 on both the x and y axes. A sample of some points in the grid are:
 >
@@ -51,7 +51,7 @@ The solution can be found at:
 
 - [mandelbrot-set.md](../../solutions/silver/mandelbrot-set.md)
 
-A worked example is provided below to help illustrate the loan calculations.
+A worked example is provided below to help illustrate the Mandelbrot set calculations.
 
 ---
 

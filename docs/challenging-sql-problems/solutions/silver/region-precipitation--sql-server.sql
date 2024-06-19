@@ -49,7 +49,7 @@ average_precipitation as (
     select
         region,
         location,
-        grouping_id(region, location) as group_id,  /* 0 - region, location; 1 - region; 3 - total */
+        grouping_id(region, location) as group_id,  /* 0 - region & location;  1 - region;  3 - total */
         avg(precipitation) as average_precipitation
     from region_by_month
     group by rollup (region, location)

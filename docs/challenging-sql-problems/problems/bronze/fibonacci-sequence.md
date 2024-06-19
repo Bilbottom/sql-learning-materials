@@ -61,4 +61,4 @@ The solution can be found at:
 <!-- prettier-ignore -->
 >? TIP: **Hint 2**
 >
-> Use the columns `n`, `f_n`, and `f_m` to keep track of the current term, the current Fibonacci number, and the previous Fibonacci number.
+> Use the columns `n`, `f_n`, and `f_m` to keep track of the current term, the current Fibonacci number, and the previous Fibonacci number, respectively.

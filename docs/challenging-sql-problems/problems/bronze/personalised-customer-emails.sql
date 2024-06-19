@@ -1,9 +1,9 @@
 ```sql
 create table customers (
-    customer_id int primary key,
-    full_name varchar not null,
-    first_name varchar,
-    last_name varchar,
+    customer_id   int primary key,
+    full_name     varchar not null,
+    first_name    varchar,
+    last_name     varchar,
     email_address varchar
 );
 insert into customers
@@ -25,8 +25,8 @@ values
 
 create table customer_relationships (
     parent_customer_id int references customers(customer_id),
-    child_customer_id int references customers(customer_id),
-    relationship_type varchar not null,
+    child_customer_id  int references customers(customer_id),
+    relationship_type  varchar not null,
     primary key (parent_customer_id, child_customer_id)
 );
 insert into customer_relationships

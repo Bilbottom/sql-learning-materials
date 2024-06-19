@@ -1,8 +1,8 @@
 ```sql
 create table bus_stops (
-    bus_id int,
+    bus_id    int,
     from_stop varchar,
-    to_stop varchar,
+    to_stop   varchar,
     primary key (bus_id, from_stop)
 );
 insert into bus_stops

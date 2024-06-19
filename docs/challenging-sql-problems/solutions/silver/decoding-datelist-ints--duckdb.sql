@@ -5,7 +5,7 @@ axis(active_date, max_, step) as (
         select
             (select last_update from user_history limit 1),
             (select max(log2(activity_history)) from user_history),
-            1 as step
+            1
     union all
         select active_date - 1, max_, step + 1
         from axis
