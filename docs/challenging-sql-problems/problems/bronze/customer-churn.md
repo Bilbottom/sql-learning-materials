@@ -105,7 +105,6 @@ We can apply the same logic to the other bits:
 └-------------- 2024-02-24 (active)
 ```
 
-└─
 Since there are no more bits on the left, we can assume that the user was inactive on those days.
 
 This user is therefore not a churned user since they were active at least once in the last 7 days.
@@ -114,7 +113,7 @@ This user is therefore not a churned user since they were active at least once i
 
 The `activity_history` for user 2 is `2688`, which in binary is `101010000000`.
 
-We can expand the binary representation to understand the activity again:
+We can expand the binary representation to understand the activity:
 
 ```
 1 0 1 0 1 0 0 0 0 0 0 0
@@ -133,13 +132,13 @@ We can expand the binary representation to understand the activity again:
 └------------------------ 2024-02-19 (active)
 ```
 
-User 2 _has_ churned user since they were not active in the last 7 days (between `2024-02-24` and `2024-03-01`) but were active at least once in the 7 days before that.
+User 2 _has_ churned since they were not active in the last 7 days (between `2024-02-24` and `2024-03-01`) but were active at least once in the 7 days before that.
 
 #### User 3
 
 The `activity_history` for user 3 is `13144`, which in binary is `11001101011000`.
 
-We can expand the binary representation to understand the activity again:
+Again, we can expand the binary representation to understand the activity:
 
 ```
 1 1 0 0 1 1 0 1 0 1 1 0 0 0

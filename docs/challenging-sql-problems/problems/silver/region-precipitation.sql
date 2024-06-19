@@ -1,18 +1,18 @@
 ```sql
 create table precipitation (
-    grid_id varchar primary key,
-    pr_january numeric(14, 9),
-    pr_february numeric(14, 9),
-    pr_march numeric(14, 9),
-    pr_april numeric(14, 9),
-    pr_may numeric(14, 9),
-    pr_june numeric(14, 9),
-    pr_july numeric(14, 9),
-    pr_august numeric(14, 9),
+    grid_id      varchar primary key,
+    pr_january   numeric(14, 9),
+    pr_february  numeric(14, 9),
+    pr_march     numeric(14, 9),
+    pr_april     numeric(14, 9),
+    pr_may       numeric(14, 9),
+    pr_june      numeric(14, 9),
+    pr_july      numeric(14, 9),
+    pr_august    numeric(14, 9),
     pr_september numeric(14, 9),
-    pr_october numeric(14, 9),
-    pr_november numeric(14, 9),
-    pr_december numeric(14, 9)
+    pr_october   numeric(14, 9),
+    pr_november  numeric(14, 9),
+    pr_december  numeric(14, 9)
 );
 insert into precipitation
 values

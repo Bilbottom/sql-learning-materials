@@ -16,7 +16,7 @@ Regardless of the database, the result set should look like:
 |  17 |      11.5 |      11.5 |      11.5 |      11.5 |
 |  18 |      12.0 |      12.0 |      12.0 |      12.0 |
 
-This is one of the interesting things about Anscombe's quartet (and is the reason Anscombe created it): the four datasets have the same summary statistics, but look very different when plotted!
+This is one of the interesting things about Anscombe's quartet (and is the reason Anscombe created it): the four datasets have the same line of best fit, but look very different when plotted!
 
 <details>
 <summary>Expand for the DDL</summary>

@@ -2,9 +2,9 @@
 
 > [!SUCCESS] Scenario
 >
-> You're helping a client plan a trip from New York to Paris, and they want you to find the fastest and cheapest route.
+> You're helping a client plan a trip from New York to Paris, and they want you to find the fastest and cheapest routes.
 >
-> They have collected journey information into two tables:
+> They have collected journey information for routes that they are happy to take into two tables:
 >
 > - `routes_timetable`
 > - `routes_schedule`
@@ -17,7 +17,7 @@
 >
 > Given the tables that your client has provided, find the fastest and cheapest route from New York to Paris, leaving after `2024-01-01 12:00:00-05:00`.
 >
-> Give a minimum of 30 minutes and a maximum of 2 hours for "interchange" time (the time between arrival and departure at the same location). All costs are in the same currency (with no currency specified by the client).
+> Give a minimum of 30 minutes and a maximum of 6 hours for "interchange" time, which is the time between arrival and departure at the same location. All costs are in the same currency (with no currency specified by the client).
 >
 > The output should have at most two rows (the fastest/cheapest routes, which may be the same route), with the columns:
 >
@@ -50,7 +50,7 @@ The solution can be found at:
 > |           1 | train             | London Gatwick | London St Pancras | 09:00:00 +00:00    | 21:00:00 +00:00  | 01:00:00   | 00:30:00 | 12.25 |
 > |           2 | bus               | London Gatwick | London St Pancras | 06:00:00 +00:00    | 06:00:00 +00:00  | _null_     | 03:30:00 |  8.50 |
 >
-> **Routes Schedule**
+> **Routes Timetable**
 >
 > | route_id | mode_of_transport | from_location     | to_location    | departure_datetime | arrival_datetime  |   cost |
 > |---------:|:------------------|:------------------|:---------------|:-------------------|:------------------|-------:|

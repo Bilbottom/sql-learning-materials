@@ -17,7 +17,7 @@
 > - `repayment_date` as the date of the repayment
 > - `interest` as the interest component of the repayment
 > - `principal` as the principal component of the repayment
-> - `total` as the total repayment
+> - `total` as the total value of the repayment
 > - `balance` as the outstanding balance _after_ the repayment
 >
 > Order the output by `loan_id` and `repayment_number`.

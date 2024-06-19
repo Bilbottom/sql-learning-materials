@@ -10,6 +10,8 @@
 >
 > The number of rows to show in the output should be the number of days in the `activity_history` column for the user with the most days.
 >
+> Just like in the [customer churn](../bronze/customer-churn.md) problem, the `last_update` column will always have the same date for all users.
+>
 > The output should have a single row per day with the columns:
 >
 > - `active_date` as the date of the activity, starting from the `last_update` date
