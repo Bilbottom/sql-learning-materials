@@ -5,6 +5,7 @@
 # url = ""
 # destination = ""
 # database = ""  (optional)
+# skip = false  (optional)
 #
 # The `destination` and `database` are relative to the project root.
 #
@@ -38,4 +39,9 @@ database = "src/resources/data/sqlite/loan.db"
 [duckdb.loans]
 url = "https://raw.githubusercontent.com/Bilbottom/sql-models/v0.0.1/sql_models/loans/simple-loan-database.sql"
 destination = "src/resources/data/duckdb/simple-loan-database.sql"
-database = "src/resources/data/duckdb/loan.db"
+database = "src/resources/data/duckdb/duckdb.db:loans"
+
+[duckdb.website]
+url = "https://raw.githubusercontent.com/Bilbottom/sql-models/bf46eeb1f7979f8af14b3930905887b4fcad7e10/sql_models/website-backend/website.sql"
+destination = "src/resources/data/duckdb/simple-website-backend.sql"
+database = "src/resources/data/duckdb/duckdb.db:website"

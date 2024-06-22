@@ -76,10 +76,10 @@ The credentials for the databases are not sensitive and are defined in the `dock
 
 The SQLite and DuckDB databases are just files, so using Docker for these is overkill -- when you run `python -m resources`, the files for these databases will be created in your file system. The file locations are defined in the `resources.toml` config file (you can override them there if you want) and are:
 
-| Database | File location                       |
-| -------- | ----------------------------------- |
-| SQLite   | `src/resources/data/sqlite/loan.db` |
-| DuckDB   | `src/resources/data/duckdb/loan.db` |
+| Database | File location                         |
+| -------- | ------------------------------------- |
+| SQLite   | `src/resources/data/sqlite/loan.db`   |
+| DuckDB   | `src/resources/data/duckdb/duckdb.db` |
 
 The Metabase instance will be launched on [`localhost:3000`](http://localhost:3000) and you will have to configure your own login details.
 
