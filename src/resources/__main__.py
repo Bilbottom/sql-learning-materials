@@ -64,8 +64,15 @@ def _create_database__duckdb(
     """
     import duckdb
 
-    logging.info(f"Creating DuckDB database '{database_file}'...")
-    duckdb.connect(str(database_file)).execute(sql_file.read_text())
+    database, schema = database_file.name.split(":")
+
+    logging.info(f"Using DuckDB database '{database}'...")
+    conn = duckdb.connect(str(database_file.parent / database))
+
+    logging.info(f"Creating DuckDB schema '{schema}'...")
+    conn.execute(f"drop schema if exists {schema} cascade")
+    conn.execute(f"create schema {schema}")
+    conn.execute(f"use {schema}; {sql_file.read_text()}")
 
 
 class DatabaseType(enum.StrEnum):
@@ -102,29 +109,37 @@ class Resource:
     """
 
     type: DatabaseType
+    name: str
     url: str
     destination: pathlib.Path
     database_file: pathlib.Path | None
+    skip: bool
 
     def __init__(
         self,
         type_: DatabaseType,
+        name: str,
         url: str,
         destination: pathlib.Path,
         database_file: pathlib.Path | None,
+        skip: bool | False,
     ) -> None:
         self.type = type_
+        self.name = name
         self.url = url
         self.destination = destination
         self.database_file = database_file
+        self.skip = skip
 
     def __str__(self):
         return (
             f"Resource("
             f"type_='{self.type}', "
+            f"name='{self.name}', "
             f"url='{self.url}', "
             f"destination='{self.destination}', "
-            f"database='{self.database_file}'"
+            f"database='{self.database_file}', "
+            f"skip={self.skip}"
             f")"
         )
 
@@ -135,11 +150,13 @@ class Resource:
     def from_dict(
         cls,
         type_: DatabaseType,
-        details: dict[str, str],
+        resource: tuple[str, dict[str, str]],
         destination_root: pathlib.Path,
     ) -> Resource:
+        name, details = resource
         return cls(
             type_=type_,
+            name=name,
             url=details["url"],
             destination=destination_root / details["destination"],
             database_file=(
@@ -147,6 +164,7 @@ class Resource:
                 if "database" in details
                 else None
             ),
+            skip=details.get("skip"),
         )
 
     def get_resource(self) -> None:
@@ -182,9 +200,9 @@ def _open_resource_config(
     config = tomllib.loads(filename.read_text())
 
     return [
-        Resource.from_dict(DatabaseType(type_), details, destination_root)
+        Resource.from_dict(DatabaseType(type_), resource, destination_root)
         for type_, resources in config.items()
-        for details in resources.values()
+        for resource in resources.items()
     ]
 
 
@@ -194,6 +212,9 @@ def main() -> None:
     """
     resources = _open_resource_config(SRC / "resources/resources.toml")
     for resource in resources:
+        if resource.skip:
+            logging.info(f"Skipping '{resource.type}.{resource.name}'...")
+            continue
         resource.get_resource()
         resource.create_database()
 

@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/mssql.Dockerfile
-    image: mssql
+    image: sql-learning-materials/mssql
     container_name: SQL-Server
     environment:
       ACCEPT_EULA: "Y"
@@ -15,7 +15,7 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/postgres.Dockerfile
-    image: postgres
+    image: sql-learning-materials/postgres
     container_name: PostgreSQL
     environment:
       POSTGRES_PASSWORD: Test@12345

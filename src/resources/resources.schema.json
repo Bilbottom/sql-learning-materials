@@ -25,6 +25,11 @@
             "database": {
               "type": "string",
               "description": "Location of the database file."
+            },
+            "skip": {
+              "type": "boolean",
+              "description": "Whether to skip the resource.",
+              "default": false
             }
           },
           "required": ["url", "destination"],
