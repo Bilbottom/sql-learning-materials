@@ -2,7 +2,7 @@
 
 > [!SUCCESS] Scenario
 >
-> The same company from the [suspicious login activity](../bronze/suspicious-login-activity.md) question have decided to take a more proactive approach to their security.
+> The same company from the [suspicious login activity](../bronze/suspicious-login-activity.md) problem have decided to take a more proactive approach to their security.
 >
 > If a user has at least 3 consecutive `login failed` attempts in a day for 3 consecutive days, they are automatically banned.
 >
