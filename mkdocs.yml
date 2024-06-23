@@ -77,9 +77,10 @@ nav:
       - Problems:
           - 🟤 Bronze Tier:
               - challenging-sql-problems/problems/bronze/temperature-anomaly-detection.md #  window functions
+              - challenging-sql-problems/problems/bronze/outstanding-invoices.md #  asof join
               - challenging-sql-problems/problems/bronze/personalised-customer-emails.md #  string similarity
               - challenging-sql-problems/problems/bronze/suspicious-login-activity.md #  window functions (gaps and islands)
-              - challenging-sql-problems/problems/bronze/combining-dimensions.md #  asof join
+              - challenging-sql-problems/problems/bronze/combining-dimensions.md #  asof join, custom axis
               - challenging-sql-problems/problems/bronze/customer-churn.md #  bit-shifting
               - challenging-sql-problems/problems/bronze/fibonacci-sequence.md #  recursive CTE
               - challenging-sql-problems/problems/bronze/uk-bank-holidays.md #  unpivot and unnest
@@ -91,6 +92,7 @@ nav:
               - challenging-sql-problems/problems/silver/region-precipitation.md #  unpivot and rollup
               - challenging-sql-problems/problems/silver/predicting-values.md #  unpivot, regr, and pivot
               - challenging-sql-problems/problems/silver/mandelbrot-set.md #  recursive CTE
+              - challenging-sql-problems/problems/silver/encoding-datelist-ints.md #  window functions (gaps and islands), correlated subquery, custom axis
               - challenging-sql-problems/problems/silver/customer-sales-running-totals.md #  window functions
           - 🟡 Gold Tier:
               - challenging-sql-problems/problems/gold/loan-repayment-schedule.md #  recursive CTE
@@ -98,6 +100,7 @@ nav:
       - Solutions:
           - 🟤 Bronze Tier:
               - challenging-sql-problems/solutions/bronze/temperature-anomaly-detection.md
+              - challenging-sql-problems/solutions/bronze/outstanding-invoices.md
               - challenging-sql-problems/solutions/bronze/personalised-customer-emails.md
               - challenging-sql-problems/solutions/bronze/suspicious-login-activity.md
               - challenging-sql-problems/solutions/bronze/combining-dimensions.md
@@ -112,6 +115,7 @@ nav:
               - challenging-sql-problems/solutions/silver/region-precipitation.md
               - challenging-sql-problems/solutions/silver/predicting-values.md
               - challenging-sql-problems/solutions/silver/mandelbrot-set.md
+              - challenging-sql-problems/solutions/silver/encoding-datelist-ints.md
               - challenging-sql-problems/solutions/silver/customer-sales-running-totals.md
           - 🟡 Gold Tier:
               - challenging-sql-problems/solutions/gold/loan-repayment-schedule.md

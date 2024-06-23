@@ -1,4 +1,4 @@
-# Challenging SQL questions
+# Challenging SQL problems
 
 > [!WARNING]
 >
@@ -17,12 +17,13 @@
 As long as you know your database features and query patterns, these are fairly straightforward.
 
 1. [Temperature anomaly detection](problems/bronze/temperature-anomaly-detection.md)
-2. [Personalised customer emails](problems/bronze/personalised-customer-emails.md)
-3. [Suspicious login activity](problems/bronze/suspicious-login-activity.md)
-4. [Combining dimensions](problems/bronze/combining-dimensions.md)
-5. [Customer churn](problems/bronze/customer-churn.md)
-6. [Fibonacci sequence](problems/bronze/fibonacci-sequence.md)
-7. [UK bank holidays](problems/bronze/uk-bank-holidays.md)
+2. [Outstanding invoices](problems/bronze/outstanding-invoices.md)
+3. [Personalised customer emails](problems/bronze/personalised-customer-emails.md)
+4. [Suspicious login activity](problems/bronze/suspicious-login-activity.md)
+5. [Combining dimensions](problems/bronze/combining-dimensions.md)
+6. [Customer churn](problems/bronze/customer-churn.md)
+7. [Fibonacci sequence](problems/bronze/fibonacci-sequence.md)
+8. [UK bank holidays](problems/bronze/uk-bank-holidays.md)
 
 ### ⚪ Silver Tier
 
@@ -35,7 +36,8 @@ These require a bit more thinking.
 5. [Region precipitation](problems/silver/region-precipitation.md)
 6. [Predicting values](problems/silver/predicting-values.md)
 7. [Mandelbrot set](problems/silver/mandelbrot-set.md)
-8. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
+8. [Encoding datelist ints](problems/silver/encoding-datelist-ints.md)
+9. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
 
 ### 🟡 Gold Tier
 
