@@ -77,9 +77,10 @@ nav:
       - Problems:
           - 🟤 Bronze Tier:
               - challenging-sql-problems/problems/bronze/temperature-anomaly-detection.md #  window functions
+              - challenging-sql-problems/problems/bronze/outstanding-invoices.md #  asof join
               - challenging-sql-problems/problems/bronze/personalised-customer-emails.md #  string similarity
               - challenging-sql-problems/problems/bronze/suspicious-login-activity.md #  window functions (gaps and islands)
-              - challenging-sql-problems/problems/bronze/combining-dimensions.md #  asof join
+              - challenging-sql-problems/problems/bronze/combining-dimensions.md #  asof join, custom axis
               - challenging-sql-problems/problems/bronze/customer-churn.md #  bit-shifting
               - challenging-sql-problems/problems/bronze/fibonacci-sequence.md #  recursive CTE
               - challenging-sql-problems/problems/bronze/uk-bank-holidays.md #  unpivot and unnest
@@ -99,6 +100,7 @@ nav:
       - Solutions:
           - 🟤 Bronze Tier:
               - challenging-sql-problems/solutions/bronze/temperature-anomaly-detection.md
+              - challenging-sql-problems/solutions/bronze/outstanding-invoices.md
               - challenging-sql-problems/solutions/bronze/personalised-customer-emails.md
               - challenging-sql-problems/solutions/bronze/suspicious-login-activity.md
               - challenging-sql-problems/solutions/bronze/combining-dimensions.md
