@@ -36,15 +36,15 @@ These require a bit more thinking.
 5. [Region precipitation](problems/silver/region-precipitation.md)
 6. [Predicting values](problems/silver/predicting-values.md)
 7. [Mandelbrot set](problems/silver/mandelbrot-set.md)
-8. [Encoding datelist ints](problems/silver/encoding-datelist-ints.md)
-9. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
+8. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
 
 ### 🟡 Gold Tier
 
 Expect to spend a bit of time on these.
 
-1. [Loan repayment schedules](problems/gold/loan-repayment-schedule.md)
-2. [Travel plans](problems/gold/travel-plans.md)
+1. [Encoding datelist ints](problems/gold/encoding-datelist-ints.md)
+2. [Loan repayment schedules](problems/gold/loan-repayment-schedule.md)
+3. [Travel plans](problems/gold/travel-plans.md)
 
 ---
 
