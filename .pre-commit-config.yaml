@@ -47,7 +47,7 @@ repos:
         name: Make code pretty
 
   - repo: https://github.com/asottile/pyupgrade
-    rev: v3.15.2
+    rev: v3.16.0
     hooks:
       - id: pyupgrade
         args: ["--py311-plus"]
@@ -75,7 +75,7 @@ repos:
 
   # Sourcery (refactoring)
   - repo: https://github.com/sourcery-ai/sourcery
-    rev: v1.16.0
+    rev: v1.18.1b30
     hooks:
       - id: sourcery
         name: Check for refactoring opportunities
