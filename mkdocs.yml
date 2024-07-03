@@ -85,6 +85,7 @@ nav:
               - challenging-sql-problems/problems/bronze/fibonacci-sequence.md #  recursive CTE
               - challenging-sql-problems/problems/bronze/uk-bank-holidays.md #  unpivot and unnest
           - ⚪ Silver Tier:
+              - challenging-sql-problems/problems/silver/metric-correlation.md #  unpivot, corr
               - challenging-sql-problems/problems/silver/funnel-analytics.md #  custom axis
               - challenging-sql-problems/problems/silver/bannable-login-activity.md #  window functions (gaps and islands, range between)
               - challenging-sql-problems/problems/silver/bus-routes.md #  recursive CTE
@@ -108,6 +109,7 @@ nav:
               - challenging-sql-problems/solutions/bronze/fibonacci-sequence.md
               - challenging-sql-problems/solutions/bronze/uk-bank-holidays.md
           - ⚪ Silver Tier:
+              - challenging-sql-problems/solutions/silver/metric-correlation.md
               - challenging-sql-problems/solutions/silver/funnel-analytics.md
               - challenging-sql-problems/solutions/silver/bannable-login-activity.md
               - challenging-sql-problems/solutions/silver/bus-routes.md

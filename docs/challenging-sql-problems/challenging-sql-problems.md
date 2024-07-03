@@ -29,14 +29,15 @@ As long as you know your database features and query patterns, these are fairly 
 
 These require a bit more thinking.
 
-1. [Funnel analytics](problems/silver/funnel-analytics.md)
-2. [Bannable login activity](problems/silver/bannable-login-activity.md)
-3. [Bus routes](problems/silver/bus-routes.md)
-4. [Decoding datelist ints](problems/silver/decoding-datelist-ints.md)
-5. [Region precipitation](problems/silver/region-precipitation.md)
-6. [Predicting values](problems/silver/predicting-values.md)
-7. [Mandelbrot set](problems/silver/mandelbrot-set.md)
-8. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
+1. [Metric correlation](problems/silver/metric-correlation.md)
+2. [Funnel analytics](problems/silver/funnel-analytics.md)
+3. [Bannable login activity](problems/silver/bannable-login-activity.md)
+4. [Bus routes](problems/silver/bus-routes.md)
+5. [Decoding datelist ints](problems/silver/decoding-datelist-ints.md)
+6. [Region precipitation](problems/silver/region-precipitation.md)
+7. [Predicting values](problems/silver/predicting-values.md)
+8. [Mandelbrot set](problems/silver/mandelbrot-set.md)
+9. [Customer sales running totals](problems/silver/customer-sales-running-totals.md)
 
 ### 🟡 Gold Tier
 
