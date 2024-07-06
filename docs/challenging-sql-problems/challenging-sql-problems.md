@@ -43,9 +43,10 @@ These require a bit more thinking.
 
 Expect to spend a bit of time on these.
 
-1. [Encoding datelist ints](problems/gold/encoding-datelist-ints.md)
-2. [Loan repayment schedules](problems/gold/loan-repayment-schedule.md)
-3. [Travel plans](problems/gold/travel-plans.md)
+1. [Loan repayment schedules](problems/gold/loan-repayment-schedule.md)
+2. [Supply chain network](problems/gold/supply-chain-network.md)
+3. [Encoding datelist ints](problems/gold/encoding-datelist-ints.md)
+4. [Travel plans](problems/gold/travel-plans.md)
 
 ---
 
