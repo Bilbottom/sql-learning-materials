@@ -101,12 +101,7 @@ A worked example is provided below to help illustrate the loan calculations.
 
 ### Worked example
 
-To help illustrate the loan calculations, consider the following loan:
-
-- `loan_value`: 10,000.00
-- `interest_rate`: 0.01
-- `repayments`: 6
-- `start_date`: 2024-01-01
+To help illustrate the loan calculations, consider the loan in the **Sample input**.
 
 A loan with these details will have a monthly repayment value of 1,725.48 (rounded to 2 decimal places).
 

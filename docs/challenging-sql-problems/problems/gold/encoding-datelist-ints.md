@@ -84,22 +84,7 @@ A worked example is provided below to help illustrate the encoding.
 
 ### Worked example
 
-To help illustrate the encoding, consider the following events:
-
-| event_id | user_id | event_datetime      | event_type |
-| -------: | ------: | :------------------ | :--------- |
-|        1 |       1 | 2024-01-01 01:03:00 | login      |
-|        2 |       1 | 2024-01-04 01:02:00 | login      |
-|        3 |       1 | 2024-01-05 01:01:00 | login      |
-|        4 |       1 | 2024-01-06 01:00:00 | logout     |
-|        5 |       1 | 2024-01-07 01:05:00 | logout     |
-|        6 |       1 | 2024-01-07 01:06:00 | logout     |
-|        7 |       2 | 2024-01-08 01:07:00 | login      |
-|        8 |       2 | 2024-01-09 01:08:00 | login      |
-|        9 |       2 | 2024-01-10 01:09:00 | login      |
-|       10 |       2 | 2024-01-10 01:10:00 | logout     |
-|       11 |       2 | 2024-01-11 01:11:00 | logout     |
-|       12 |       2 | 2024-01-12 01:12:00 | logout     |
+To help illustrate the encoding, consider the following events in the **Sample input**.
 
 We'll walk through each of the events and how they contribute to different sessions.
 
