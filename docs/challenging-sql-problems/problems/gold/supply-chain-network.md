@@ -59,7 +59,7 @@ The solution can be found at:
 
 - [supply-chain-network.md](../../solutions/gold/supply-chain-network.md)
 
-A worked example is provided below to help illustrate the "shuffling" within the locations.
+A worked example is provided below to help illustrate the stock movement within the locations.
 
 ---
 
