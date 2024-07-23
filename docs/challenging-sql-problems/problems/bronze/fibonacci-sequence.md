@@ -1,3 +1,10 @@
+---
+hide:
+  - tags
+tags:
+  - recursive CTE
+---
+
 # Fibonacci sequence 🔢
 
 > [!INFO]

@@ -1,3 +1,10 @@
+---
+hide:
+  - tags
+tags:
+  - asof join
+---
+
 # Outstanding invoices 💱
 
 > [!SUCCESS] Scenario

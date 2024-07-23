@@ -1,3 +1,10 @@
+---
+hide:
+  - tags
+tags:
+  - string similarity
+---
+
 # Personalised customer emails 📨
 
 > [!SUCCESS] Scenario

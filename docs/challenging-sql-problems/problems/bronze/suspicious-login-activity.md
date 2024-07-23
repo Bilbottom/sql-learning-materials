@@ -1,3 +1,11 @@
+---
+hide:
+  - tags
+tags:
+  - window function
+  - gaps and islands
+---
+
 # Suspicious login activity 🤔
 
 > [!SUCCESS] Scenario

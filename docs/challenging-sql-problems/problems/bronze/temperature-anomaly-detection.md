@@ -1,3 +1,10 @@
+---
+hide:
+  - tags
+tags:
+  - window function
+---
+
 # Temperature anomaly detection 🔍
 
 > [!SUCCESS] Scenario

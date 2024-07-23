@@ -1,3 +1,11 @@
+---
+hide:
+  - tags
+tags:
+  - pivot and unpivot
+  - rollup
+---
+
 # Region precipitation ☔
 
 > [!SUCCESS] Scenario

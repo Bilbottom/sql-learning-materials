@@ -1,3 +1,11 @@
+---
+hide:
+  - tags
+tags:
+  - asof join
+  - custom axis
+---
+
 # Combining dimensions 🔗
 
 > [!SUCCESS] Scenario

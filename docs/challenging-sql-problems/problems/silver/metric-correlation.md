@@ -1,3 +1,11 @@
+---
+hide:
+  - tags
+tags:
+  - pivot and unpivot
+  - correlation
+---
+
 # Metric correlation 🔀
 
 > [!SUCCESS] Scenario

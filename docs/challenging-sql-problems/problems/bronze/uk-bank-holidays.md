@@ -1,3 +1,11 @@
+---
+hide:
+  - tags
+tags:
+  - pivot and unpivot
+  - semi-structured data
+---
+
 # UK bank holidays 📅
 
 > [!NOTE]

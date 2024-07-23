@@ -1,4 +1,12 @@
-# Decoding datelist ints 🔐
+---
+hide:
+  - tags
+tags:
+  - recursive CTE
+  - bitshift
+---
+
+# Decoding datelist ints 🔓
 
 > [!SUCCESS] Scenario
 >
