@@ -1,3 +1,10 @@
+---
+hide:
+  - tags
+tags:
+  - bitshift
+---
+
 # Customer churn 🔄
 
 > [!SUCCESS] Scenario

@@ -1,3 +1,10 @@
+---
+hide:
+  - tags
+tags:
+  - recursive CTE
+---
+
 # Loan repayment schedule 💰
 
 > [!SUCCESS] Scenario

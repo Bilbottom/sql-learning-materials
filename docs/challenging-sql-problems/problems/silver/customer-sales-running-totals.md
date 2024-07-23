@@ -1,3 +1,10 @@
+---
+hide:
+  - tags
+tags:
+  - window function
+---
+
 # Customer sales running totals 📈
 
 > [!SUCCESS] Scenario

@@ -124,6 +124,7 @@ nav:
               - challenging-sql-problems/solutions/gold/supply-chain-network.md
               - challenging-sql-problems/solutions/gold/encoding-datelist-ints.md
               - challenging-sql-problems/solutions/gold/travel-plans.md
+      - challenging-sql-problems/topics.md
 
 markdown_extensions:
   - admonition
@@ -138,3 +139,5 @@ markdown_extensions:
 plugins:
   - search
   - callouts # https://github.com/sondregronas/mkdocs-callouts
+  - tags:
+      tags_file: challenging-sql-problems/topics.md

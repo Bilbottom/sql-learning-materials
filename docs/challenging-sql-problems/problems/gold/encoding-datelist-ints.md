@@ -1,3 +1,13 @@
+---
+hide:
+  - tags
+tags:
+  - window function
+  - gaps and islands
+  - correlated subquery
+  - custom axis
+---
+
 # Encoding datelist ints 🔐
 
 > [!SUCCESS] Scenario

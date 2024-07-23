@@ -1,3 +1,11 @@
+---
+hide:
+  - tags
+tags:
+  - pivot and unpivot
+  - linear regression
+---
+
 # Predicting values 🎱
 
 > [!SUCCESS] Scenario

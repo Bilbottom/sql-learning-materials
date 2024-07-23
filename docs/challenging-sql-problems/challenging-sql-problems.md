@@ -50,6 +50,12 @@ Expect to spend a bit of time on these.
 
 ---
 
+## Questions by topic
+
+To see the questions grouped by topic, head over to the [topics page](topics.md).
+
+---
+
 ## Looking for more?
 
 The repo [Bilbottom/sql-models](https://github.com/Bilbottom/sql-models) has a collection of custom SQL models, some of which come with exercises.

@@ -1,3 +1,10 @@
+---
+hide:
+  - tags
+tags:
+  - custom axis
+---
+
 # Funnel analytics ⏬
 
 > [!SUCCESS] Scenario

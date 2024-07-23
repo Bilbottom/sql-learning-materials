@@ -1,4 +1,4 @@
-# Decoding datelist ints 🔐
+# Decoding datelist ints 🔓
 
 > [!TIP]
 >

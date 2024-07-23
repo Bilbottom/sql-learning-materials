@@ -1,3 +1,10 @@
+---
+hide:
+  - tags
+tags:
+  - recursive CTE
+---
+
 # Bus routes 🚌
 
 > [!SUCCESS] Scenario

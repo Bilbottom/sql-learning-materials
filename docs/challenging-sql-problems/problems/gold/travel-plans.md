@@ -1,3 +1,10 @@
+---
+hide:
+  - tags
+tags:
+  - recursive CTE
+---
+
 # Travel plans 🚂
 
 > [!SUCCESS] Scenario
