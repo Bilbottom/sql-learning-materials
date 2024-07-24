@@ -48,6 +48,15 @@ Expect to spend a bit of time on these.
 3. [Encoding datelist ints](problems/gold/encoding-datelist-ints.md)
 4. [Travel plans](problems/gold/travel-plans.md)
 
+### 🛠️ Engineering
+
+These are specifically for data engineering pipelines.
+
+1. [Identifying changed records](problems/engineering/identifying-changed-records.md)
+2. [Updating SCD1 dimension](problems/engineering/updating-scd1-dimension.md)
+3. [Updating SCD2 dimension](problems/engineering/updating-scd2-dimension.md)
+4. [Updating datelist ints](problems/engineering/updating-datelist-ints.md)
+
 ---
 
 ## Questions by topic
