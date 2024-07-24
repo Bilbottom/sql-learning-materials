@@ -100,6 +100,11 @@ nav:
               - challenging-sql-problems/problems/gold/supply-chain-network.md
               - challenging-sql-problems/problems/gold/encoding-datelist-ints.md #  window functions (gaps and islands), correlated subquery, custom axis
               - challenging-sql-problems/problems/gold/travel-plans.md #  recursive CTEs
+          - 🛠️ Engineering:
+              - challenging-sql-problems/problems/engineering/identifying-changed-records.md
+              - challenging-sql-problems/problems/engineering/updating-scd1-dimension.md
+              - challenging-sql-problems/problems/engineering/updating-scd2-dimension.md
+              - challenging-sql-problems/problems/engineering/updating-datelist-ints.md
       - Solutions:
           - 🟤 Bronze Tier:
               - challenging-sql-problems/solutions/bronze/temperature-anomaly-detection.md
@@ -126,6 +131,11 @@ nav:
               - challenging-sql-problems/solutions/gold/supply-chain-network.md
               - challenging-sql-problems/solutions/gold/encoding-datelist-ints.md
               - challenging-sql-problems/solutions/gold/travel-plans.md
+          - 🛠️ Engineering:
+              - challenging-sql-problems/solutions/engineering/identifying-changed-records.md
+              - challenging-sql-problems/solutions/engineering/updating-scd1-dimension.md
+              - challenging-sql-problems/solutions/engineering/updating-scd2-dimension.md
+              - challenging-sql-problems/solutions/engineering/updating-datelist-ints.md
       - challenging-sql-problems/topics.md
 
 markdown_extensions:
