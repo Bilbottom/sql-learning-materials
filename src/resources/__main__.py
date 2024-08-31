@@ -115,7 +115,7 @@ class Resource:
     database_file: pathlib.Path | None
     skip: bool
 
-    def __init__(
+    def __init__(  # noqa: PLR0913
         self,
         type_: DatabaseType,
         name: str,
@@ -172,7 +172,7 @@ class Resource:
         Download the resource.
         """
         logging.info(f"Downloading from '{self.url}'...")
-        urllib.request.urlretrieve(self.url, self.destination)
+        urllib.request.urlretrieve(self.url, self.destination)  # noqa: S310
         if self.destination.suffix == ".gz":
             _unzip_file(self.destination)
 

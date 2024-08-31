@@ -6,6 +6,7 @@ import sqlite3
 
 import db_query_profiler
 import duckdb
+import psycopg2
 import pyodbc
 
 from src import SRC
@@ -19,7 +20,7 @@ def sqlite_connector() -> Connection:
 
 
 def duckdb_connector() -> Connection:
-    return duckdb.connect(database=str(DB_PATH / "duckdb/loan.db"))  # type: ignore
+    return duckdb.connect(database=str(DB_PATH / "duckdb/duckdb.db"))  # type: ignore
 
 
 def mssql_connector() -> Connection:
@@ -36,21 +37,26 @@ def mssql_connector() -> Connection:
 
 
 def postgres_connector() -> Connection:
-    pass
+    # TODO: Grab from `src/metabase/databases.toml`
+    connection = psycopg2.connect(
+        "dbname=postgres user=postgres password=Test@12345"
+    )
+    return connection.cursor()
 
 
 def main() -> None:
     """
     Time the queries in the queries directory.
     """
-    db_conn = (
-        # sqlite_connector()
-        duckdb_connector()
-        # mssql_connector()
-        # postgres_connector()
-    )
+    db_conn = {
+        "sqlite": sqlite_connector,
+        "duckdb": duckdb_connector,
+        "mssql": mssql_connector,
+        "postgres": postgres_connector,
+    }["postgres"]
+
     db_query_profiler.time_queries(
-        conn=db_conn,
+        conn=db_conn(),
         repeat=1_000,
         directory=SRC / "profiler/queries",
     )

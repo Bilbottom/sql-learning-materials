@@ -19,13 +19,13 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.11"
 duckdb = "1.0.0"
-pyodbc = "^5.1.0"
+pyodbc = "^5.1.0"  # SQL Server driver
+psycopg2 = "^2.9.9"  # PostgreSQL driver
 
 [tool.poetry.group]
 dev.optional = true
 test.optional = true
 docs.optional = true
-ide.optional = true
 
 [tool.poetry.group.dev.dependencies]
 coverage-badge = "^1.1.0"
@@ -43,29 +43,34 @@ mkdocs-callouts = "^1.10.0"
 markdown-callouts = "^0.3.0"
 mdx-truly-sane-lists = "^1.3"
 
-[tool.poetry.group.ide.dependencies]
-black = "*"
-
 
 [tool.pytest.ini_options]
 addopts = "--cov=src --cov-report term-missing"
-testpaths = [
-    "tests",
-]
+testpaths = ["tests"]
 
 
-[tool.black]
-target_version = ["py311"]
+[tool.ruff]
 line-length = 80
+indent-width = 4
+target-version = "py311"
 
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
 
-[tool.isort]
-profile = "black"
-line_length = 80
+[tool.ruff.lint]
+select = ["F", "I", "N", "PL", "R", "RUF", "S", "UP", "W"]
+ignore = []
+fixable = ["ALL"]
+unfixable = []
+# Allow unused variables when underscore-prefixed
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
-
-[tool.pylint.format]
-max-line-length = 80
-
-[tool.pylint.MASTER]
-ignore-paths = "^tests/.*$"
+# https://github.com/astral-sh/ruff/issues/4368
+[tool.ruff.lint.extend-per-file-ignores]
+"tests/**/*.py" = [
+    "S101",    #  Use of `assert` detected
+    "PLR2004", #  Magic value used in comparison
+]

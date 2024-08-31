@@ -37,11 +37,11 @@ class Response(NamedTuple):
         return output
 
 
-def request(
+def request(  # noqa: PLR0913
     url: str,
-    data: dict = None,
-    params: dict = None,
-    headers: dict = None,
+    data: dict | None = None,
+    params: dict | None = None,
+    headers: dict | None = None,
     method: str = "GET",
     data_as_json: bool = True,
     error_count: int = 0,
@@ -76,12 +76,15 @@ def request(
         else:
             request_data = urllib.parse.urlencode(data).encode()
 
-    httprequest = urllib.request.Request(
-        url, data=request_data, headers=headers, method=method
+    httprequest = urllib.request.Request(  # noqa: S310
+        url,
+        data=request_data,
+        headers=headers,
+        method=method,
     )
 
     try:
-        with urllib.request.urlopen(httprequest) as httpresponse:
+        with urllib.request.urlopen(httprequest) as httpresponse:  # noqa: S310
             response = Response(
                 headers=httpresponse.headers,
                 status=httpresponse.status,
@@ -129,7 +132,12 @@ class MetabaseConnector:
     password: str
     _token: str
 
-    def __init__(self, username: str, password: str, token: str = None) -> None:
+    def __init__(
+        self,
+        username: str,
+        password: str,
+        token: str | None = None,
+    ) -> None:
         self.username = username
         self.password = password
         self._token = token
@@ -157,7 +165,7 @@ class MetabaseConnector:
             headers=self.headers,
         )
 
-    def post(self, endpoint: str, payload: dict = None) -> Response:
+    def post(self, endpoint: str, payload: dict | None = None) -> Response:
         """
         Post to Metabase.
         """
@@ -201,7 +209,7 @@ class MetabaseConnector:
 def main() -> None:
     metabase = MetabaseConnector(
         username=input("Metabase username: "),
-        password="Test@12345",
+        password="Test@12345",  # noqa: S106
     )
     databases = tomllib.loads((SRC / "metabase/databases.toml").read_text())
 
