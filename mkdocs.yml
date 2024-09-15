@@ -96,6 +96,7 @@ nav:
               - challenging-sql-problems/problems/silver/customer-sales-running-totals.md #  window functions
           - 🟡 Gold Tier:
               - challenging-sql-problems/problems/gold/loan-repayment-schedule.md #  recursive CTE
+              - challenging-sql-problems/problems/gold/risk-invasions.md #  window functions, recursive CTE, custom axis
               - challenging-sql-problems/problems/gold/supply-chain-network.md
               - challenging-sql-problems/problems/gold/encoding-datelist-ints.md #  window functions (gaps and islands), correlated subquery, custom axis
               - challenging-sql-problems/problems/gold/travel-plans.md #  recursive CTEs
@@ -121,6 +122,7 @@ nav:
               - challenging-sql-problems/solutions/silver/customer-sales-running-totals.md
           - 🟡 Gold Tier:
               - challenging-sql-problems/solutions/gold/loan-repayment-schedule.md
+              - challenging-sql-problems/solutions/gold/risk-invasions.md
               - challenging-sql-problems/solutions/gold/supply-chain-network.md
               - challenging-sql-problems/solutions/gold/encoding-datelist-ints.md
               - challenging-sql-problems/solutions/gold/travel-plans.md
