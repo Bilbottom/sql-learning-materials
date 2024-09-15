@@ -44,9 +44,10 @@ These require a bit more thinking.
 Expect to spend a bit of time on these.
 
 1. [Loan repayment schedules](problems/gold/loan-repayment-schedule.md)
-2. [Supply chain network](problems/gold/supply-chain-network.md)
-3. [Encoding datelist ints](problems/gold/encoding-datelist-ints.md)
-4. [Travel plans](problems/gold/travel-plans.md)
+2. [Risk invasions](problems/gold/risk-invasions.md)
+3. [Supply chain network](problems/gold/supply-chain-network.md)
+4. [Encoding datelist ints](problems/gold/encoding-datelist-ints.md)
+5. [Travel plans](problems/gold/travel-plans.md)
 
 ---
 
