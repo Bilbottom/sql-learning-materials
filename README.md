@@ -6,6 +6,7 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/Bilbottom/sql-learning-materials)](https://shields.io/badges/git-hub-last-commit-by-committer)
 
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-2022-teal.svg)](https://www.microsoft.com/en-gb/sql-server/sql-server-downloads)
+[![MySQL](https://img.shields.io/badge/MySQL-8.4-teal.svg)](https://dev.mysql.com/downloads/mysql/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16.2-teal.svg)](https://www.postgresql.org/download/)
 [![ClickHouse](https://img.shields.io/badge/ClickHouse-24.8-teal.svg)](https://clickhouse.com/docs/en/install)
 [![SQLite](https://img.shields.io/badge/SQLite-3.45-teal.svg)](https://www.sqlite.org/index.html)
@@ -72,6 +73,7 @@ The credentials for the databases are not sensitive and are defined in the `dock
 | Database   | Username | Password   | Host      | Port |
 | ---------- | -------- | ---------- | --------- | ---- |
 | SQL Server | SA       | Test@12345 | localhost | 1433 |
+| MySQL      | root     | Test@12345 | localhost | 3306 |
 | PostgreSQL | postgres | Test@12345 | localhost | 5432 |
 | ClickHouse |          |            | localhost | 8123 |
 
