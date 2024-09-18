@@ -1,10 +1,15 @@
 ---
 services:
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8
+    container_name: ClickHouse
+    ports: ["8123:8123"]
+
   mssql:
     build:
       context: .
       dockerfile: dockerfiles/mssql.Dockerfile
-    image: sql-learning-materials/mssql
+    image: sql-learning-materials/mssql:2022
     container_name: SQL-Server
     environment:
       ACCEPT_EULA: "Y"
@@ -22,17 +27,12 @@ services:
     build:
       context: .
       dockerfile: dockerfiles/postgres.Dockerfile
-    image: sql-learning-materials/postgres
+    image: sql-learning-materials/postgres:16.2
     container_name: PostgreSQL
     environment:
       POSTGRES_PASSWORD: Test@12345
       POSTGRES_USER: postgres
     ports: ["5432:5432"]
-
-  clickhouse:
-    image: clickhouse/clickhouse-server:24.8
-    container_name: ClickHouse
-    ports: ["8123:8123"]
 
   metabase:
     image: metabase/metabase:latest

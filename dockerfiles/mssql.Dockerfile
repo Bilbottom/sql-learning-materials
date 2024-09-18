@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/mssql/server:2022-latest
+FROM mcr.microsoft.com/mssql/server:2022-CU12-GDR1-ubuntu-22.04
 ENV SA_PASSWORD="Test@12345"
 
 ###
