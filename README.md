@@ -6,10 +6,11 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/Bilbottom/sql-learning-materials)](https://shields.io/badges/git-hub-last-commit-by-committer)
 
 [![SQL Server](https://img.shields.io/badge/SQL%20Server-2022-teal.svg)](https://www.microsoft.com/en-gb/sql-server/sql-server-downloads)
+[![MySQL](https://img.shields.io/badge/MySQL-8.4-teal.svg)](https://dev.mysql.com/downloads/mysql/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16.2-teal.svg)](https://www.postgresql.org/download/)
+[![ClickHouse](https://img.shields.io/badge/ClickHouse-24.8-teal.svg)](https://clickhouse.com/docs/en/install)
 [![SQLite](https://img.shields.io/badge/SQLite-3.45-teal.svg)](https://www.sqlite.org/index.html)
 [![DuckDB](https://img.shields.io/badge/DuckDB-1.0-teal.svg)](https://duckdb.org/)
-[![Metabase](https://img.shields.io/badge/Metabase-0.47-teal.svg)](https://www.metabase.com/)
 
 </div>
 
@@ -72,7 +73,11 @@ The credentials for the databases are not sensitive and are defined in the `dock
 | Database   | Username | Password   | Host      | Port |
 | ---------- | -------- | ---------- | --------- | ---- |
 | SQL Server | SA       | Test@12345 | localhost | 1433 |
+| MySQL      | root     | Test@12345 | localhost | 3306 |
 | PostgreSQL | postgres | Test@12345 | localhost | 5432 |
+| ClickHouse |          |            | localhost | 8123 |
+
+Note that ClickHouse can be connected to without any authentication.
 
 The SQLite and DuckDB databases are just files, so using Docker for these is overkill -- when you run `python -m resources`, the files for these databases will be created in your file system. The file locations are defined in the `resources.toml` config file (you can override them there if you want) and are:
 

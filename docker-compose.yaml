@@ -11,6 +11,13 @@ services:
       MSSQL_PID: Developer
     ports: ["1433:1433"]
 
+  mysql:
+    image: mysql:8.4.2
+    container_name: MySQL
+    environment:
+      MYSQL_ROOT_PASSWORD: Test@12345
+    ports: ["3306:3306"]
+
   postgres:
     build:
       context: .
@@ -21,6 +28,11 @@ services:
       POSTGRES_PASSWORD: Test@12345
       POSTGRES_USER: postgres
     ports: ["5432:5432"]
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8
+    container_name: ClickHouse
+    ports: ["8123:8123"]
 
   metabase:
     image: metabase/metabase:latest
