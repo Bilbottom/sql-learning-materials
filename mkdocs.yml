@@ -53,6 +53,7 @@ nav:
           - from-excel-to-sql/main-concepts/style-guide.md
       - Advanced Concepts:
           - from-excel-to-sql/advanced-concepts/advanced-aggregations.md
+          - from-excel-to-sql/advanced-concepts/window-function-options.md
           - from-excel-to-sql/advanced-concepts/correlated-subqueries.md
           - from-excel-to-sql/advanced-concepts/recursive-ctes.md
   - Everything about joins:
