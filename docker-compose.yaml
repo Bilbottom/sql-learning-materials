@@ -22,6 +22,11 @@ services:
       POSTGRES_USER: postgres
     ports: ["5432:5432"]
 
+  clickhouse:
+    image: clickhouse/clickhouse-server:24.8
+    container_name: ClickHouse
+    ports: ["8123:8123"]
+
   metabase:
     image: metabase/metabase:latest
     container_name: Metabase
