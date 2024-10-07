@@ -9,7 +9,7 @@ repos:
       - id: identity
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: no-commit-to-branch
         args: ["--branch", "main"]
@@ -23,7 +23,7 @@ repos:
       - id: check-ast
 
   - repo: https://github.com/python-poetry/poetry
-    rev: 1.8.2
+    rev: 1.8.0
     hooks:
       - id: poetry-check
       - id: poetry-lock
@@ -35,7 +35,7 @@ repos:
       - id: prettier
 
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.2
+    rev: v0.6.9
     hooks:
       - id: ruff
         args: ["--fix"]
