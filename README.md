@@ -58,7 +58,7 @@ After installing the pre-requisites and cloning this repo, just run the `resourc
 ```bash
 poetry install --sync  # --with dev,test,docs
 python -m resources
-docker compose up --detach
+docker compose --profile build up --detach
 mkdocs build
 mkdocs serve
 docker compose down --volumes  # When you're finished
