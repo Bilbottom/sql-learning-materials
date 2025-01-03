@@ -18,14 +18,15 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.11"
-duckdb = "1.0.0"
+
+duckdb = "1.1.3"
 pyodbc = "^5.1.0"  # SQL Server driver
 psycopg2 = "^2.9.9"  # PostgreSQL driver
 
 [tool.poetry.group]
-dev.optional = true
-test.optional = true
-docs.optional = true
+dev.optional = false
+test.optional = false
+docs.optional = false
 
 [tool.poetry.group.dev.dependencies]
 coverage-badge = "^1.1.0"
