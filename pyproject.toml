@@ -1,24 +1,26 @@
+[project]
+name = "sql-learning-materials"
+version = "0.0.0"
+description = "SQL scripts that demonstrate various features and concepts."
+authors = [{name = "Bilbottom"}]
+readme = "README.md"
+keywords = ["sql", "sql-server", "postgres", "sqlite", "duckdb"]
+repository = "https://github.com/Bilbottom/sql-learning-materials"
+requires-python = ">=3.11,<4.0"
+dynamic = ["dependencies"]
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 
 [tool.poetry]
-name = "sql-learning-materials"
-version = "0.0.0"
-description = "SQL scripts that demonstrate various features and concepts."
-authors = ["Bilbottom"]
-readme = "README.md"
-keywords = ["sql", "sql-server", "postgres", "sqlite", "duckdb"]
-repository = "https://github.com/Bilbottom/sql-learning-materials"
 packages = [
     { include = "profiler", from = "src" },
     { include = "resources", from = "src" },
 ]
 
 [tool.poetry.dependencies]
-python = "^3.11"
-
 duckdb = "1.1.3"
 pyodbc = "^5.1.0"  # SQL Server driver
 psycopg2 = "^2.9.9"  # PostgreSQL driver
