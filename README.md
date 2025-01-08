@@ -56,7 +56,7 @@ To install these, follow the instructions on their websites:
 After installing the pre-requisites and cloning this repo, just run the `resources` package to download the files needed to feed into the SQL Server and PostgreSQL databases before running Docker's `compose` command.
 
 ```bash
-poetry install --sync  # --with dev,test,docs
+poetry install
 python -m resources
 docker compose --profile build up --detach
 mkdocs build
