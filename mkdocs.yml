@@ -28,6 +28,8 @@ theme:
 
 nav:
   - Home: index.md
+  - Ultimate SQL Setup Guide:
+      - ultimate-sql-setup-guide/ultimate-sql-setup-guide.md
   - From Excel to SQL:
       - from-excel-to-sql/from-excel-to-sql.md
       - Getting Started:

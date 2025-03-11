@@ -25,6 +25,7 @@ All credit for the data goes to the respective owners, and these sources should 
 
 This project has a few different series:
 
+- [Ultimate SQL Setup Guide](ultimate-sql-setup-guide/ultimate-sql-setup-guide.md), which gets you up and running with SQL
 - [From Excel to SQL](from-excel-to-sql/from-excel-to-sql.md), which is aimed at Excel users who want to learn SQL
 - [Everything about joins](everything-about-joins/everything-about-joins.md), which is a comprehensive guide to SQL joins
 - [Challenging SQL questions](challenging-sql-problems/challenging-sql-problems.md), which are SQL questions that really test your skills
