@@ -139,7 +139,6 @@ markdown_extensions:
         - { name: mermaid, class: mermaid }
 
 plugins:
-  - search
   - callouts # https://github.com/sondregronas/mkdocs-callouts
-  - tags:
-      tags_file: challenging-sql-problems/topics.md
+  - search
+  - tags
