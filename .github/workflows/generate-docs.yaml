@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
 ---
 name: 📝 Generate Docs
 
@@ -21,8 +22,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pipx install poetry==2.0.0
+      - uses: astral-sh/setup-uv@v5
+        with: { version: "0.6.5", enable-cache: true }
       - uses: actions/setup-python@v5
-        with: { python-version: 3.11, cache: poetry }
-      - run: poetry install --without dev,test
-      - run: poetry run mkdocs gh-deploy --force
+        with: { python-version: 3.11 }
+      - uses: actions/setup-python@v5
+        with: { python-version-file: "pyproject.toml" }
+      - run: uv sync --group docs
+      - run: uv run mkdocs gh-deploy --force

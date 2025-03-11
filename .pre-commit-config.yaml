@@ -1,7 +1,7 @@
 ---
 ci:
   autoupdate_schedule: quarterly
-  skip: ["identity", "poetry-lock"]
+  skip: ["identity", "uv-lock"]
 
 repos:
   - repo: meta
@@ -22,11 +22,10 @@ repos:
       - id: check-toml
       - id: check-ast
 
-  - repo: https://github.com/python-poetry/poetry
-    rev: 2.0.0
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.6.5
     hooks:
-      - id: poetry-check
-      - id: poetry-lock
+      - id: uv-lock
 
   # Formatting
   - repo: https://github.com/pre-commit/mirrors-prettier
