@@ -10,7 +10,7 @@
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16.2-teal.svg)](https://www.postgresql.org/download/)
 [![ClickHouse](https://img.shields.io/badge/ClickHouse-24.8-teal.svg)](https://clickhouse.com/docs/en/install)
 [![SQLite](https://img.shields.io/badge/SQLite-3.45-teal.svg)](https://www.sqlite.org/index.html)
-[![DuckDB](https://img.shields.io/badge/DuckDB-1.0-teal.svg)](https://duckdb.org/)
+[![DuckDB](https://img.shields.io/badge/DuckDB-1.1-teal.svg)](https://duckdb.org/)
 
 </div>
 
