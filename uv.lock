@@ -180,14 +180,14 @@ wheels = [
 
 [[package]]
 name = "db-query-profiler"
-version = "0.0.6"
+version = "0.0.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d0/f5/2d453e514eafb03623f4f67b8b861567e92ae1ec8c4d762005d48c7dca4a/db_query_profiler-0.0.6.tar.gz", hash = "sha256:25097bdb43341c1a43aa782c6992c4397d1f752645b100df125cbda77e593ded", size = 6598 }
+sdist = { url = "https://files.pythonhosted.org/packages/ac/38/7a28d8e76872408fe43134e2363bf20d577d3c1117ecb0576f4e3f49cad2/db_query_profiler-0.0.7.tar.gz", hash = "sha256:a4fce20b3fa94cbdaa272da51830bcd30a0bb2b7155d235de4c8be4f46e8b4a9", size = 7303 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/1b/9a/c521dc083b7571944b115ffdca1681d8bb1bef4c28493c557cd098fbec2e/db_query_profiler-0.0.6-py3-none-any.whl", hash = "sha256:5f49fa357c070ffb07d250207c4d2613ca71880e27ccf842fda664e1727b8c70", size = 7227 },
+    { url = "https://files.pythonhosted.org/packages/93/86/cde888f21e3f3dae7acd6fc50dab55c5bf13fefedeb7d7a8def7b5e1a2a5/db_query_profiler-0.0.7-py3-none-any.whl", hash = "sha256:704d8cec876d3664c45729e4d5b1ba2ed2bd6d9361eb0519f4011d6713da2852", size = 7377 },
 ]
 
 [[package]]

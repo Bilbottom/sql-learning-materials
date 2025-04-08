@@ -23,7 +23,7 @@ repos:
       - id: check-ast
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.6.12
+    rev: 0.6.12 # reminder: keep aligned with the GitHub actions
     hooks:
       - id: uv-lock
 
