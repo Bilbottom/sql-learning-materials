@@ -1,7 +1,7 @@
 <div align="center">
 
+[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![uv](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/uv/main/assets/badge/v0.json)](https://github.com/astral-sh/uv)
-[![Python](https://img.shields.io/badge/Python-3.11-blue.svg)](https://www.python.org/downloads/release/python-3110/)
 [![Docker](https://img.shields.io/badge/Docker-24.0.5-blue.svg)](https://www.docker.com/)
 [![GitHub last commit](https://img.shields.io/github/last-commit/Bilbottom/sql-learning-materials)](https://shields.io/badges/git-hub-last-commit-by-committer)
 

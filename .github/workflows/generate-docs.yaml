@@ -23,8 +23,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
-        with: { version: "0.6.5", enable-cache: true }
+        with:
+          version: "0.6.12" # reminder: keep aligned with the pre-commit hooks
+          enable-cache: true
       - uses: actions/setup-python@v5
-        with: { python-version: 3.11, python-version-file: "pyproject.toml" }
+        with:
+          python-version: 3.11
+          python-version-file: "pyproject.toml"
       - run: uv sync --group docs
       - run: uv run mkdocs gh-deploy --force
