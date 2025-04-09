@@ -28,7 +28,6 @@ jobs:
           enable-cache: true
       - uses: actions/setup-python@v5
         with:
-          python-version: 3.11
           python-version-file: "pyproject.toml"
-      - run: uv sync --group docs
+      - run: uv sync --no-default-groups --group docs
       - run: uv run mkdocs gh-deploy --force
