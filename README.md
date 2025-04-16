@@ -43,7 +43,7 @@ The docs are built using [MkDocs](https://www.mkdocs.org/) and the [Material for
 
 ## Pre-requisites
 
-This project uses [UV](https://docs.astral.sh/uv/) to manage the Python dependencies and [Docker](https://www.docker.com/) to spin up the databases.
+This project uses [uv](https://docs.astral.sh/uv/) to manage the Python dependencies and [Docker](https://www.docker.com/) to spin up the databases.
 
 To install these, follow the instructions on their websites:
 
@@ -57,7 +57,7 @@ After installing the pre-requisites and cloning this repo, just run the `resourc
 
 ```bash
 uv sync --all-groups
-python -m resources
+python -m src.resources
 docker compose --profile build up --detach
 mkdocs build
 mkdocs serve
