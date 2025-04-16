@@ -28,12 +28,11 @@ This is one of the interesting things about Anscombe's quartet (and is the reaso
 Some SQL solutions per database are provided below.
 
 <!-- prettier-ignore -->
-> SUCCESS: **DuckDB**
->
-> Here's a solution using the `regr_slope` and `regr_intercept` functions:
+> SUCCESS: **DuckDB (using `regr_slope` and `regr_intercept`)**
 >
 --8<-- "docs/challenging-sql-problems/solutions/silver/predicting-values--duckdb--regr.sql"
->
-> ...and one doing this manually:
+
+<!-- prettier-ignore -->
+> SUCCESS: **DuckDB (manual calculations)**
 >
 --8<-- "docs/challenging-sql-problems/solutions/silver/predicting-values--duckdb--manual.sql"
