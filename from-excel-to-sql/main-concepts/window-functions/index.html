@@ -1,0 +1,4158 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="SQL scripts that demonstrate various features and concepts.">
+      
+      
+        <meta name="author" content="Bilbottom">
+      
+      
+        <link rel="canonical" href="https://github.com/Bilbottom/sql-learning-materials/docs/from-excel-to-sql/main-concepts/window-functions/">
+      
+      
+        <link rel="prev" href="../subqueries/">
+      
+      
+        <link rel="next" href="../logical-processing-order/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.7">
+    
+    
+      
+        <title>Window functions 📈 - SQL Learning Materials</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="default" data-md-color-accent="default">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#window-functions" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="SQL Learning Materials" class="md-header__button md-logo" aria-label="SQL Learning Materials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL Learning Materials
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Window functions 📈
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="default" data-md-color-accent="default"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="default" data-md-color-accent="default"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Bilbottom/sql-learning-materials/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../from-excel-to-sql/" class="md-tabs__link">
+          
+  
+  From Excel to SQL
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../everything-about-joins/everything-about-joins/" class="md-tabs__link">
+          
+  
+  Everything about joins
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../challenging-sql-problems/challenging-sql-problems/" class="md-tabs__link">
+          
+  
+  Challenging SQL problems
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SQL Learning Materials" class="md-nav__button md-logo" aria-label="SQL Learning Materials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SQL Learning Materials
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Bilbottom/sql-learning-materials/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    From Excel to SQL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            From Excel to SQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../from-excel-to-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    From Excel to SQL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/setting-the-context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setting the context 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/sql-syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL syntax 📚
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Main Concepts
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Main Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../select-and-from/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gimme data 📁
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../where/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Filtering 🚦
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../order-by/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ordering ⏬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../comments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comments 📝
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../top-and-distinct/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TOP and DISTINCT 🔝
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../data-types/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data types 🧱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../operators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operators ➕
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../conditionals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conditionals 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../date-formatting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Date formatting 📆
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../group-by/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aggregations 📊
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rollup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pivot tables 🧮
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../join/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins 🔗
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../union/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unions 🧬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../subqueries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Subqueries 🧩
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Window functions 📈
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Window functions 📈
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#window-functions-are-another-way-to-summarise-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Window functions are another way to summarise rows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Window functions are another way to summarise rows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#theres-some-terminology-to-be-aware-of" class="md-nav__link">
+    <span class="md-ellipsis">
+      There's some terminology to be aware of
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-over-clause-is-the-key-to-window-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      The OVER clause is the key to window functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#converting-a-subquery-to-a-window-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Converting a subquery to a window function
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-the-partition-of-a-window-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining the partition of a window function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#there-are-two-other-ways-to-use-window-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      There are two other ways to use window functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="There are two other ways to use window functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cumulative-windows-are-great-for-running-totals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cumulative windows are great for running totals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sliding-windows-are-great-for-moving-averages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sliding windows are great for moving averages
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#define-common-windows-with-the-window-clause" class="md-nav__link">
+    <span class="md-ellipsis">
+      Define common windows with the WINDOW clause
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#you-can-use-partition-by-and-order-by-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      You can use PARTITION BY and ORDER BY together
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../logical-processing-order/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logical processing order 🎥
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../style-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Style guide ✨
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Advanced Concepts
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-concepts/advanced-aggregations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Advanced aggregations 🥇
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-concepts/correlated-subqueries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Correlated subqueries 🌐
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../advanced-concepts/recursive-ctes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Recursive CTEs 🔁
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Everything about joins
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Everything about joins
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/everything-about-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Everything about joins
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Syntax
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Syntax
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/join-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Join fundamentals 🧩
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/more-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    More fundamentals 📚
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/timestamp-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "timestamp" join (ASOF) ⏱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/filtering-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "filtering" joins (SEMI, ANTI) 🚦
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/glue-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "glue" join (POSITIONAL) 📎
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/explosive-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "explosive" joins (LATERAL) 💥
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/sql-92-rant/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL-92 (ANSI-SQL join syntax) 📝
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Under the hood
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Under the hood
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/joins-with-an-index/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins with an index 🔍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/join-order/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Does join order matter? 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/loop-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loop joins 🔄
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/hash-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hash joins 🔑
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/merge-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Merge joins 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/range-intersection-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Range intersection joins 🎯
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Challenging SQL problems
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Challenging SQL problems
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/challenging-sql-problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Challenging SQL problems
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Problems
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Problems
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_1" id="__nav_4_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟤 Bronze Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            🟤 Bronze Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/temperature-anomaly-detection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Temperature anomaly detection 🔍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/outstanding-invoices/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Outstanding invoices 💱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/personalised-customer-emails/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Personalised customer emails 📨
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/suspicious-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Suspicious login activity 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/combining-dimensions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Combining dimensions 🔗
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/customer-churn/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer churn 🔄
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/fibonacci-sequence/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fibonacci sequence 🔢
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/uk-bank-holidays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UK bank holidays 📅
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_2" id="__nav_4_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ⚪ Silver Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            ⚪ Silver Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/metric-correlation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metric correlation 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/funnel-analytics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Funnel analytics ⏬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/bannable-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bannable login activity ❌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/bus-routes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus routes 🚌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/decoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decoding datelist ints 🔓
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/region-precipitation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Region precipitation ☔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/predicting-values/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Predicting values 🎱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/mandelbrot-set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mandelbrot set 🌀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/customer-sales-running-totals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer sales running totals 📈
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_3" id="__nav_4_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟡 Gold Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            🟡 Gold Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/loan-repayment-schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loan repayment schedule 💰
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/risk-invasions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Risk invasions 🛡️
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/supply-chain-network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supply chain network 🚛
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/encoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Encoding datelist ints 🔐
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/travel-plans/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Travel plans 🚂
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Solutions
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_1" id="__nav_4_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟤 Bronze Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            🟤 Bronze Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/temperature-anomaly-detection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Temperature anomaly detection 🔍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/outstanding-invoices/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Outstanding invoices 💱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/personalised-customer-emails/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Personalised customer emails 📨
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/suspicious-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Suspicious login activity 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/combining-dimensions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Combining dimensions 🔗
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/customer-churn/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer churn 🔄
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/fibonacci-sequence/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fibonacci sequence 🔢
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/uk-bank-holidays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UK bank holidays 📅
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_2" id="__nav_4_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ⚪ Silver Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            ⚪ Silver Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/metric-correlation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metric correlation 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/funnel-analytics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Funnel analytics ⏬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/bannable-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bannable login activity ❌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/bus-routes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus routes 🚌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/decoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decoding datelist ints 🔓
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/region-precipitation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Region precipitation ☔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/predicting-values/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Predicting values 🎱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/mandelbrot-set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mandelbrot set 🌀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/customer-sales-running-totals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer sales running totals 📈
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_3" id="__nav_4_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟡 Gold Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            🟡 Gold Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/loan-repayment-schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loan repayment schedule 💰
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/risk-invasions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Risk invasions 🛡️
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/supply-chain-network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supply chain network 🚛
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/encoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Encoding datelist ints 🔐
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/travel-plans/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Travel plans 🚂
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/topics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Questions by topic
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#window-functions-are-another-way-to-summarise-rows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Window functions are another way to summarise rows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Window functions are another way to summarise rows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#theres-some-terminology-to-be-aware-of" class="md-nav__link">
+    <span class="md-ellipsis">
+      There's some terminology to be aware of
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-over-clause-is-the-key-to-window-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      The OVER clause is the key to window functions
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#converting-a-subquery-to-a-window-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Converting a subquery to a window function
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#defining-the-partition-of-a-window-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Defining the partition of a window function
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#there-are-two-other-ways-to-use-window-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      There are two other ways to use window functions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="There are two other ways to use window functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cumulative-windows-are-great-for-running-totals" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cumulative windows are great for running totals
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sliding-windows-are-great-for-moving-averages" class="md-nav__link">
+    <span class="md-ellipsis">
+      Sliding windows are great for moving averages
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#define-common-windows-with-the-window-clause" class="md-nav__link">
+    <span class="md-ellipsis">
+      Define common windows with the WINDOW clause
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#you-can-use-partition-by-and-order-by-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      You can use PARTITION BY and ORDER BY together
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="window-functions">Window functions 📈</h1>
+<div class="admonition success">
+<p class="admonition-title">Success</p>
+<p>Windows functions allow us to summarise rows <em>without</em> having to use the <code>GROUP BY</code> clause.</p>
+<p>There are two ways to use window functions, and we'll see that both are very similar to row aggregations that we do in Excel!</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Window functions are widely regarded as an advanced concept in SQL. Hopefully this page will show that they're not as scary as people make them seem!</p>
+</div>
+<h2 id="window-functions-are-another-way-to-summarise-rows">Window functions are another way to summarise rows</h2>
+<p>We saw in <a href="../group-by/">the aggregations section</a> that we can use the <code>GROUP BY</code> clause to summarise rows. An important result of this is that <em>the number of rows is reduced</em>.</p>
+<p>However, there are times when we want to summarise rows <em>without</em> reducing the number of rows; that is, without having to use <code>GROUP BY</code>.</p>
+<p>This is where window functions come in: they summarise rows <em>without</em> reducing the row count.</p>
+<p>There are three extremely common use cases for window functions:</p>
+<ul>
+<li>Summarising entire columns</li>
+<li>Calculating running totals</li>
+<li>Calculating moving averages</li>
+</ul>
+<p>I'll bet you've done these in Excel before! 😝</p>
+<h3 id="theres-some-terminology-to-be-aware-of">There's some terminology to be aware of</h3>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>Although we've been throwing around the term "window function", the actual SQL feature that we use to achieve this is the <code>OVER</code> clause.</p>
+</div>
+<p>Before going into an example, there's a bit of terminology to clarify.</p>
+<p><em>Window functions</em> are functions that can be used with the <code>OVER</code> clause, such as:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/row-number-transact-sql"><code>ROW_NUMBER</code></a></li>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/lag-transact-sql"><code>LAG</code></a></li>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/first-value-transact-sql"><code>FIRST_VALUE</code></a></li>
+</ul>
+<p>The "aggregate functions" we've seen so far (like <code>SUM</code>, <code>AVG</code>, <code>COUNT</code>, etc.) are designed to be used with the <code>GROUP BY</code> clause, but many of them can also be used with the <code>OVER</code> clause. This means that these aggregate functions are <em>also</em> window functions!</p>
+<h3 id="the-over-clause-is-the-key-to-window-functions">The <code>OVER</code> clause is the key to window functions</h3>
+<p>So... how do we use window functions?</p>
+<p>Since window functions don't reduce the number of rows, we use them in the <code>SELECT</code> clause to add a new column to the result set just like we would if we were doing any other kind of column calculation.</p>
+<p>Specifically, we write the window function followed by the <code>OVER</code> clause, which is followed by a set of parentheses. Inside the parentheses, we can specify the <em>window</em> over which we want to perform the calculation.</p>
+<p>The following example shows how to get the count of rows in the <code>Person.Person</code> table alongside showing the first few rows and columns:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">    </span><span class="n">BusinessEntityID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">FirstName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LastName</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalRows</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">Person</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">BusinessEntityID</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">BusinessEntityID</th>
+<th style="text-align: left;">FirstName</th>
+<th style="text-align: left;">LastName</th>
+<th style="text-align: right;">TotalRows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Ken</td>
+<td style="text-align: left;">Sánchez</td>
+<td style="text-align: right;">19972</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Terri</td>
+<td style="text-align: left;">Duffy</td>
+<td style="text-align: right;">19972</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Roberto</td>
+<td style="text-align: left;">Tamburello</td>
+<td style="text-align: right;">19972</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Rob</td>
+<td style="text-align: left;">Walters</td>
+<td style="text-align: right;">19972</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Gail</td>
+<td style="text-align: left;">Erickson</td>
+<td style="text-align: right;">19972</td>
+</tr>
+</tbody>
+</table>
+<p>The parentheses after <code>OVER</code> are important (even if they're empty). We'll go through what goes inside the parentheses shortly.</p>
+<p>To confirm that the <code>TotalRows</code> number is correct, we can verify it with a separate query:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalRows</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">Person</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">TotalRows</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">19972</td>
+</tr>
+</tbody>
+</table>
+<p>Looks good!</p>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>We used the <code>TOP 5</code> in the query with the window function to limit the number of rows returned, so why did we get 19972 instead of 5?</p>
+<p>This is to do with the order that SQL processes the query, which is (briefly) covered in <a href="../logical-processing-order/">the logical processing order section</a> -- <code>TOP</code> is processed <em>after</em> <code>OVER</code>!</p>
+</div>
+<h3 id="converting-a-subquery-to-a-window-function">Converting a subquery to a window function</h3>
+<p>Remember the example below from <a href="../subqueries/">the subqueries section</a>?</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">    </span><span class="n">SalesOrderID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">OrderDate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">TotalDue</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="k">AVG</span><span class="p">(</span><span class="n">TotalDue</span><span class="p">)</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderHeader</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">AverageTotalDue</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderHeader</span>
+<span class="p">;</span>
+</code></pre></div>
+<p>We can rewrite this example to use <code>AVG</code> with <code>OVER</code> instead of the subquery:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">    </span><span class="n">SalesOrderID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">OrderDate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">TotalDue</span><span class="p">,</span>
+<span class="w">    </span><span class="k">AVG</span><span class="p">(</span><span class="n">TotalDue</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">AverageTotalDue</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderHeader</span>
+<span class="p">;</span>
+</code></pre></div>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>We've just seen that two very different features -- subqueries and window functions -- can be used to achieve the same result. The natural question is: which one should you use?</p>
+<p>The answer is: it depends on the situation. However, my personal preference is to use window functions over subqueries until I have a reason not to.</p>
+</div>
+<h2 id="defining-the-partition-of-a-window-function">Defining the partition of a window function</h2>
+<p>The examples above just specify <code>OVER</code> with empty parentheses. This is the simplest form of the <code>OVER</code> clause, and it means that the window function is applied to <em>all</em> rows in the result set.</p>
+<p>The output that this produces is equivalent to summarising the entire column, which was proven in the first example by comparing the <code>TotalRows</code> column to the count of rows in the table.</p>
+<p>However, just like how we can <code>GROUP BY</code> specific columns, we can also specify a <em>window</em> over specific columns. We do this by writing <code>PARTITION BY</code> inside the parentheses of the <code>OVER</code> clause, followed by the column(s) that we want to partition by. Although we write <code>PARTITION BY</code>, this is just like doing <code>GROUP BY</code>!</p>
+<p>The following example shows how to get the count of rows in the <code>Person.Person</code> table partitioned by the <code>EmailPromotion</code> column:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">    </span><span class="n">BusinessEntityID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">FirstName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LastName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmailPromotion</span><span class="p">,</span>
+<span class="w">    </span><span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">EmailPromotion</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalRowsPerEmailPromotion</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">Person</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">BusinessEntityID</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">BusinessEntityID</th>
+<th style="text-align: left;">FirstName</th>
+<th style="text-align: left;">LastName</th>
+<th style="text-align: right;">EmailPromotion</th>
+<th style="text-align: right;">TotalRowsPerEmailPromotion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Ken</td>
+<td style="text-align: left;">Sánchez</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11158</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Terri</td>
+<td style="text-align: left;">Duffy</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5044</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Roberto</td>
+<td style="text-align: left;">Tamburello</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11158</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Rob</td>
+<td style="text-align: left;">Walters</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11158</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Gail</td>
+<td style="text-align: left;">Erickson</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11158</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">Jossef</td>
+<td style="text-align: left;">Goldberg</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11158</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">Dylan</td>
+<td style="text-align: left;">Miller</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3770</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">Diane</td>
+<td style="text-align: left;">Margheim</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11158</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">Gigi</td>
+<td style="text-align: left;">Matthew</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">11158</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">Michael</td>
+<td style="text-align: left;">Raheem</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3770</td>
+</tr>
+</tbody>
+</table>
+<p>Notice that the <code>TotalRowsPerEmailPromotion</code> column shows the count of rows for each <code>EmailPromotion</code> value, and it just repeats that count for each row with the same <code>EmailPromotion</code> value. This is precisely why using <code>PARTITION BY</code> is like using <code>GROUP BY</code> -- it does the grouping just like it would if we were using <code>GROUP BY</code>, but it doesn't reduce the number of rows!</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>When we use <code>PARTITION BY</code> in a window function, we're splitting the result set into <em>partitions</em> based on the column(s) that we specify. The window function is then applied to each partition separately.</p>
+</div>
+<div class="admonition success">
+<p class="admonition-title">Success</p>
+<p>When we create partitions, this is like using Excel's "IF" summary functions over an entire column, such as <code>=SUMIF(A:A, A2)</code>.</p>
+</div>
+<h2 id="there-are-two-other-ways-to-use-window-functions">There are two other ways to use window functions</h2>
+<p>The examples above show how to use window functions over different partitions (including a single partition, the entire table).</p>
+<p>Other window functions are designed to be used with the rows considered in some order, so we can also specify <code>ORDER BY</code> inside the parentheses of the <code>OVER</code> clause.</p>
+<p>A great example of this is the <code>LAG</code> function which looks "one row up" based on the order that we specify. For example, the following query shows the first few people in the <code>Person.Person</code> table with the first names of the person who came before them (based on the <code>BusinessEntityID</code> column):</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">5</span>
+<span class="w">    </span><span class="n">BusinessEntityID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">FirstName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LastName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LAG</span><span class="p">(</span><span class="n">FirstName</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">BusinessEntityID</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">PreviousFirstName</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">Person</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">BusinessEntityID</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">BusinessEntityID</th>
+<th style="text-align: left;">FirstName</th>
+<th style="text-align: left;">LastName</th>
+<th style="text-align: left;">PreviousFirstName</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Ken</td>
+<td style="text-align: left;">Sánchez</td>
+<td style="text-align: left;"><em>null</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Terri</td>
+<td style="text-align: left;">Duffy</td>
+<td style="text-align: left;">Ken</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Roberto</td>
+<td style="text-align: left;">Tamburello</td>
+<td style="text-align: left;">Terri</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Rob</td>
+<td style="text-align: left;">Walters</td>
+<td style="text-align: left;">Roberto</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Gail</td>
+<td style="text-align: left;">Erickson</td>
+<td style="text-align: left;">Rob</td>
+</tr>
+</tbody>
+</table>
+<p>This is just like using a relative cell reference in Excel!</p>
+<p>Although this isn't a super helpful example, this demonstrates a case where we need to tell SQL which order to use to understand "previous" and "next" rows. There are technical reasons for it that we won't go into, but SQL will <em>not</em> assume any order unless we specify it.</p>
+<p>With this in mind, there are two types of windows that we can specify:</p>
+<ul>
+<li>Cumulative windows, which are things like "all rows up to this one" and are useful for calculating running totals</li>
+<li>Sliding windows, which are things like "the last three rows" and are useful for calculating moving averages</li>
+</ul>
+<h3 id="cumulative-windows-are-great-for-running-totals">Cumulative windows are great for running totals</h3>
+<p>One of the most common things to do in Excel is to calculate running totals.</p>
+<p>We can do this in SQL too by using <code>SUM</code> with the <code>OVER</code> clause, making sure that we specify a row order:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">    </span><span class="n">SalesOrderID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">TotalDue</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">TotalDue</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SalesOrderID</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">RunningTotal</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderHeader</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SalesOrderID</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">SalesOrderID</th>
+<th style="text-align: right;">TotalDue</th>
+<th style="text-align: right;">RunningTotal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">43659</td>
+<td style="text-align: right;">23153.2339</td>
+<td style="text-align: right;">23153.2339</td>
+</tr>
+<tr>
+<td style="text-align: right;">43660</td>
+<td style="text-align: right;">1457.3288</td>
+<td style="text-align: right;">24610.5627</td>
+</tr>
+<tr>
+<td style="text-align: right;">43661</td>
+<td style="text-align: right;">36865.8012</td>
+<td style="text-align: right;">61476.3639</td>
+</tr>
+<tr>
+<td style="text-align: right;">43662</td>
+<td style="text-align: right;">32474.9324</td>
+<td style="text-align: right;">93951.2963</td>
+</tr>
+<tr>
+<td style="text-align: right;">43663</td>
+<td style="text-align: right;">472.3108</td>
+<td style="text-align: right;">94423.6071</td>
+</tr>
+<tr>
+<td style="text-align: right;">43664</td>
+<td style="text-align: right;">27510.4109</td>
+<td style="text-align: right;">121934.0180</td>
+</tr>
+<tr>
+<td style="text-align: right;">43665</td>
+<td style="text-align: right;">16158.6961</td>
+<td style="text-align: right;">138092.7141</td>
+</tr>
+<tr>
+<td style="text-align: right;">43666</td>
+<td style="text-align: right;">5694.8564</td>
+<td style="text-align: right;">143787.5705</td>
+</tr>
+<tr>
+<td style="text-align: right;">43667</td>
+<td style="text-align: right;">6876.3649</td>
+<td style="text-align: right;">150663.9354</td>
+</tr>
+<tr>
+<td style="text-align: right;">43668</td>
+<td style="text-align: right;">40487.7233</td>
+<td style="text-align: right;">191151.6587</td>
+</tr>
+</tbody>
+</table>
+<p>There are a few ways that you could do this in Excel. The SQL approach is just like using the formula <code>=SUM($B$2:B2)</code> in cell <code>C2</code> and dragging it down (assuming that the <code>TotalDue</code> column is in column <code>B</code> and the <code>RunningTotal</code> column is in column <code>C</code>).</p>
+<p>In contrast, if we <em>didn't</em> specify <code>ORDER BY</code> inside the parentheses of the <code>OVER</code> clause, the <code>SUM</code> would be calculated over the entire table:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">    </span><span class="n">SalesOrderID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">TotalDue</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">TotalDue</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">RunningTotal</span><span class="w">  </span><span class="cm">/* This is now a misnomer */</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderHeader</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SalesOrderID</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">SalesOrderID</th>
+<th style="text-align: right;">TotalDue</th>
+<th style="text-align: right;">RunningTotal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">43659</td>
+<td style="text-align: right;">23153.2339</td>
+<td style="text-align: right;">123216786.1159</td>
+</tr>
+<tr>
+<td style="text-align: right;">43660</td>
+<td style="text-align: right;">1457.3288</td>
+<td style="text-align: right;">123216786.1159</td>
+</tr>
+<tr>
+<td style="text-align: right;">43661</td>
+<td style="text-align: right;">36865.8012</td>
+<td style="text-align: right;">123216786.1159</td>
+</tr>
+<tr>
+<td style="text-align: right;">43662</td>
+<td style="text-align: right;">32474.9324</td>
+<td style="text-align: right;">123216786.1159</td>
+</tr>
+<tr>
+<td style="text-align: right;">43663</td>
+<td style="text-align: right;">472.3108</td>
+<td style="text-align: right;">123216786.1159</td>
+</tr>
+<tr>
+<td style="text-align: right;">43664</td>
+<td style="text-align: right;">27510.4109</td>
+<td style="text-align: right;">123216786.1159</td>
+</tr>
+<tr>
+<td style="text-align: right;">43665</td>
+<td style="text-align: right;">16158.6961</td>
+<td style="text-align: right;">123216786.1159</td>
+</tr>
+<tr>
+<td style="text-align: right;">43666</td>
+<td style="text-align: right;">5694.8564</td>
+<td style="text-align: right;">123216786.1159</td>
+</tr>
+<tr>
+<td style="text-align: right;">43667</td>
+<td style="text-align: right;">6876.3649</td>
+<td style="text-align: right;">123216786.1159</td>
+</tr>
+<tr>
+<td style="text-align: right;">43668</td>
+<td style="text-align: right;">40487.7233</td>
+<td style="text-align: right;">123216786.1159</td>
+</tr>
+</tbody>
+</table>
+<p>This is quite a different result!</p>
+<h3 id="sliding-windows-are-great-for-moving-averages">Sliding windows are great for moving averages</h3>
+<p>Another common thing to do in Excel is to calculate moving averages.</p>
+<p>We can do this in SQL too by using <code>AVG</code> with the <code>OVER</code> clause, making sure that we specify a row order <em>and a window size</em>. The "window size" is some more new syntax, so let's go through an example to see how it works.</p>
+<p>The following query shows the first few orders in the <code>Sales.SalesOrderHeader</code> table with the moving average of the <code>TotalDue</code> column over the last three orders (based on the <code>SalesOrderID</code> column):</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">    </span><span class="n">SalesOrderID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">TotalDue</span><span class="p">,</span>
+<span class="w">    </span><span class="k">AVG</span><span class="p">(</span><span class="n">TotalDue</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SalesOrderID</span>
+<span class="w">        </span><span class="k">ROWS</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">PRECEDING</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="k">ROW</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">MovingAverage</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderHeader</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SalesOrderID</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">SalesOrderID</th>
+<th style="text-align: right;">TotalDue</th>
+<th style="text-align: right;">MovingAverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">43659</td>
+<td style="text-align: right;">23153.2339</td>
+<td style="text-align: right;">23153.2339</td>
+</tr>
+<tr>
+<td style="text-align: right;">43660</td>
+<td style="text-align: right;">1457.3288</td>
+<td style="text-align: right;">12305.2813</td>
+</tr>
+<tr>
+<td style="text-align: right;">43661</td>
+<td style="text-align: right;">36865.8012</td>
+<td style="text-align: right;">20492.1213</td>
+</tr>
+<tr>
+<td style="text-align: right;">43662</td>
+<td style="text-align: right;">32474.9324</td>
+<td style="text-align: right;">23599.3541</td>
+</tr>
+<tr>
+<td style="text-align: right;">43663</td>
+<td style="text-align: right;">472.3108</td>
+<td style="text-align: right;">23271.0148</td>
+</tr>
+<tr>
+<td style="text-align: right;">43664</td>
+<td style="text-align: right;">27510.4109</td>
+<td style="text-align: right;">20152.5513</td>
+</tr>
+<tr>
+<td style="text-align: right;">43665</td>
+<td style="text-align: right;">16158.6961</td>
+<td style="text-align: right;">14713.8059</td>
+</tr>
+<tr>
+<td style="text-align: right;">43666</td>
+<td style="text-align: right;">5694.8564</td>
+<td style="text-align: right;">16454.6544</td>
+</tr>
+<tr>
+<td style="text-align: right;">43667</td>
+<td style="text-align: right;">6876.3649</td>
+<td style="text-align: right;">9576.6391</td>
+</tr>
+<tr>
+<td style="text-align: right;">43668</td>
+<td style="text-align: right;">40487.7233</td>
+<td style="text-align: right;">17686.3148</td>
+</tr>
+</tbody>
+</table>
+<p>To compare this to Excel, this is just like using the formula <code>=AVERAGE(B2:B4)</code> in cell <code>C4</code> and dragging it down (assuming that the <code>TotalDue</code> column is in column <code>B</code> and the <code>MovingAverage</code> column is in column <code>C</code>).</p>
+<p>To define the sliding window (the window size), we wrote:</p>
+<div class="highlight"><pre><span></span><code><span class="k">ROWS</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">PRECEDING</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="k">ROW</span>
+</code></pre></div>
+<p>This sounds a bit funny, but should be fairly intuitive:</p>
+<ul>
+<li>The <code>ROWS BETWEEN</code> tells SQL that we're going to define a window based on the number of rows</li>
+<li>The <code>2 PRECEDING</code> means "two rows <em>before</em> the current row"</li>
+<li>The <code>CURRENT ROW</code> part is clear and means "the current row" 😝</li>
+</ul>
+<p>Altogether, this means "the last three rows".</p>
+<p>We could also look a few rows <em>after</em> the current row by using <code>FOLLOWING</code> instead of <code>PRECEDING</code>; the following window would be "the current row and the next two rows":</p>
+<div class="highlight"><pre><span></span><code><span class="k">ROWS</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="k">ROW</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">FOLLOWING</span>
+</code></pre></div>
+<p>In fact, we can also specify the cumulative window that we saw earlier by using <code>UNBOUNDED PRECEDING</code> (this is the default window size):</p>
+<div class="highlight"><pre><span></span><code><span class="k">ROWS</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="n">UNBOUNDED</span><span class="w"> </span><span class="n">PRECEDING</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="k">ROW</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The syntax for defining window functions is actually very flexible, and there are a few different ways to specify the window. The examples above are just the most common ways to do it to keep things simple for this course.</p>
+</div>
+<h2 id="define-common-windows-with-the-window-clause">Define common windows with the <code>WINDOW</code> clause</h2>
+<p>If you find yourself using the same window definition in multiple places of the same statement, you can define it once in the <code>WINDOW</code> clause and then reference it by name:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">10</span>
+<span class="w">    </span><span class="n">SalesOrderID</span><span class="p">,</span>
+<span class="w">    </span><span class="k">AVG</span><span class="p">(</span><span class="n">SubTotal</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="n">LastThreeSalesOrderIDs</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">SubTotalMovingAverage</span><span class="p">,</span>
+<span class="w">    </span><span class="k">AVG</span><span class="p">(</span><span class="n">TaxAmt</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="n">LastThreeSalesOrderIDs</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TaxAmtMovingAverage</span><span class="p">,</span>
+<span class="w">    </span><span class="k">AVG</span><span class="p">(</span><span class="n">Freight</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="n">LastThreeSalesOrderIDs</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">FreightMovingAverage</span><span class="p">,</span>
+<span class="w">    </span><span class="k">AVG</span><span class="p">(</span><span class="n">TotalDue</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="n">LastThreeSalesOrderIDs</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalDueMovingAverage</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderHeader</span>
+<span class="n">WINDOW</span><span class="w"> </span><span class="n">LastThreeSalesOrderIDs</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">SalesOrderID</span>
+<span class="w">    </span><span class="k">ROWS</span><span class="w"> </span><span class="k">BETWEEN</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="n">PRECEDING</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="k">CURRENT</span><span class="w"> </span><span class="k">ROW</span>
+<span class="p">)</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">SalesOrderID</th>
+<th style="text-align: right;">SubTotalMovingAverage</th>
+<th style="text-align: right;">TaxAmtMovingAverage</th>
+<th style="text-align: right;">FreightMovingAverage</th>
+<th style="text-align: right;">TotalDueMovingAverage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">43659</td>
+<td style="text-align: right;">20565.6206</td>
+<td style="text-align: right;">1971.5149</td>
+<td style="text-align: right;">616.0984</td>
+<td style="text-align: right;">23153.2339</td>
+</tr>
+<tr>
+<td style="text-align: right;">43660</td>
+<td style="text-align: right;">10929.9367</td>
+<td style="text-align: right;">1047.8816</td>
+<td style="text-align: right;">327.4630</td>
+<td style="text-align: right;">12305.2813</td>
+</tr>
+<tr>
+<td style="text-align: right;">43661</td>
+<td style="text-align: right;">18195.4507</td>
+<td style="text-align: right;">1749.8442</td>
+<td style="text-align: right;">546.8263</td>
+<td style="text-align: right;">20492.1213</td>
+</tr>
+<tr>
+<td style="text-align: right;">43662</td>
+<td style="text-align: right;">20951.0868</td>
+<td style="text-align: right;">2017.7275</td>
+<td style="text-align: right;">630.5398</td>
+<td style="text-align: right;">23599.3541</td>
+</tr>
+<tr>
+<td style="text-align: right;">43663</td>
+<td style="text-align: right;">20659.4888</td>
+<td style="text-align: right;">1989.7341</td>
+<td style="text-align: right;">621.7919</td>
+<td style="text-align: right;">23271.0148</td>
+</tr>
+<tr>
+<td style="text-align: right;">43664</td>
+<td style="text-align: right;">17894.8655</td>
+<td style="text-align: right;">1720.1416</td>
+<td style="text-align: right;">537.5442</td>
+<td style="text-align: right;">20152.5513</td>
+</tr>
+<tr>
+<td style="text-align: right;">43665</td>
+<td style="text-align: right;">13068.2796</td>
+<td style="text-align: right;">1253.7343</td>
+<td style="text-align: right;">391.7919</td>
+<td style="text-align: right;">14713.8059</td>
+</tr>
+<tr>
+<td style="text-align: right;">43666</td>
+<td style="text-align: right;">14613.9565</td>
+<td style="text-align: right;">1402.4365</td>
+<td style="text-align: right;">438.2614</td>
+<td style="text-align: right;">16454.6544</td>
+</tr>
+<tr>
+<td style="text-align: right;">43667</td>
+<td style="text-align: right;">8505.4476</td>
+<td style="text-align: right;">816.1459</td>
+<td style="text-align: right;">255.0456</td>
+<td style="text-align: right;">9576.6391</td>
+</tr>
+<tr>
+<td style="text-align: right;">43668</td>
+<td style="text-align: right;">15702.5759</td>
+<td style="text-align: right;">1511.4201</td>
+<td style="text-align: right;">472.3188</td>
+<td style="text-align: right;">17686.3148</td>
+</tr>
+</tbody>
+</table>
+<h2 id="you-can-use-partition-by-and-order-by-together">You can use <code>PARTITION BY</code> and <code>ORDER BY</code> together</h2>
+<p>Wherever you're defining a window, you can use <code>PARTITION BY</code> and <code>ORDER BY</code> together to define the window.</p>
+<p>There are a few use-cases for this, but a great one is to compute within-year running totals.</p>
+<p>Consider the following query which shows the quarterly sales totals for 2012 and 2013:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="k">YEAR</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">OrderYear</span><span class="p">,</span>
+<span class="w">    </span><span class="n">DATEPART</span><span class="p">(</span><span class="n">QUARTER</span><span class="p">,</span><span class="w"> </span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">OrderQuarter</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">TotalDue</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalSales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderHeader</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">YEAR</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span><span class="w"> </span><span class="mi">2013</span><span class="p">)</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="k">YEAR</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">),</span>
+<span class="w">    </span><span class="n">DATEPART</span><span class="p">(</span><span class="n">QUARTER</span><span class="p">,</span><span class="w"> </span><span class="n">OrderDate</span><span class="p">)</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">OrderYear</span><span class="p">,</span>
+<span class="w">    </span><span class="n">OrderQuarter</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">OrderYear</th>
+<th style="text-align: right;">OrderQuarter</th>
+<th style="text-align: right;">TotalSales</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9443736.8161</td>
+</tr>
+<tr>
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9935495.1729</td>
+</tr>
+<tr>
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">10164406.8281</td>
+</tr>
+<tr>
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8132061.4949</td>
+</tr>
+<tr>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8771886.3577</td>
+</tr>
+<tr>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">12225061.3830</td>
+</tr>
+<tr>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">14339319.1851</td>
+</tr>
+<tr>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">13629621.0374</td>
+</tr>
+</tbody>
+</table>
+<p>We'll whack this <a href="../subqueries/#common-tables-expressions-ctes-are-another-flavour-of-subquery">into a CTE</a> to make using it easier, and then we can use the <code>ORDER BY</code> and <code>PARTITION BY</code> clauses to calculate the running total for each year:</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">YearlySales</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="k">YEAR</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">OrderYear</span><span class="p">,</span>
+<span class="w">        </span><span class="n">DATEPART</span><span class="p">(</span><span class="n">QUARTER</span><span class="p">,</span><span class="w"> </span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">OrderQuarter</span><span class="p">,</span>
+<span class="w">        </span><span class="k">SUM</span><span class="p">(</span><span class="n">TotalDue</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalSales</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderHeader</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="k">YEAR</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">)</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">2012</span><span class="p">,</span><span class="w"> </span><span class="mi">2013</span><span class="p">)</span>
+<span class="w">    </span><span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">        </span><span class="k">YEAR</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">),</span>
+<span class="w">        </span><span class="n">DATEPART</span><span class="p">(</span><span class="n">QUARTER</span><span class="p">,</span><span class="w"> </span><span class="n">OrderDate</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">OrderYear</span><span class="p">,</span>
+<span class="w">    </span><span class="n">OrderQuarter</span><span class="p">,</span>
+<span class="w">    </span><span class="n">TotalSales</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">TotalSales</span><span class="p">)</span><span class="w"> </span><span class="n">OVER</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">PARTITION</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">OrderYear</span>
+<span class="w">        </span><span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">OrderQuarter</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">WithinYearRunningTotal</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">YearlySales</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span>
+<span class="w">    </span><span class="n">OrderYear</span><span class="p">,</span>
+<span class="w">    </span><span class="n">OrderQuarter</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">OrderYear</th>
+<th style="text-align: right;">OrderQuarter</th>
+<th style="text-align: right;">TotalSales</th>
+<th style="text-align: right;">WithinYearRunningTotal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9443736.8161</td>
+<td style="text-align: right;">9443736.8161</td>
+</tr>
+<tr>
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">9935495.1729</td>
+<td style="text-align: right;">19379231.9890</td>
+</tr>
+<tr>
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">10164406.8281</td>
+<td style="text-align: right;">29543638.8171</td>
+</tr>
+<tr>
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8132061.4949</td>
+<td style="text-align: right;">37675700.3120</td>
+</tr>
+<tr>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8771886.3577</td>
+<td style="text-align: right;">8771886.3577</td>
+</tr>
+<tr>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">12225061.3830</td>
+<td style="text-align: right;">20996947.7407</td>
+</tr>
+<tr>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">14339319.1851</td>
+<td style="text-align: right;">35336266.9258</td>
+</tr>
+<tr>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">13629621.0374</td>
+<td style="text-align: right;">48965887.9632</td>
+</tr>
+</tbody>
+</table>
+<p>Super simple!</p>
+<h2 id="further-reading">Further reading</h2>
+<p>Check out the <a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql">official Microsoft documentation</a> for more information on the <code>OVER</code> clause at:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql">https://learn.microsoft.com/en-us/sql/t-sql/queries/select-over-clause-transact-sql</a></li>
+</ul>
+<p>Microsoft SQL Server splits the window functions into two categories (other than aggregate functions), <em>ranking functions</em> and <em>analytic functions</em>:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/ranking-functions-transact-sql">https://learn.microsoft.com/en-us/sql/t-sql/functions/ranking-functions-transact-sql</a></li>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/functions/analytic-functions-transact-sql">https://learn.microsoft.com/en-us/sql/t-sql/functions/analytic-functions-transact-sql</a></li>
+</ul>
+<p>The video version of this content is also available at:</p>
+<ul>
+<li><a href="https://youtu.be/8e4mQfEDJDk">https://youtu.be/8e4mQfEDJDk</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../subqueries/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Subqueries 🧩">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Subqueries 🧩
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../logical-processing-order/" class="md-footer__link md-footer__link--next" aria-label="Next: Logical processing order 🎥">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Logical processing order 🎥
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.footer", "navigation.tabs", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>

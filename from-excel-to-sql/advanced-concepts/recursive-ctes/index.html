@@ -1,0 +1,5107 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="SQL scripts that demonstrate various features and concepts.">
+      
+      
+        <meta name="author" content="Bilbottom">
+      
+      
+        <link rel="canonical" href="https://github.com/Bilbottom/sql-learning-materials/docs/from-excel-to-sql/advanced-concepts/recursive-ctes/">
+      
+      
+        <link rel="prev" href="../correlated-subqueries/">
+      
+      
+        <link rel="next" href="../../../everything-about-joins/everything-about-joins/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.7">
+    
+    
+      
+        <title>Recursive CTEs 🔁 - SQL Learning Materials</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="default" data-md-color-accent="default">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#recursive-ctes" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="SQL Learning Materials" class="md-header__button md-logo" aria-label="SQL Learning Materials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL Learning Materials
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Recursive CTEs 🔁
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="default" data-md-color-accent="default"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="default" data-md-color-accent="default"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Bilbottom/sql-learning-materials/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../from-excel-to-sql/" class="md-tabs__link">
+          
+  
+  From Excel to SQL
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../everything-about-joins/everything-about-joins/" class="md-tabs__link">
+          
+  
+  Everything about joins
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../challenging-sql-problems/challenging-sql-problems/" class="md-tabs__link">
+          
+  
+  Challenging SQL problems
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SQL Learning Materials" class="md-nav__button md-logo" aria-label="SQL Learning Materials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SQL Learning Materials
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Bilbottom/sql-learning-materials/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    From Excel to SQL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            From Excel to SQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../from-excel-to-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    From Excel to SQL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/setting-the-context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setting the context 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/sql-syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL syntax 📚
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Main Concepts
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Main Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/select-and-from/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gimme data 📁
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/where/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Filtering 🚦
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/order-by/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ordering ⏬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/comments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comments 📝
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/top-and-distinct/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TOP and DISTINCT 🔝
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/data-types/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data types 🧱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/operators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operators ➕
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/conditionals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conditionals 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/date-formatting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Date formatting 📆
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/group-by/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aggregations 📊
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/rollup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pivot tables 🧮
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/join/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins 🔗
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/union/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unions 🧬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/subqueries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Subqueries 🧩
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/window-functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Window functions 📈
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/logical-processing-order/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logical processing order 🎥
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/style-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Style guide ✨
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Advanced Concepts
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced-aggregations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Advanced aggregations 🥇
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../correlated-subqueries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Correlated subqueries 🌐
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Recursive CTEs 🔁
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Recursive CTEs 🔁
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-recursive-cte-is-one-that-references-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      A recursive CTE is one that references itself
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A recursive CTE is one that references itself">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-shape-of-a-recursive-cte" class="md-nav__link">
+    <span class="md-ellipsis">
+      The "shape" of a recursive CTE
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The &#34;shape&#34; of a recursive CTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-anchor-select-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      The anchor SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-union-all-keywords" class="md-nav__link">
+    <span class="md-ellipsis">
+      The UNION ALL keywords
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-recursive-select-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      The recursive SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-termination-condition-in-the-where-clause" class="md-nav__link">
+    <span class="md-ellipsis">
+      The termination condition in the WHERE clause
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting it all together
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generating-data-with-a-recursive-cte" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating data with a recursive CTE
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generating data with a recursive CTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#there-are-two-excel-equivalents" class="md-nav__link">
+    <span class="md-ellipsis">
+      There are two Excel equivalents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#breaking-down-the-data-generation-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking down the data generation example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Breaking down the data generation example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-anchor-select-statement_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      The anchor SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-recursive-select-statement_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      The recursive SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-a-date-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating a date range
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flattening-hierarchical-data-with-a-recursive-cte" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flattening hierarchical data with a recursive CTE
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flattening hierarchical data with a recursive CTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-anchor-select-statement_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      The anchor SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-recursive-select-statement_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      The recursive SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#breaking-down-the-hierarchy-flattening-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking down the hierarchy flattening example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Breaking down the hierarchy flattening example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-anchor-is-the-ceo" class="md-nav__link">
+    <span class="md-ellipsis">
+      The anchor is the CEO
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-first-iteration-is-the-ceos-direct-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      The first iteration is the CEO's direct report(s)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-second-iteration-is-the-first-iterations-direct-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      The second iteration is the first iteration's direct report(s)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-third-iteration-is-the-second-iterations-direct-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      The third iteration is the second iteration's direct report(s)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-fourth-iteration-will-terminate-the-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      The fourth iteration will terminate the loop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-hierarchy-flattening-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other hierarchy flattening examples
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-quick-note-for-the-programmers" class="md-nav__link">
+    <span class="md-ellipsis">
+      A quick note for the programmers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#some-fun-recursive-cte-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Some fun recursive CTE examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Some fun recursive CTE examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-a-fibonacci-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating a Fibonacci sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-the-mandelbrot-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating the Mandelbrot set
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Further reading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#some-links-for-excel-stuff" class="md-nav__link">
+    <span class="md-ellipsis">
+      Some links for Excel stuff
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Everything about joins
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Everything about joins
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/everything-about-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Everything about joins
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Syntax
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Syntax
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/join-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Join fundamentals 🧩
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/more-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    More fundamentals 📚
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/timestamp-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "timestamp" join (ASOF) ⏱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/filtering-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "filtering" joins (SEMI, ANTI) 🚦
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/glue-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "glue" join (POSITIONAL) 📎
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/explosive-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "explosive" joins (LATERAL) 💥
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/sql-92-rant/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL-92 (ANSI-SQL join syntax) 📝
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Under the hood
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Under the hood
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/joins-with-an-index/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins with an index 🔍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/join-order/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Does join order matter? 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/loop-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loop joins 🔄
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/hash-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hash joins 🔑
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/merge-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Merge joins 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/range-intersection-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Range intersection joins 🎯
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Challenging SQL problems
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Challenging SQL problems
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/challenging-sql-problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Challenging SQL problems
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Problems
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Problems
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_1" id="__nav_4_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟤 Bronze Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            🟤 Bronze Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/temperature-anomaly-detection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Temperature anomaly detection 🔍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/outstanding-invoices/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Outstanding invoices 💱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/personalised-customer-emails/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Personalised customer emails 📨
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/suspicious-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Suspicious login activity 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/combining-dimensions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Combining dimensions 🔗
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/customer-churn/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer churn 🔄
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/fibonacci-sequence/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fibonacci sequence 🔢
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/uk-bank-holidays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UK bank holidays 📅
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_2" id="__nav_4_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ⚪ Silver Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            ⚪ Silver Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/metric-correlation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metric correlation 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/funnel-analytics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Funnel analytics ⏬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/bannable-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bannable login activity ❌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/bus-routes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus routes 🚌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/decoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decoding datelist ints 🔓
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/region-precipitation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Region precipitation ☔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/predicting-values/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Predicting values 🎱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/mandelbrot-set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mandelbrot set 🌀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/customer-sales-running-totals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer sales running totals 📈
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_3" id="__nav_4_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟡 Gold Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            🟡 Gold Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/loan-repayment-schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loan repayment schedule 💰
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/risk-invasions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Risk invasions 🛡️
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/supply-chain-network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supply chain network 🚛
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/encoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Encoding datelist ints 🔐
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/travel-plans/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Travel plans 🚂
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Solutions
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_1" id="__nav_4_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟤 Bronze Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            🟤 Bronze Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/temperature-anomaly-detection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Temperature anomaly detection 🔍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/outstanding-invoices/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Outstanding invoices 💱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/personalised-customer-emails/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Personalised customer emails 📨
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/suspicious-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Suspicious login activity 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/combining-dimensions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Combining dimensions 🔗
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/customer-churn/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer churn 🔄
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/fibonacci-sequence/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fibonacci sequence 🔢
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/uk-bank-holidays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UK bank holidays 📅
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_2" id="__nav_4_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ⚪ Silver Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            ⚪ Silver Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/metric-correlation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metric correlation 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/funnel-analytics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Funnel analytics ⏬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/bannable-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bannable login activity ❌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/bus-routes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus routes 🚌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/decoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decoding datelist ints 🔓
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/region-precipitation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Region precipitation ☔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/predicting-values/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Predicting values 🎱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/mandelbrot-set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mandelbrot set 🌀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/customer-sales-running-totals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer sales running totals 📈
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_3" id="__nav_4_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟡 Gold Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            🟡 Gold Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/loan-repayment-schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loan repayment schedule 💰
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/risk-invasions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Risk invasions 🛡️
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/supply-chain-network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supply chain network 🚛
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/encoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Encoding datelist ints 🔐
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/travel-plans/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Travel plans 🚂
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/topics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Questions by topic
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#a-recursive-cte-is-one-that-references-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      A recursive CTE is one that references itself
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="A recursive CTE is one that references itself">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-shape-of-a-recursive-cte" class="md-nav__link">
+    <span class="md-ellipsis">
+      The "shape" of a recursive CTE
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="The &#34;shape&#34; of a recursive CTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-anchor-select-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      The anchor SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-union-all-keywords" class="md-nav__link">
+    <span class="md-ellipsis">
+      The UNION ALL keywords
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-recursive-select-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      The recursive SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-termination-condition-in-the-where-clause" class="md-nav__link">
+    <span class="md-ellipsis">
+      The termination condition in the WHERE clause
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting it all together
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#generating-data-with-a-recursive-cte" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating data with a recursive CTE
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Generating data with a recursive CTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#there-are-two-excel-equivalents" class="md-nav__link">
+    <span class="md-ellipsis">
+      There are two Excel equivalents
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#breaking-down-the-data-generation-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking down the data generation example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Breaking down the data generation example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-anchor-select-statement_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      The anchor SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-recursive-select-statement_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      The recursive SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-a-date-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating a date range
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#flattening-hierarchical-data-with-a-recursive-cte" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flattening hierarchical data with a recursive CTE
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Flattening hierarchical data with a recursive CTE">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-anchor-select-statement_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      The anchor SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-recursive-select-statement_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      The recursive SELECT statement
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#breaking-down-the-hierarchy-flattening-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      Breaking down the hierarchy flattening example
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Breaking down the hierarchy flattening example">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-anchor-is-the-ceo" class="md-nav__link">
+    <span class="md-ellipsis">
+      The anchor is the CEO
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-first-iteration-is-the-ceos-direct-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      The first iteration is the CEO's direct report(s)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-second-iteration-is-the-first-iterations-direct-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      The second iteration is the first iteration's direct report(s)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-third-iteration-is-the-second-iterations-direct-reports" class="md-nav__link">
+    <span class="md-ellipsis">
+      The third iteration is the second iteration's direct report(s)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-fourth-iteration-will-terminate-the-loop" class="md-nav__link">
+    <span class="md-ellipsis">
+      The fourth iteration will terminate the loop
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#other-hierarchy-flattening-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Other hierarchy flattening examples
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-quick-note-for-the-programmers" class="md-nav__link">
+    <span class="md-ellipsis">
+      A quick note for the programmers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#some-fun-recursive-cte-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      Some fun recursive CTE examples
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Some fun recursive CTE examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#generating-a-fibonacci-sequence" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating a Fibonacci sequence
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#generating-the-mandelbrot-set" class="md-nav__link">
+    <span class="md-ellipsis">
+      Generating the Mandelbrot set
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Further reading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#some-links-for-excel-stuff" class="md-nav__link">
+    <span class="md-ellipsis">
+      Some links for Excel stuff
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="recursive-ctes">Recursive CTEs 🔁</h1>
+<div class="admonition success">
+<p class="admonition-title">Success</p>
+<p>Recursive CTEs are a great way to generate data and to flatten hierarchical data.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Recursive CTEs are advanced, and while there is <em>almost</em> an Excel equivalent for one type of recursive CTE, the Excel equivalent is not as flexible as the SQL version.</p>
+<p>Make sure that you are comfortable with the main concepts before diving into these advanced concepts.</p>
+</div>
+<h2 id="a-recursive-cte-is-one-that-references-itself">A recursive CTE is one that references itself</h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When you use a recursive CTE, it will keep "re-running"/iterating the CTE and adding new rows until the CTE is told to stop.</p>
+</div>
+<p>We saw in <a href="../../main-concepts/subqueries/#common-tables-expressions-ctes-are-another-flavour-of-subquery">the subqueries section</a> that subqueries can be defined in the <code>WITH</code> clause at the top of a query:</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">Orders</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="n">FORMAT</span><span class="p">(</span><span class="n">OrderDate</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;yyyy-MM&#39;</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">OrderMonth</span><span class="p">,</span>
+<span class="w">        </span><span class="n">TotalDue</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">Sales</span><span class="p">.</span><span class="n">SalesOrderHeader</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">OrderMonth</span><span class="p">,</span>
+<span class="w">    </span><span class="k">SUM</span><span class="p">(</span><span class="n">TotalDue</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">TotalSales</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Orders</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">OrderMonth</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;2013-01&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2013-02&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;2013-03&#39;</span><span class="p">)</span>
+<span class="k">GROUP</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">OrderMonth</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">OrderMonth</span>
+<span class="p">;</span>
+</code></pre></div>
+<p>The <code>Orders</code> CTE references the <code>Sales.SalesOrderHeader</code> table, which is then referenced by the <code>SELECT</code> statement.</p>
+<pre class="mermaid"><code>flowchart LR
+    A[Sales.SalesOrderHeader] --&gt; B[Orders] --&gt; C[SELECT]</code></pre>
+<p><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#guidelines-for-defining-and-using-recursive-common-table-expressions">A recursive CTE</a> is one that references itself. This sounds a bit weird, but it has two main uses:</p>
+<ol>
+<li>To generate rows of data, e.g. a sequence of numbers or a date range</li>
+<li>To flatten hierarchical data, e.g. an organisation's structure</li>
+</ol>
+<h3 id="the-shape-of-a-recursive-cte">The "shape" of a recursive CTE</h3>
+<p>We'll use the following recursive CTE as an example. For now, we'll just focus on how it's written and will explain what it does later.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">Numbers</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">Number</span>
+<span class="w">    </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Numbers</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">5</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Numbers</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table>
+<p>There are four parts to a recursive CTE:</p>
+<ol>
+<li>The anchor <code>SELECT</code> statement</li>
+<li>The <code>UNION ALL</code> keywords</li>
+<li>The recursive <code>SELECT</code> statement</li>
+<li>The termination condition in the <code>WHERE</code> clause</li>
+</ol>
+<h4 id="the-anchor-select-statement">The anchor <code>SELECT</code> statement</h4>
+<p>For a CTE to be able to reference itself, it has to have a starting point 😝</p>
+<p>In the example above, the starting point/anchor statement is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">Number</span>
+</code></pre></div>
+<p>This creates a single row with a single column whose value is <code>1</code>.</p>
+<h4 id="the-union-all-keywords">The <code>UNION ALL</code> keywords</h4>
+<p>A recursive CTE will append new rows to the bottom of the existing rows, so it needs a <code>UNION</code>.</p>
+<p>However, you <strong>must</strong> use <code>UNION ALL</code> and not just <code>UNION</code>. This is a requirement of SQL, not just a recommendation.</p>
+<h4 id="the-recursive-select-statement">The recursive <code>SELECT</code> statement</h4>
+<p>The recursive <code>SELECT</code> statement is the one that references the CTE itself.</p>
+<p>In the example above, the recursive statement is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Numbers</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">5</span>
+</code></pre></div>
+<p>The <code>SELECT</code> clause in this statement contains the logic that you want to apply with each "re-run"/iteration. In this case, we're adding <code>1</code> to the <code>Number</code> column.</p>
+<p>The <code>FROM</code> clause is explicitly where we reference the CTE itself. If we don't reference the CTE itself within the CTE, it won't be recursive 😄</p>
+<h4 id="the-termination-condition-in-the-where-clause">The termination condition in the <code>WHERE</code> clause</h4>
+<p>The <code>WHERE</code> clause in the recursive <code>SELECT</code> statement is the condition that tells the CTE to stop.</p>
+<p>This is <em>super</em> important: if you don't have a termination condition, the CTE will not stop running!</p>
+<p>In the example above, the termination condition is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">WHERE</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">5</span>
+</code></pre></div>
+<p>This tells the CTE to stop when the <code>Number</code> column is less than <code>5</code>. Note that, because of the way that SQL processes the <code>WHERE</code> clause, the last loop will be when <code>Number</code> is <code>4</code> but <em>the <code>SELECT</code> clause will still add <code>1</code> to it</em>, so the final number in <code>Number</code> will be <code>5</code>.</p>
+<h4 id="putting-it-all-together">Putting it all together</h4>
+<p>The query below is the same as the one above, but it has comments to show where each part of the recursive CTE is.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">Numbers</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="cm">/* 1. The anchor SELECT statement */</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">Number</span>
+<span class="w">    </span><span class="cm">/* 2. The UNION ALL keywords */</span>
+<span class="w">    </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">        </span><span class="cm">/* 3. The recursive SELECT statement */</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Numbers</span>
+<span class="w">        </span><span class="cm">/* 4. The termination condition in the WHERE clause */</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">5</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Numbers</span>
+<span class="p">;</span>
+</code></pre></div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>In some SQL flavours, you have to explicitly write <code>RECURSIVE</code> after the <code>WITH</code> keyword to tell SQL that the CTE is recursive.</p>
+<p>This is not necessary (and not even allowed!) in Microsoft SQL Server.</p>
+</div>
+<h2 id="generating-data-with-a-recursive-cte">Generating data with a recursive CTE</h2>
+<p>The simplest example of a recursive CTE is one that generates a sequence of numbers. This is precisely what the example above does!</p>
+<p>There's two Excel equivalents to this:</p>
+<h3 id="there-are-two-excel-equivalents">There are two Excel equivalents</h3>
+<ul>
+<li>The <strong>Series</strong> feature</li>
+<li>The <code>SEQUENCE</code> function</li>
+</ul>
+<p><a href="https://support.microsoft.com/en-gb/office/project-values-in-a-series-5311f5cf-149e-4d06-81dd-5aaad87e5400">The <strong>Series</strong> feature</a> is in the <strong>Home</strong> tab, in the <strong>Editing</strong> group, and is called <strong>Series...</strong> (under AutoSum). This is not available in the Web version of Excel; Microsoft recommend dragging <a href="https://support.microsoft.com/en-gb/office/fill-data-automatically-in-worksheet-cells-74e31bdd-d993-45da-aa82-35a236c5b5db">the fill handle instead</a>.</p>
+<p><a href="https://support.microsoft.com/en-gb/office/sequence-function-57467a98-57e0-4817-9f14-2eb78519ca90">The <code>SEQUENCE</code> function</a> is a function to do the same as the <strong>Series</strong> feature and the fill handle.</p>
+<h3 id="breaking-down-the-data-generation-example">Breaking down the data generation example</h3>
+<p>We've gone through <em>how</em> the query is written, but we haven't explained <em>what</em> it does.</p>
+<h4 id="the-anchor-select-statement_1">The anchor <code>SELECT</code> statement</h4>
+<p>The anchor <code>SELECT</code> statement is only run once, and it's the starting point for the CTE.</p>
+<p>In our example, the anchor <code>SELECT</code> statement is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">Number</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p>This is the starting point for the recursive CTE and is the first row to be passed to the recursive <code>SELECT</code> statement.</p>
+<h4 id="the-recursive-select-statement_1">The recursive <code>SELECT</code> statement</h4>
+<p>The first time that the recursive <code>SELECT</code> statement is run, it'll use the row from the anchor <code>SELECT</code> statement as its input; the rest of the time, it'll use the rows from the previous iteration (this will be significant in the hierarchy flattening example).</p>
+<p>As a reminder, the recursive <code>SELECT</code> statement is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Numbers</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="nb">Number</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">5</span>
+</code></pre></div>
+<p>We start with a single row from the anchor statement, so the first iteration of the recursive statement takes the <code>1</code> (which is less than <code>5</code>) and adds <code>1</code> to it to get <code>2</code>, so after this iteration the CTE is:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Number</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td>← anchor</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td>← 1st iteration</td>
+</tr>
+</tbody>
+</table>
+<p>Now the recursive <code>SELECT</code> statement is run again, but this time it uses the row from the first iteration as its input. It takes the <code>2</code> (which is less than <code>5</code>) and adds <code>1</code> to it to get <code>3</code>, so after this iteration the CTE is:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Number</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td>← anchor</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td>← 1st iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td>← 2nd iteration</td>
+</tr>
+</tbody>
+</table>
+<p>This process continues for a third iteration, using only the row from the previous iteration (the <code>3</code>):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Number</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td>← anchor</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td>← 1st iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td>← 2nd iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td>← 3rd iteration</td>
+</tr>
+</tbody>
+</table>
+<p>The process continues for a fourth iteration, using only the row from the previous iteration (the <code>4</code>):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Number</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td>← anchor</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td>← 1st iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td>← 2nd iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td>← 3rd iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td>← 4th iteration</td>
+</tr>
+</tbody>
+</table>
+<p>Finally, when the process attempts to run a fifth iteration using <code>5</code>, the <code>WHERE</code> condition <code>Number &lt; 5</code> is no longer met. No rows are generated during this iteration, so the CTE stops running and the final result is:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">Number</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+</tr>
+</tbody>
+</table>
+<h3 id="generating-a-date-range">Generating a date range</h3>
+<p>The same principle can be applied to generate a date range. The following query generates a date range from <code>2023-01-01</code> to <code>2023-01-31</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">Dates</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="k">CAST</span><span class="p">(</span><span class="s1">&#39;2023-01-01&#39;</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">DATE</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">Date</span>
+<span class="w">    </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">DATEADD</span><span class="p">(</span><span class="k">DAY</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="nb">Date</span><span class="p">)</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Dates</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="nb">Date</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="s1">&#39;2023-01-31&#39;</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Dates</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2023-01-01</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-02</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-03</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-04</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-05</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-06</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-07</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-08</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-09</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-10</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-11</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-12</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-13</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-14</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-15</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-16</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-17</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-18</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-19</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-20</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-21</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-22</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-23</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-24</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-25</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-26</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-27</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-28</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-29</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-30</td>
+</tr>
+<tr>
+<td style="text-align: left;">2023-01-31</td>
+</tr>
+</tbody>
+</table>
+<p>Can you think of any other ranges that you'd want to generate?</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>If you're working with a good data set, you'll hopefully have a table of dates that you can use instead of generating them (often called a "calendar table" or a "date dimension").</p>
+<p>However, not all data sets will have this, so generating a date range on the fly can be super useful!</p>
+</div>
+<h2 id="flattening-hierarchical-data-with-a-recursive-cte">Flattening hierarchical data with a recursive CTE</h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>There is no Excel equivalent to this, so wrapping your head around this will probably be a bit more difficult than the data generation example.</p>
+</div>
+<p>Flattening hierarchical data is the other main use of a recursive CTE.</p>
+<p>There are lots of examples of hierarchical data:</p>
+<ul>
+<li>An organisation's structure, where each employee has a manager and each manager has a manager</li>
+<li>A family tree, where each person has parents and each parent has parents</li>
+<li>A file system, where each file is in a folder and each folder is in a folder</li>
+</ul>
+<p>We'll focus on the first example: an organisation's structure.</p>
+<p>The AdventureWorks database doesn't have a table for an organisation's structure, so we'll use the following CTE (<a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#d-use-a-recursive-common-table-expression-to-display-multiple-levels-of-recursion">adapted from the Microsoft docs</a>) to create a table of employees and their managers:</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">Organisation</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w">   </span><span class="n">N</span><span class="s1">&#39;Ken Sánchez&#39;</span><span class="p">,</span><span class="w">    </span><span class="n">N</span><span class="s1">&#39;Chief Executive Officer&#39;</span><span class="p">,</span><span class="w">      </span><span class="k">NULL</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">273</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="s1">&#39;Brian Welcker&#39;</span><span class="p">,</span><span class="w">  </span><span class="n">N</span><span class="s1">&#39;Vice President of Sales&#39;</span><span class="p">,</span><span class="w">      </span><span class="mi">1</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">274</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="s1">&#39;Stephen Jiang&#39;</span><span class="p">,</span><span class="w">  </span><span class="n">N</span><span class="s1">&#39;North American Sales Manager&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">273</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">275</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="s1">&#39;Michael Blythe&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="s1">&#39;Sales Representative&#39;</span><span class="p">,</span><span class="w">         </span><span class="mi">274</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">276</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="s1">&#39;Linda Mitchell&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="s1">&#39;Sales Representative&#39;</span><span class="p">,</span><span class="w">         </span><span class="mi">274</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">285</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="s1">&#39;Syed Abbas&#39;</span><span class="p">,</span><span class="w">     </span><span class="n">N</span><span class="s1">&#39;Pacific Sales Manager&#39;</span><span class="p">,</span><span class="w">        </span><span class="mi">273</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">286</span><span class="p">,</span><span class="w"> </span><span class="n">N</span><span class="s1">&#39;Lynn Tsoflias&#39;</span><span class="p">,</span><span class="w">  </span><span class="n">N</span><span class="s1">&#39;Sales Representative&#39;</span><span class="p">,</span><span class="w">         </span><span class="mi">285</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="w">  </span><span class="n">N</span><span class="s1">&#39;David Bradley&#39;</span><span class="p">,</span><span class="w">  </span><span class="n">N</span><span class="s1">&#39;Marketing Manager&#39;</span><span class="p">,</span><span class="w">            </span><span class="mi">273</span><span class="p">),</span>
+<span class="w">        </span><span class="p">(</span><span class="mi">23</span><span class="p">,</span><span class="w">  </span><span class="n">N</span><span class="s1">&#39;Mary Gibson&#39;</span><span class="p">,</span><span class="w">    </span><span class="n">N</span><span class="s1">&#39;Marketing Specialist&#39;</span><span class="p">,</span><span class="w">         </span><span class="mi">16</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">V</span><span class="p">(</span><span class="n">EmployeeID</span><span class="p">,</span><span class="w"> </span><span class="n">Name</span><span class="p">,</span><span class="w"> </span><span class="n">Title</span><span class="p">,</span><span class="w"> </span><span class="n">ManagerID</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Organisation</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: left;">Title</th>
+<th style="text-align: right;">ManagerID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Ken Sánchez</td>
+<td style="text-align: left;">Chief Executive Officer</td>
+<td style="text-align: right;"><em>null</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Brian Welcker</td>
+<td style="text-align: left;">Vice President of Sales</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Stephen Jiang</td>
+<td style="text-align: left;">North American Sales Manager</td>
+<td style="text-align: right;">273</td>
+</tr>
+<tr>
+<td style="text-align: right;">275</td>
+<td style="text-align: left;">Michael Blythe</td>
+<td style="text-align: left;">Sales Representative</td>
+<td style="text-align: right;">274</td>
+</tr>
+<tr>
+<td style="text-align: right;">276</td>
+<td style="text-align: left;">Linda Mitchell</td>
+<td style="text-align: left;">Sales Representative</td>
+<td style="text-align: right;">274</td>
+</tr>
+<tr>
+<td style="text-align: right;">285</td>
+<td style="text-align: left;">Syed Abbas</td>
+<td style="text-align: left;">Pacific Sales Manager</td>
+<td style="text-align: right;">273</td>
+</tr>
+<tr>
+<td style="text-align: right;">286</td>
+<td style="text-align: left;">Lynn Tsoflias</td>
+<td style="text-align: left;">Sales Representative</td>
+<td style="text-align: right;">285</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">David Bradley</td>
+<td style="text-align: left;">Marketing Manager</td>
+<td style="text-align: right;">273</td>
+</tr>
+<tr>
+<td style="text-align: right;">23</td>
+<td style="text-align: left;">Mary Gibson</td>
+<td style="text-align: left;">Marketing Specialist</td>
+<td style="text-align: right;">16</td>
+</tr>
+</tbody>
+</table>
+<p>This table has the employee ID and their manager's ID, so it would be quite easy to write a query to get the manager's name for each employee -- just do a self-join:</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">Organisation</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(...)</span>
+
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">Employee</span><span class="p">.</span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Employee</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Employee</span><span class="p">.</span><span class="n">ManagerID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Manager</span><span class="p">.</span><span class="n">Name</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">ManagerName</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Organisation</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Employee</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Organisation</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Manager</span>
+<span class="w">        </span><span class="k">ON</span><span class="w"> </span><span class="n">Employee</span><span class="p">.</span><span class="n">ManagerID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Manager</span><span class="p">.</span><span class="n">EmployeeID</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: left;">Name</th>
+<th style="text-align: right;">ManagerID</th>
+<th style="text-align: left;">ManagerName</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Ken Sánchez</td>
+<td style="text-align: right;"><em>null</em></td>
+<td style="text-align: left;"><em>null</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Brian Welcker</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Ken Sánchez</td>
+</tr>
+<tr>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Stephen Jiang</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Brian Welcker</td>
+</tr>
+<tr>
+<td style="text-align: right;">275</td>
+<td style="text-align: left;">Michael Blythe</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Stephen Jiang</td>
+</tr>
+<tr>
+<td style="text-align: right;">276</td>
+<td style="text-align: left;">Linda Mitchell</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Stephen Jiang</td>
+</tr>
+<tr>
+<td style="text-align: right;">285</td>
+<td style="text-align: left;">Syed Abbas</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Brian Welcker</td>
+</tr>
+<tr>
+<td style="text-align: right;">286</td>
+<td style="text-align: left;">Lynn Tsoflias</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: left;">Syed Abbas</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">David Bradley</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Brian Welcker</td>
+</tr>
+<tr>
+<td style="text-align: right;">23</td>
+<td style="text-align: left;">Mary Gibson</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">David Bradley</td>
+</tr>
+</tbody>
+</table>
+<p>What if we wanted to know the hierarchy level of each employee (with the CEO as <code>1</code>)?</p>
+<p>Well, we could try some subqueries and unions, but this would be <em>a lot</em> to write:</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">Organisation</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(...),</span>
+
+<span class="n">Level1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">EmployeeLevel</span><span class="p">,</span>
+<span class="w">        </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">        </span><span class="n">ManagerID</span><span class="p">,</span>
+<span class="w">        </span><span class="n">Name</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">Organisation</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">ManagerID</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w">  </span><span class="cm">/* The CEO */</span>
+<span class="p">),</span>
+
+<span class="n">Level2</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="mi">2</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">EmployeeLevel</span><span class="p">,</span>
+<span class="w">        </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">        </span><span class="n">ManagerID</span><span class="p">,</span>
+<span class="w">        </span><span class="n">Name</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">Organisation</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">ManagerID</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">EmployeeID</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Level1</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="p">),</span>
+
+<span class="n">Level3</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="mi">3</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">EmployeeLevel</span><span class="p">,</span>
+<span class="w">        </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">        </span><span class="n">ManagerID</span><span class="p">,</span>
+<span class="w">        </span><span class="n">Name</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">Organisation</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">ManagerID</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">EmployeeID</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Level2</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="p">),</span>
+
+<span class="n">Level4</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="mi">4</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">EmployeeLevel</span><span class="p">,</span>
+<span class="w">        </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">        </span><span class="n">ManagerID</span><span class="p">,</span>
+<span class="w">        </span><span class="n">Name</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">Organisation</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">ManagerID</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">EmployeeID</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Level3</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Level1</span>
+<span class="k">UNION</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Level2</span>
+<span class="k">UNION</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Level3</span>
+<span class="k">UNION</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">Level4</span>
+<span class="p">;</span>
+</code></pre></div>
+<p>Not only is this a lot to write, but it's also not very flexible. We needed to know how many levels there were in the hierarchy to write this query, and if the hierarchy changes, we'd need to change the query.</p>
+<p>This is where a recursive CTE comes in handy!</p>
+<p>The recursive CTE will keep going until it runs out of rows, so it doesn't need to know how many levels there are in the hierarchy beforehand.</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">Organisation</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(...),</span>
+
+<span class="n">Levels</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">EmployeeLevel</span><span class="p">,</span>
+<span class="w">            </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">            </span><span class="n">ManagerID</span><span class="p">,</span>
+<span class="w">            </span><span class="n">Name</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Organisation</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">ManagerID</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w">  </span><span class="cm">/* The CEO */</span>
+<span class="w">    </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="n">Levels</span><span class="p">.</span><span class="n">EmployeeLevel</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">            </span><span class="n">Organisation</span><span class="p">.</span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">            </span><span class="n">Organisation</span><span class="p">.</span><span class="n">ManagerID</span><span class="p">,</span>
+<span class="w">            </span><span class="n">Organisation</span><span class="p">.</span><span class="n">Name</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Organisation</span>
+<span class="w">            </span><span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Levels</span>
+<span class="w">                </span><span class="k">ON</span><span class="w"> </span><span class="n">Organisation</span><span class="p">.</span><span class="n">ManagerID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Levels</span><span class="p">.</span><span class="n">EmployeeID</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Levels</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeLevel</th>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: right;">ManagerID</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><em>null</em></td>
+<td style="text-align: left;">Ken Sánchez</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Brian Welcker</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Stephen Jiang</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Syed Abbas</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">David Bradley</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">Mary Gibson</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">286</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: left;">Lynn Tsoflias</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Michael Blythe</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">276</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Linda Mitchell</td>
+</tr>
+</tbody>
+</table>
+<p>This query is definitely shorter than the subquery/union version, but it's more complex than the data generation example; there are a few differences to call out and explain.</p>
+<h3 id="the-anchor-select-statement_2">The anchor <code>SELECT</code> statement</h3>
+<p>The anchor statement this time is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">EmployeeLevel</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ManagerID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Organisation</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">ManagerID</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NULL</span><span class="w">  </span><span class="cm">/* The CEO */</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeLevel</th>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: right;">ManagerID</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><em>null</em></td>
+<td style="text-align: left;">Ken Sánchez</td>
+</tr>
+</tbody>
+</table>
+<p>In contrast to the data generation example, we want to start with an actual employee. In this case, we want to start at the top of the hierarchy (the CEO) which is why we:</p>
+<ul>
+<li>Select from the <code>Organisation</code> table/CTE</li>
+<li>Filter for the row where <code>ManagerID</code> is <code>NULL</code></li>
+</ul>
+<p>This <code>WHERE</code> clause is just to set up the anchor node; this clause <em>is not</em> used in the recursive <code>SELECT</code> statement.</p>
+<p>We do, however, set the starting point for the <code>EmployeeLevel</code> column to <code>1</code> in the anchor statement.</p>
+<h3 id="the-recursive-select-statement_2">The recursive <code>SELECT</code> statement</h3>
+<p>The recursive statement is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">Levels</span><span class="p">.</span><span class="n">EmployeeLevel</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Organisation</span><span class="p">.</span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Organisation</span><span class="p">.</span><span class="n">ManagerID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Organisation</span><span class="p">.</span><span class="n">Name</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Organisation</span>
+<span class="w">    </span><span class="k">INNER</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Levels</span>
+<span class="w">        </span><span class="k">ON</span><span class="w"> </span><span class="n">Organisation</span><span class="p">.</span><span class="n">ManagerID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Levels</span><span class="p">.</span><span class="n">EmployeeID</span>
+</code></pre></div>
+<p>The <code>Levels.EmployeeLevel + 1</code> line should be fairly intuitive: it's just adding <code>1</code> to the <code>EmployeeLevel</code> column from the previous iteration, just like in the data generation example.</p>
+<p>The <code>INNER JOIN</code> clause is where the magic happens. This is actually doing two things for us:</p>
+<ol>
+<li>It's how we know which rows to use from the <code>Organisation</code> table/CTE for this iteration. This example also shows that the recursive CTE can be referenced in a <code>JOIN</code> clause instead of just in the <code>FROM</code> clause.</li>
+<li>By being an <code>INNER JOIN</code>, it's also the termination condition for the CTE! When there are no more rows to join, the CTE will stop running. This is why we don't need a <code>WHERE</code> clause in the recursive <code>SELECT</code> statement.</li>
+</ol>
+<h3 id="breaking-down-the-hierarchy-flattening-example">Breaking down the hierarchy flattening example</h3>
+<p>This is still probably a bit confusing, so let's break it down with the first few iterations.</p>
+<h4 id="the-anchor-is-the-ceo">The anchor is the CEO</h4>
+<p>We've already seen that the anchor statement gives us the CEO:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeLevel</th>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: right;">ManagerID</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><em>null</em></td>
+<td style="text-align: left;">Ken Sánchez</td>
+</tr>
+</tbody>
+</table>
+<h4 id="the-first-iteration-is-the-ceos-direct-reports">The first iteration is the CEO's direct report(s)</h4>
+<p>The first iteration of the recursive statement will use the CEO's <code>EmployeeID</code> to find the employees who report to the CEO, and it'll increment the <code>EmployeeLevel</code> by <code>1</code>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeLevel</th>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: right;">ManagerID</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Brian Welcker</td>
+</tr>
+</tbody>
+</table>
+<p>At this point, the CTE will be:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeLevel</th>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: right;">ManagerID</th>
+<th style="text-align: left;">Name</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><em>null</em></td>
+<td style="text-align: left;">Ken Sánchez</td>
+<td>← anchor</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Brian Welcker</td>
+<td>← 1st iteration</td>
+</tr>
+</tbody>
+</table>
+<h4 id="the-second-iteration-is-the-first-iterations-direct-reports">The second iteration is the first iteration's direct report(s)</h4>
+<p>The second iteration will use the output of the first iteration, namely Brian Welcker, and find their direct reports (and increment the <code>EmployeeLevel</code> by <code>1</code>):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeLevel</th>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: right;">ManagerID</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Stephen Jiang</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Syed Abbas</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">David Bradley</td>
+</tr>
+</tbody>
+</table>
+<p>At this point, the CTE will be:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeLevel</th>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: right;">ManagerID</th>
+<th style="text-align: left;">Name</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><em>null</em></td>
+<td style="text-align: left;">Ken Sánchez</td>
+<td>← anchor</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Brian Welcker</td>
+<td>← 1st iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Stephen Jiang</td>
+<td>← 2nd iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Syed Abbas</td>
+<td>← 2nd iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">David Bradley</td>
+<td>← 2nd iteration</td>
+</tr>
+</tbody>
+</table>
+<p>This is a case that we haven't seen yet: this iteration has produced multiple rows. This means that <em>all three</em> of these rows will be used in the next iteration.</p>
+<h4 id="the-third-iteration-is-the-second-iterations-direct-reports">The third iteration is the second iteration's direct report(s)</h4>
+<p>The third iteration will use the output of the second iteration, namely Stephen Jiang, Syed Abbas, and David Bradley, and find their direct reports (and increment the <code>EmployeeLevel</code> by <code>1</code>):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeLevel</th>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: right;">ManagerID</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">Mary Gibson</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">286</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: left;">Lynn Tsoflias</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Michael Blythe</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">276</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Linda Mitchell</td>
+</tr>
+</tbody>
+</table>
+<p>At this point, the CTE will be:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeLevel</th>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: right;">ManagerID</th>
+<th style="text-align: left;">Name</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><em>null</em></td>
+<td style="text-align: left;">Ken Sánchez</td>
+<td>← anchor</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Brian Welcker</td>
+<td>← 1st iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Stephen Jiang</td>
+<td>← 2nd iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Syed Abbas</td>
+<td>← 2nd iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">David Bradley</td>
+<td>← 2nd iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">Mary Gibson</td>
+<td>← 3rd iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">286</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: left;">Lynn Tsoflias</td>
+<td>← 3rd iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Michael Blythe</td>
+<td>← 3rd iteration</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">276</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Linda Mitchell</td>
+<td>← 3rd iteration</td>
+</tr>
+</tbody>
+</table>
+<h4 id="the-fourth-iteration-will-terminate-the-loop">The fourth iteration will terminate the loop</h4>
+<p>When the fourth iteration is run, it will look for the direct reports of Mary Gibson, Lynn Tsoflias, Michael Blythe, and Linda Mitchell by using the <code>INNER JOIN</code>.</p>
+<p>Since there are no direct reports for these employees, the <code>INNER JOIN</code> will not produce any rows, and the CTE will stop running!</p>
+<p>Therefore, the final result is:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeLevel</th>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: right;">ManagerID</th>
+<th style="text-align: left;">Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><em>null</em></td>
+<td style="text-align: left;">Ken Sánchez</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Brian Welcker</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Stephen Jiang</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">Syed Abbas</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">273</td>
+<td style="text-align: left;">David Bradley</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">Mary Gibson</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">286</td>
+<td style="text-align: right;">285</td>
+<td style="text-align: left;">Lynn Tsoflias</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Michael Blythe</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">276</td>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Linda Mitchell</td>
+</tr>
+</tbody>
+</table>
+<h3 id="other-hierarchy-flattening-examples">Other hierarchy flattening examples</h3>
+<p>If you want to see some more hierarchy flattening examples, check out the Microsoft documentation's examples (it has some good ones!):</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#use-a-recursive-common-table-expression-to-display-two-levels-of-recursion">https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#use-a-recursive-common-table-expression-to-display-two-levels-of-recursion</a></li>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#use-a-recursive-common-table-expression-to-display-a-hierarchical-list">https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#use-a-recursive-common-table-expression-to-display-a-hierarchical-list</a></li>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#e-use-a-common-table-expression-to-selectively-step-through-a-recursive-relationship-in-a-select-statement">https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#e-use-a-common-table-expression-to-selectively-step-through-a-recursive-relationship-in-a-select-statement</a></li>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#h-use-multiple-anchor-and-recursive-members">https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#h-use-multiple-anchor-and-recursive-members</a></li>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#bkmkUsingAnalyticalFunctionsInARecursiveCTE">https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#bkmkUsingAnalyticalFunctionsInARecursiveCTE</a></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You might be thinking: <em>what if the recursive CTE never hits the termination condition</em>?</p>
+<p>Microsoft SQL Server will stop the CTE after 100 iterations, so you won't get an infinite loop.</p>
+<p>You might then be thinking: <em>what if I want more than 100 iterations</em>?</p>
+<p>Microsoft SQL Server allows you to change this with the <code>MAXRECURSION</code> option:</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">SomeRecursiveCTE</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(...)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">SomeRecursiveCTE</span>
+<span class="k">OPTION</span><span class="w"> </span><span class="p">(</span><span class="n">MAXRECURSION</span><span class="w"> </span><span class="mi">500</span><span class="p">)</span>
+<span class="p">;</span>
+</code></pre></div>
+</div>
+<h2 id="a-quick-note-for-the-programmers">A quick note for the programmers</h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you've never done any programming before, skip this bit!</p>
+</div>
+<p>If you've used other programming languages, you might be thinking that recursive CTEs are similar to loops. You'd be right!</p>
+<p>Just like how correlated subqueries can be thought of as <a href="https://en.wikipedia.org/wiki/For_loop">for-loops</a>, recursive CTEs can be thought of as <a href="https://en.wikipedia.org/wiki/While_loop">while-loops</a> that run while a condition is met.</p>
+<p>This is why recursive CTEs can be slow if used inappropriately: they can run a lot of times!</p>
+<h2 id="some-fun-recursive-cte-examples">Some fun recursive CTE examples</h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>These are just for fun. If you're not comfortable with the main concepts, don't worry about these examples!</p>
+</div>
+<h3 id="generating-a-fibonacci-sequence">Generating a Fibonacci sequence</h3>
+<p>The Fibonacci sequence is a sequence of numbers where each number is the sum of the two preceding ones. For example, the first few terms are:</p>
+<ul>
+<li><strong>1</strong></li>
+<li><strong>1</strong></li>
+<li><strong>2</strong> (1 + 1)</li>
+<li><strong>3</strong> (1 + 2)</li>
+<li><strong>5</strong> (2 + 3)</li>
+<li><strong>8</strong> (3 + 5)</li>
+<li>...</li>
+</ul>
+<p>To generate the first <code>10</code> terms of the Fibonacci sequence, you can use the following recursive CTE:</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span><span class="w"> </span><span class="n">Fibonacci</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">n</span><span class="p">,</span>
+<span class="w">            </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">f_n</span><span class="p">,</span><span class="w">  </span><span class="cm">/* f(n) */</span>
+<span class="w">            </span><span class="mi">0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">f_n_1</span><span class="w">   </span><span class="cm">/* f(n - 1) */</span>
+<span class="w">    </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">        </span><span class="k">SELECT</span>
+<span class="w">            </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">n</span><span class="p">,</span>
+<span class="w">            </span><span class="n">f_n</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">f_n_1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">f_n</span><span class="p">,</span>
+<span class="w">            </span><span class="n">f_n</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">f_n_1</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Fibonacci</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">10</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="n">n</span><span class="p">,</span>
+<span class="w">    </span><span class="n">f_n</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Fibonacci</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">n</th>
+<th style="text-align: right;">f_n</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">21</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">34</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">55</td>
+</tr>
+</tbody>
+</table>
+<h3 id="generating-the-mandelbrot-set">Generating the Mandelbrot set</h3>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This example is taken from Graeme Job at:</p>
+<ul>
+<li><a href="https://thedailywtf.com/articles/Stupid-Coding-Tricks-The-TSQL-Madlebrot">https://thedailywtf.com/articles/Stupid-Coding-Tricks-The-TSQL-Madlebrot</a></li>
+</ul>
+</div>
+<p>The following beauty produces <a href="https://en.wikipedia.org/wiki/Mandelbrot_set">the Mandelbrot set</a>, a well-known <a href="https://en.wikipedia.org/wiki/Fractal">fractal</a>, and <a href="https://thedailywtf.com/articles/Stupid-Coding-Tricks-The-TSQL-Madlebrot">the SQL is written by Graeme Job</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span>
+<span class="w">    </span><span class="n">XGEN</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">IX</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="cm">/* X DIM GENERATOR */</span>
+<span class="w">            </span><span class="k">SELECT</span>
+<span class="w">                </span><span class="k">CAST</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">.</span><span class="mi">2</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">FLOAT</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">X</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">IX</span>
+<span class="w">        </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">            </span><span class="k">SELECT</span>
+<span class="w">                </span><span class="k">CAST</span><span class="p">(</span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">031</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">FLOAT</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">X</span><span class="p">,</span>
+<span class="w">                </span><span class="n">IX</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">IX</span>
+<span class="w">            </span><span class="k">FROM</span><span class="w"> </span><span class="n">XGEN</span>
+<span class="w">            </span><span class="k">WHERE</span><span class="w"> </span><span class="n">IX</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">YGEN</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">IY</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="cm">/* Y DIM GENERATOR */</span>
+<span class="w">            </span><span class="k">SELECT</span>
+<span class="w">                </span><span class="k">CAST</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">.</span><span class="mi">5</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">FLOAT</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">IY</span>
+<span class="w">        </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">            </span><span class="k">SELECT</span>
+<span class="w">                </span><span class="k">CAST</span><span class="p">(</span><span class="n">Y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">0</span><span class="p">.</span><span class="mi">031</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">FLOAT</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span>
+<span class="w">                </span><span class="n">IY</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">IY</span>
+<span class="w">            </span><span class="k">FROM</span><span class="w"> </span><span class="n">YGEN</span>
+<span class="w">            </span><span class="k">WHERE</span><span class="w"> </span><span class="n">IY</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span>
+<span class="w">    </span><span class="p">),</span>
+<span class="w">    </span><span class="n">Z</span><span class="p">(</span><span class="n">IX</span><span class="p">,</span><span class="w"> </span><span class="n">IY</span><span class="p">,</span><span class="w"> </span><span class="n">CX</span><span class="p">,</span><span class="w"> </span><span class="n">CY</span><span class="p">,</span><span class="w"> </span><span class="n">X</span><span class="p">,</span><span class="w"> </span><span class="n">Y</span><span class="p">,</span><span class="w"> </span><span class="n">I</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="cm">/* Z POINT ITERATOR */</span>
+<span class="w">            </span><span class="k">SELECT</span>
+<span class="w">                </span><span class="n">IX</span><span class="p">,</span>
+<span class="w">                </span><span class="n">IY</span><span class="p">,</span>
+<span class="w">                </span><span class="n">X</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">CX</span><span class="p">,</span>
+<span class="w">                </span><span class="n">Y</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">CY</span><span class="p">,</span>
+<span class="w">                </span><span class="n">X</span><span class="p">,</span>
+<span class="w">                </span><span class="n">Y</span><span class="p">,</span>
+<span class="w">                </span><span class="mi">0</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">I</span>
+<span class="w">            </span><span class="k">FROM</span><span class="w"> </span><span class="n">XGEN</span><span class="p">,</span><span class="w"> </span><span class="n">YGEN</span>
+<span class="w">        </span><span class="k">UNION</span><span class="w"> </span><span class="k">ALL</span>
+<span class="w">            </span><span class="k">SELECT</span>
+<span class="w">                </span><span class="n">IX</span><span class="p">,</span>
+<span class="w">                </span><span class="n">IY</span><span class="p">,</span>
+<span class="w">                </span><span class="n">CX</span><span class="p">,</span>
+<span class="w">                </span><span class="n">CY</span><span class="p">,</span>
+<span class="w">                </span><span class="n">X</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">CX</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">X</span><span class="p">,</span>
+<span class="w">                </span><span class="n">Y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">CY</span><span class="p">,</span>
+<span class="w">                </span><span class="n">I</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<span class="w">            </span><span class="k">FROM</span><span class="w"> </span><span class="n">Z</span>
+<span class="w">            </span><span class="k">WHERE</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">X</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">Y</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">16</span>
+<span class="w">              </span><span class="k">AND</span><span class="w"> </span><span class="n">I</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">100</span>
+<span class="w">    </span><span class="p">)</span>
+
+<span class="k">SELECT</span>
+<span class="w">    </span><span class="k">TRANSLATE</span><span class="p">(</span>
+<span class="w">        </span><span class="p">(</span>
+<span class="w">            </span><span class="n">X0</span><span class="w"> </span><span class="o">+</span><span class="n">X1</span><span class="w"> </span><span class="o">+</span><span class="n">X2</span><span class="w"> </span><span class="o">+</span><span class="n">X3</span><span class="w"> </span><span class="o">+</span><span class="n">X4</span><span class="w"> </span><span class="o">+</span><span class="n">X5</span><span class="w"> </span><span class="o">+</span><span class="n">X6</span><span class="w"> </span><span class="o">+</span><span class="n">X7</span><span class="w"> </span><span class="o">+</span><span class="n">X8</span><span class="w"> </span><span class="o">+</span><span class="n">X9</span><span class="w"> </span><span class="o">+</span><span class="n">X10</span><span class="o">+</span><span class="n">X11</span><span class="o">+</span><span class="n">X12</span><span class="o">+</span><span class="n">X13</span><span class="o">+</span><span class="n">X14</span><span class="o">+</span><span class="n">X15</span><span class="o">+</span><span class="n">X16</span><span class="o">+</span><span class="n">X17</span><span class="o">+</span><span class="n">X18</span><span class="o">+</span><span class="n">X19</span><span class="o">+</span>
+<span class="w">            </span><span class="n">X20</span><span class="o">+</span><span class="n">X21</span><span class="o">+</span><span class="n">X22</span><span class="o">+</span><span class="n">X23</span><span class="o">+</span><span class="n">X24</span><span class="o">+</span><span class="n">X25</span><span class="o">+</span><span class="n">X26</span><span class="o">+</span><span class="n">X27</span><span class="o">+</span><span class="n">X28</span><span class="o">+</span><span class="n">X29</span><span class="o">+</span><span class="n">X30</span><span class="o">+</span><span class="n">X31</span><span class="o">+</span><span class="n">X32</span><span class="o">+</span><span class="n">X33</span><span class="o">+</span><span class="n">X34</span><span class="o">+</span><span class="n">X35</span><span class="o">+</span><span class="n">X36</span><span class="o">+</span><span class="n">X37</span><span class="o">+</span><span class="n">X38</span><span class="o">+</span><span class="n">X39</span><span class="o">+</span>
+<span class="w">            </span><span class="n">X40</span><span class="o">+</span><span class="n">X41</span><span class="o">+</span><span class="n">X42</span><span class="o">+</span><span class="n">X43</span><span class="o">+</span><span class="n">X44</span><span class="o">+</span><span class="n">X45</span><span class="o">+</span><span class="n">X46</span><span class="o">+</span><span class="n">X47</span><span class="o">+</span><span class="n">X48</span><span class="o">+</span><span class="n">X49</span><span class="o">+</span><span class="n">X50</span><span class="o">+</span><span class="n">X51</span><span class="o">+</span><span class="n">X52</span><span class="o">+</span><span class="n">X53</span><span class="o">+</span><span class="n">X54</span><span class="o">+</span><span class="n">X55</span><span class="o">+</span><span class="n">X56</span><span class="o">+</span><span class="n">X57</span><span class="o">+</span><span class="n">X58</span><span class="o">+</span><span class="n">X59</span><span class="o">+</span>
+<span class="w">            </span><span class="n">X60</span><span class="o">+</span><span class="n">X61</span><span class="o">+</span><span class="n">X62</span><span class="o">+</span><span class="n">X63</span><span class="o">+</span><span class="n">X64</span><span class="o">+</span><span class="n">X65</span><span class="o">+</span><span class="n">X66</span><span class="o">+</span><span class="n">X67</span><span class="o">+</span><span class="n">X68</span><span class="o">+</span><span class="n">X69</span><span class="o">+</span><span class="n">X70</span><span class="o">+</span><span class="n">X71</span><span class="o">+</span><span class="n">X72</span><span class="o">+</span><span class="n">X73</span><span class="o">+</span><span class="n">X74</span><span class="o">+</span><span class="n">X75</span><span class="o">+</span><span class="n">X76</span><span class="o">+</span><span class="n">X77</span><span class="o">+</span><span class="n">X78</span><span class="o">+</span><span class="n">X79</span><span class="o">+</span>
+<span class="w">            </span><span class="n">X80</span><span class="o">+</span><span class="n">X81</span><span class="o">+</span><span class="n">X82</span><span class="o">+</span><span class="n">X83</span><span class="o">+</span><span class="n">X84</span><span class="o">+</span><span class="n">X85</span><span class="o">+</span><span class="n">X86</span><span class="o">+</span><span class="n">X87</span><span class="o">+</span><span class="n">X88</span><span class="o">+</span><span class="n">X89</span><span class="o">+</span><span class="n">X90</span><span class="o">+</span><span class="n">X91</span><span class="o">+</span><span class="n">X92</span><span class="o">+</span><span class="n">X93</span><span class="o">+</span><span class="n">X94</span><span class="o">+</span><span class="n">X95</span><span class="o">+</span><span class="n">X96</span><span class="o">+</span><span class="n">X97</span><span class="o">+</span><span class="n">X98</span><span class="o">+</span><span class="n">X99</span>
+<span class="w">        </span><span class="p">),</span>
+<span class="w">        </span><span class="s1">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span><span class="p">,</span>
+<span class="w">        </span><span class="s1">&#39; .,,,-----++++%%%%@@@@### &#39;</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span>
+<span class="w">        </span><span class="s1">&#39;X&#39;</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="k">CAST</span><span class="p">(</span><span class="n">IX</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">IX</span><span class="p">,</span>
+<span class="w">        </span><span class="n">IY</span><span class="p">,</span>
+<span class="w">        </span><span class="k">SUBSTRING</span><span class="p">(</span><span class="s1">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span><span class="p">,</span><span class="w"> </span><span class="k">ISNULL</span><span class="p">(</span><span class="k">NULLIF</span><span class="p">(</span><span class="n">I</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">I</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">Z</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">ZT</span>
+<span class="n">PIVOT</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">MAX</span><span class="p">(</span><span class="n">I</span><span class="p">)</span><span class="w"> </span><span class="k">FOR</span><span class="w"> </span><span class="n">IX</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span>
+<span class="w">        </span><span class="n">X0</span><span class="p">,</span><span class="w"> </span><span class="n">X1</span><span class="p">,</span><span class="w"> </span><span class="n">X2</span><span class="p">,</span><span class="w"> </span><span class="n">X3</span><span class="p">,</span><span class="w"> </span><span class="n">X4</span><span class="p">,</span><span class="w"> </span><span class="n">X5</span><span class="p">,</span><span class="w"> </span><span class="n">X6</span><span class="p">,</span><span class="w"> </span><span class="n">X7</span><span class="p">,</span><span class="w"> </span><span class="n">X8</span><span class="p">,</span><span class="w"> </span><span class="n">X9</span><span class="p">,</span><span class="w"> </span><span class="n">X10</span><span class="p">,</span><span class="n">X11</span><span class="p">,</span><span class="n">X12</span><span class="p">,</span><span class="n">X13</span><span class="p">,</span><span class="n">X14</span><span class="p">,</span><span class="n">X15</span><span class="p">,</span><span class="n">X16</span><span class="p">,</span><span class="n">X17</span><span class="p">,</span><span class="n">X18</span><span class="p">,</span><span class="n">X19</span><span class="p">,</span>
+<span class="w">        </span><span class="n">X20</span><span class="p">,</span><span class="n">X21</span><span class="p">,</span><span class="n">X22</span><span class="p">,</span><span class="n">X23</span><span class="p">,</span><span class="n">X24</span><span class="p">,</span><span class="n">X25</span><span class="p">,</span><span class="n">X26</span><span class="p">,</span><span class="n">X27</span><span class="p">,</span><span class="n">X28</span><span class="p">,</span><span class="n">X29</span><span class="p">,</span><span class="n">X30</span><span class="p">,</span><span class="n">X31</span><span class="p">,</span><span class="n">X32</span><span class="p">,</span><span class="n">X33</span><span class="p">,</span><span class="n">X34</span><span class="p">,</span><span class="n">X35</span><span class="p">,</span><span class="n">X36</span><span class="p">,</span><span class="n">X37</span><span class="p">,</span><span class="n">X38</span><span class="p">,</span><span class="n">X39</span><span class="p">,</span>
+<span class="w">        </span><span class="n">X40</span><span class="p">,</span><span class="n">X41</span><span class="p">,</span><span class="n">X42</span><span class="p">,</span><span class="n">X43</span><span class="p">,</span><span class="n">X44</span><span class="p">,</span><span class="n">X45</span><span class="p">,</span><span class="n">X46</span><span class="p">,</span><span class="n">X47</span><span class="p">,</span><span class="n">X48</span><span class="p">,</span><span class="n">X49</span><span class="p">,</span><span class="n">X50</span><span class="p">,</span><span class="n">X51</span><span class="p">,</span><span class="n">X52</span><span class="p">,</span><span class="n">X53</span><span class="p">,</span><span class="n">X54</span><span class="p">,</span><span class="n">X55</span><span class="p">,</span><span class="n">X56</span><span class="p">,</span><span class="n">X57</span><span class="p">,</span><span class="n">X58</span><span class="p">,</span><span class="n">X59</span><span class="p">,</span>
+<span class="w">        </span><span class="n">X60</span><span class="p">,</span><span class="n">X61</span><span class="p">,</span><span class="n">X62</span><span class="p">,</span><span class="n">X63</span><span class="p">,</span><span class="n">X64</span><span class="p">,</span><span class="n">X65</span><span class="p">,</span><span class="n">X66</span><span class="p">,</span><span class="n">X67</span><span class="p">,</span><span class="n">X68</span><span class="p">,</span><span class="n">X69</span><span class="p">,</span><span class="n">X70</span><span class="p">,</span><span class="n">X71</span><span class="p">,</span><span class="n">X72</span><span class="p">,</span><span class="n">X73</span><span class="p">,</span><span class="n">X74</span><span class="p">,</span><span class="n">X75</span><span class="p">,</span><span class="n">X76</span><span class="p">,</span><span class="n">X77</span><span class="p">,</span><span class="n">X78</span><span class="p">,</span><span class="n">X79</span><span class="p">,</span>
+<span class="w">        </span><span class="n">X80</span><span class="p">,</span><span class="n">X81</span><span class="p">,</span><span class="n">X82</span><span class="p">,</span><span class="n">X83</span><span class="p">,</span><span class="n">X84</span><span class="p">,</span><span class="n">X85</span><span class="p">,</span><span class="n">X86</span><span class="p">,</span><span class="n">X87</span><span class="p">,</span><span class="n">X88</span><span class="p">,</span><span class="n">X89</span><span class="p">,</span><span class="n">X90</span><span class="p">,</span><span class="n">X91</span><span class="p">,</span><span class="n">X92</span><span class="p">,</span><span class="n">X93</span><span class="p">,</span><span class="n">X94</span><span class="p">,</span><span class="n">X95</span><span class="p">,</span><span class="n">X96</span><span class="p">,</span><span class="n">X97</span><span class="p">,</span><span class="n">X98</span><span class="p">,</span><span class="n">X99</span>
+<span class="w">    </span><span class="p">)</span>
+<span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">PZT</span>
+<span class="p">;</span>
+</code></pre></div>
+<p>The output doesn't look great here, so give it a run yourself!</p>
+<h2 id="further-reading">Further reading</h2>
+<p>Check out the <a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#guidelines-for-defining-and-using-recursive-common-table-expressions">official Microsoft documentation</a> for more information on recursive CTEs at:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#guidelines-for-defining-and-using-recursive-common-table-expressions">https://learn.microsoft.com/en-us/sql/t-sql/queries/with-common-table-expression-transact-sql#guidelines-for-defining-and-using-recursive-common-table-expressions</a></li>
+</ul>
+<h3 id="some-links-for-excel-stuff">Some links for Excel stuff</h3>
+<p>The <strong>Series</strong> feature and the fill handles are documented at:</p>
+<ul>
+<li><a href="https://support.microsoft.com/en-gb/office/project-values-in-a-series-5311f5cf-149e-4d06-81dd-5aaad87e5400">https://support.microsoft.com/en-gb/office/project-values-in-a-series-5311f5cf-149e-4d06-81dd-5aaad87e5400</a></li>
+<li><a href="https://support.microsoft.com/en-gb/office/fill-data-automatically-in-worksheet-cells-74e31bdd-d993-45da-aa82-35a236c5b5db">https://support.microsoft.com/en-gb/office/fill-data-automatically-in-worksheet-cells-74e31bdd-d993-45da-aa82-35a236c5b5db</a></li>
+</ul>
+<p>The <code>SEQUENCE</code> function can be super handy for generating sequences of numbers in Excel. The official documentation is at:</p>
+<ul>
+<li><a href="https://support.microsoft.com/en-gb/office/sequence-function-57467a98-57e0-4817-9f14-2eb78519ca90">https://support.microsoft.com/en-gb/office/sequence-function-57467a98-57e0-4817-9f14-2eb78519ca90</a></li>
+</ul>
+<p>However, the following tutorials are also super useful:</p>
+<ul>
+<li><a href="https://exceljet.net/functions/sequence-function">https://exceljet.net/functions/sequence-function</a></li>
+<li><a href="https://exceljet.net/videos/the-sequence-function">https://exceljet.net/videos/the-sequence-function</a></li>
+<li><a href="https://exceljet.net/formulas/sequence-of-days">https://exceljet.net/formulas/sequence-of-days</a></li>
+<li><a href="https://exceljet.net/formulas/sequence-of-times">https://exceljet.net/formulas/sequence-of-times</a></li>
+<li><a href="https://exceljet.net/formulas/sequence-of-months">https://exceljet.net/formulas/sequence-of-months</a></li>
+<li><a href="https://exceljet.net/formulas/sequence-of-years">https://exceljet.net/formulas/sequence-of-years</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../correlated-subqueries/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Correlated subqueries 🌐">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Correlated subqueries 🌐
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../../everything-about-joins/everything-about-joins/" class="md-footer__link md-footer__link--next" aria-label="Next: Everything about joins">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Everything about joins
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.footer", "navigation.tabs", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>

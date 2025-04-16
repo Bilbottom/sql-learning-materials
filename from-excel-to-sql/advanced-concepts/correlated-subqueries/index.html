@@ -1,0 +1,4512 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="SQL scripts that demonstrate various features and concepts.">
+      
+      
+        <meta name="author" content="Bilbottom">
+      
+      
+        <link rel="canonical" href="https://github.com/Bilbottom/sql-learning-materials/docs/from-excel-to-sql/advanced-concepts/correlated-subqueries/">
+      
+      
+        <link rel="prev" href="../advanced-aggregations/">
+      
+      
+        <link rel="next" href="../recursive-ctes/">
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.7">
+    
+    
+      
+        <title>Correlated subqueries 🌐 - SQL Learning Materials</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.8608ea7d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="default" data-md-color-accent="default">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#correlated-subqueries" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="SQL Learning Materials" class="md-header__button md-logo" aria-label="SQL Learning Materials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SQL Learning Materials
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Correlated subqueries 🌐
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="default" data-md-color-accent="default"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 6H7c-3.31 0-6 2.69-6 6s2.69 6 6 6h10c3.31 0 6-2.69 6-6s-2.69-6-6-6m0 10H7c-2.21 0-4-1.79-4-4s1.79-4 4-4h10c2.21 0 4 1.79 4 4s-1.79 4-4 4M7 9c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="default" data-md-color-accent="default"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 7H7a5 5 0 0 0-5 5 5 5 0 0 0 5 5h10a5 5 0 0 0 5-5 5 5 0 0 0-5-5m0 8a3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 3 3 3 3 0 0 1-3 3"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/Bilbottom/sql-learning-materials/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../from-excel-to-sql/" class="md-tabs__link">
+          
+  
+  From Excel to SQL
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../everything-about-joins/everything-about-joins/" class="md-tabs__link">
+          
+  
+  Everything about joins
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../challenging-sql-problems/challenging-sql-problems/" class="md-tabs__link">
+          
+  
+  Challenging SQL problems
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="SQL Learning Materials" class="md-nav__button md-logo" aria-label="SQL Learning Materials" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SQL Learning Materials
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/Bilbottom/sql-learning-materials/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    From Excel to SQL
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            From Excel to SQL
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../from-excel-to-sql/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    From Excel to SQL
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/setting-the-context/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Setting the context 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../getting-started/sql-syntax/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL syntax 📚
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Main Concepts
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Main Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/select-and-from/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Gimme data 📁
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/where/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Filtering 🚦
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/order-by/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Ordering ⏬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/comments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Comments 📝
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/top-and-distinct/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TOP and DISTINCT 🔝
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/data-types/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Data types 🧱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/operators/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Operators ➕
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/conditionals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Conditionals 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/date-formatting/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Date formatting 📆
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/group-by/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Aggregations 📊
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/rollup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Pivot tables 🧮
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/join/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins 🔗
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/union/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Unions 🧬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/subqueries/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Subqueries 🧩
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/window-functions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Window functions 📈
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/logical-processing-order/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Logical processing order 🎥
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../main-concepts/style-guide/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Style guide ✨
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Advanced Concepts
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Advanced Concepts
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced-aggregations/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Advanced aggregations 🥇
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Correlated subqueries 🌐
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Correlated subqueries 🌐
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#correlated-subqueries-run-a-subquery-for-each-row-in-a-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correlated subqueries "run a subquery" for each row in a table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#converting-joins-into-a-correlated-subquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Converting joins into a correlated subquery
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Converting joins into a correlated subquery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#employee-left-join-department" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee LEFT JOIN Department
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Employee LEFT JOIN Department">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#employee-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 5
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting it all together
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-about-the-other-join-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      What about the other join examples?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What about the other join examples?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#employee-inner-join-department" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee INNER JOIN Department
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-left-join-address" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee LEFT JOIN Address
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-correlated-subqueries-for-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using correlated subqueries for filtering
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using correlated subqueries for filtering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-correlated-subqueries-for-relativity-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using correlated subqueries for relativity tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using correlated subqueries for relativity tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#employee-4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 16
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employees-224-and-234" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employees 224 and 234
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-250" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 250
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#putting-it-all-together_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting it all together
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-correlated-subqueries-for-existence-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using correlated subqueries for existence tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-quick-note-for-the-programmers" class="md-nav__link">
+    <span class="md-ellipsis">
+      A quick note for the programmers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-extra-example-to-get-the-brain-juices-flowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      An extra example to get the brain juices flowing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="An extra example to get the brain juices flowing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-sql-for-running-this-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      The SQL for running this example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Further reading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#similarity-to-cross-apply" class="md-nav__link">
+    <span class="md-ellipsis">
+      Similarity to CROSS APPLY
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../recursive-ctes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Recursive CTEs 🔁
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Everything about joins
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Everything about joins
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/everything-about-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Everything about joins
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Syntax
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Syntax
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/join-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Join fundamentals 🧩
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/more-fundamentals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    More fundamentals 📚
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/timestamp-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "timestamp" join (ASOF) ⏱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/filtering-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "filtering" joins (SEMI, ANTI) 🚦
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/glue-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "glue" join (POSITIONAL) 📎
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/explosive-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    The "explosive" joins (LATERAL) 💥
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/syntax/sql-92-rant/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    SQL-92 (ANSI-SQL join syntax) 📝
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Under the hood
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Under the hood
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/joins-with-an-index/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Joins with an index 🔍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/join-order/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Does join order matter? 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/loop-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loop joins 🔄
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/hash-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hash joins 🔑
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/merge-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Merge joins 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../everything-about-joins/under-the-hood/range-intersection-joins/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Range intersection joins 🎯
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Challenging SQL problems
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Challenging SQL problems
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/challenging-sql-problems/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Challenging SQL problems
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2" id="__nav_4_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Problems
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2">
+            <span class="md-nav__icon md-icon"></span>
+            Problems
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_1" id="__nav_4_2_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟤 Bronze Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            🟤 Bronze Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/temperature-anomaly-detection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Temperature anomaly detection 🔍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/outstanding-invoices/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Outstanding invoices 💱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/personalised-customer-emails/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Personalised customer emails 📨
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/suspicious-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Suspicious login activity 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/combining-dimensions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Combining dimensions 🔗
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/customer-churn/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer churn 🔄
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/fibonacci-sequence/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fibonacci sequence 🔢
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/bronze/uk-bank-holidays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UK bank holidays 📅
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_2" id="__nav_4_2_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ⚪ Silver Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            ⚪ Silver Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/metric-correlation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metric correlation 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/funnel-analytics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Funnel analytics ⏬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/bannable-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bannable login activity ❌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/bus-routes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus routes 🚌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/decoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decoding datelist ints 🔓
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/region-precipitation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Region precipitation ☔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/predicting-values/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Predicting values 🎱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/mandelbrot-set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mandelbrot set 🌀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/silver/customer-sales-running-totals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer sales running totals 📈
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_2_3" id="__nav_4_2_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟡 Gold Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            🟡 Gold Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/loan-repayment-schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loan repayment schedule 💰
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/risk-invasions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Risk invasions 🛡️
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/supply-chain-network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supply chain network 🚛
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/encoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Encoding datelist ints 🔐
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/problems/gold/travel-plans/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Travel plans 🚂
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3" id="__nav_4_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Solutions
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            Solutions
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_1" id="__nav_4_3_1_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟤 Bronze Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            🟤 Bronze Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/temperature-anomaly-detection/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Temperature anomaly detection 🔍
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/outstanding-invoices/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Outstanding invoices 💱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/personalised-customer-emails/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Personalised customer emails 📨
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/suspicious-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Suspicious login activity 🤔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/combining-dimensions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Combining dimensions 🔗
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/customer-churn/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer churn 🔄
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/fibonacci-sequence/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Fibonacci sequence 🔢
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/bronze/uk-bank-holidays/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    UK bank holidays 📅
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_2" id="__nav_4_3_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    ⚪ Silver Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            ⚪ Silver Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/metric-correlation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Metric correlation 🔀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/funnel-analytics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Funnel analytics ⏬
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/bannable-login-activity/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bannable login activity ❌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/bus-routes/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Bus routes 🚌
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/decoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Decoding datelist ints 🔓
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/region-precipitation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Region precipitation ☔
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/predicting-values/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Predicting values 🎱
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/mandelbrot-set/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Mandelbrot set 🌀
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/silver/customer-sales-running-totals/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Customer sales running totals 📈
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_4_3_3" id="__nav_4_3_3_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    🟡 Gold Tier
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_4_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            🟡 Gold Tier
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/loan-repayment-schedule/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Loan repayment schedule 💰
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/risk-invasions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Risk invasions 🛡️
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/supply-chain-network/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Supply chain network 🚛
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/encoding-datelist-ints/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Encoding datelist ints 🔐
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/solutions/gold/travel-plans/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Travel plans 🚂
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../challenging-sql-problems/topics/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Questions by topic
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#correlated-subqueries-run-a-subquery-for-each-row-in-a-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Correlated subqueries "run a subquery" for each row in a table
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#converting-joins-into-a-correlated-subquery" class="md-nav__link">
+    <span class="md-ellipsis">
+      Converting joins into a correlated subquery
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Converting joins into a correlated subquery">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#employee-left-join-department" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee LEFT JOIN Department
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Employee LEFT JOIN Department">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#employee-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 1
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 2
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 3
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 5
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#putting-it-all-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting it all together
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-about-the-other-join-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      What about the other join examples?
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="What about the other join examples?">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#employee-inner-join-department" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee INNER JOIN Department
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-left-join-address" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee LEFT JOIN Address
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-correlated-subqueries-for-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using correlated subqueries for filtering
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using correlated subqueries for filtering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#using-correlated-subqueries-for-relativity-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using correlated subqueries for relativity tests
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using correlated subqueries for relativity tests">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#employee-4_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 4
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-16" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 16
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employees-224-and-234" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employees 224 and 234
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#employee-250" class="md-nav__link">
+    <span class="md-ellipsis">
+      Employee 250
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#putting-it-all-together_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Putting it all together
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-correlated-subqueries-for-existence-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      Using correlated subqueries for existence tests
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-quick-note-for-the-programmers" class="md-nav__link">
+    <span class="md-ellipsis">
+      A quick note for the programmers
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#an-extra-example-to-get-the-brain-juices-flowing" class="md-nav__link">
+    <span class="md-ellipsis">
+      An extra example to get the brain juices flowing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="An extra example to get the brain juices flowing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-sql-for-running-this-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      The SQL for running this example
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further reading
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Further reading">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#similarity-to-cross-apply" class="md-nav__link">
+    <span class="md-ellipsis">
+      Similarity to CROSS APPLY
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="correlated-subqueries">Correlated subqueries 🌐</h1>
+<div class="admonition success">
+<p class="admonition-title">Success</p>
+<p>Correlated subqueries are a great way to "run a subquery" for each row in a table.</p>
+<p>This can be slow if used inappropriately, but there are some great places to use this!</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>Correlated subqueries are advanced, and there aren't Excel equivalents for them.</p>
+<p>Make sure that you are comfortable with the main concepts before diving into these advanced concepts.</p>
+</div>
+<h2 id="correlated-subqueries-run-a-subquery-for-each-row-in-a-table">Correlated subqueries "run a subquery" for each row in a table</h2>
+<p>We saw subqueries in <a href="../../main-concepts/subqueries/">the subqueries section</a>, so what makes one "correlated"?</p>
+<p>A subquery becomes a <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/subqueries#correlated">"correlated subquery"</a> if it <em>references a column from a table in the outer query</em>.</p>
+<p>The subquery is then "run" for each row in the referenced column.</p>
+<p>This can take a bit of getting used to, but it's a powerful tool when used appropriately.</p>
+<h2 id="converting-joins-into-a-correlated-subquery">Converting joins into a correlated subquery</h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>These are contrived examples to demonstrate the concept. You should stick to using <code>JOIN</code> for this kind of operation! 😝</p>
+</div>
+<h3 id="employee-left-join-department"><code>Employee LEFT JOIN Department</code></h3>
+<p>To ease into the concept, we'll see how we could convert a <code>JOIN</code> into a correlated subquery.</p>
+<p>We saw the following query in <a href="../../main-concepts/join/#employee-left-join-department">the <code>Employee LEFT JOIN Department</code> part</a> of <a href="../../main-concepts/join/">the joins section</a>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">Employee</span><span class="p">.</span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Employee</span><span class="p">.</span><span class="n">EmployeeName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Employee</span><span class="p">.</span><span class="n">DepartmentID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Department</span><span class="p">.</span><span class="n">DepartmentName</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Employee</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">Department</span>
+<span class="w">        </span><span class="k">ON</span><span class="w"> </span><span class="n">Employee</span><span class="p">.</span><span class="n">DepartmentID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Department</span><span class="p">.</span><span class="n">DepartmentID</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: left;">EmployeeName</th>
+<th style="text-align: right;">DepartmentID</th>
+<th style="text-align: left;">DepartmentName</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Alice</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Bob</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Charlie</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Marketing</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Dave</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Marketing</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Eve</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">null</td>
+</tr>
+</tbody>
+</table>
+<p>In this example, we're finding the <code>DepartmentName</code> in the <code>Department</code> table that matches the <code>DepartmentID</code> for each employee in the <code>Employee</code> table.</p>
+<p>We could convert this into a correlated subquery like so:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">EmployeeID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EmployeeName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">DepartmentID</span><span class="p">,</span>
+<span class="w">    </span><span class="p">(</span>
+<span class="w">        </span><span class="k">SELECT</span><span class="w"> </span><span class="n">DepartmentName</span>
+<span class="w">        </span><span class="k">FROM</span><span class="w"> </span><span class="n">Department</span>
+<span class="w">        </span><span class="k">WHERE</span><span class="w"> </span><span class="n">Department</span><span class="p">.</span><span class="n">DepartmentID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Employee</span><span class="p">.</span><span class="n">DepartmentID</span>
+<span class="w">    </span><span class="p">)</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">DepartmentName</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Employee</span>
+<span class="p">;</span>
+</code></pre></div>
+<p>This isn't just a normal subquery: the <code>WHERE</code> clause references the <code>Employee</code> table which is outside the subquery!</p>
+<p>Let's break down what's happening with each row in this table.</p>
+<h4 id="employee-1">Employee 1</h4>
+<p>The first row is employee 1:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: left;">EmployeeName</th>
+<th style="text-align: right;">DepartmentID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Alice</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p>Their <code>DepartmentID</code> is 1, so SQL will run the following subquery to find the <code>DepartmentName</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">DepartmentName</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Department</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Department</span><span class="p">.</span><span class="n">DepartmentID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">DepartmentName</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Sales</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore, the value <code>Sales</code> will be used for the <code>DepartmentName</code> for Alice.</p>
+<h4 id="employee-2">Employee 2</h4>
+<p>The second row is employee 2:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: left;">EmployeeName</th>
+<th style="text-align: right;">DepartmentID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Bob</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+<p>Their <code>DepartmentID</code> is also 1, so SQL will run the exact same subquery to find the <code>DepartmentName</code>; this means that Bob will also have <code>Sales</code> as their <code>DepartmentName</code>.</p>
+<h4 id="employee-3">Employee 3</h4>
+<p>The third row is employee 3:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: left;">EmployeeName</th>
+<th style="text-align: right;">DepartmentID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Charlie</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+<p>Their <code>DepartmentID</code> is 2, so SQL will run the following subquery to find the <code>DepartmentName</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">DepartmentName</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Department</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Department</span><span class="p">.</span><span class="n">DepartmentID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">DepartmentName</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Marketing</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore, the value <code>Marketing</code> will be used for the <code>DepartmentName</code> for Charlie.</p>
+<h4 id="employee-4">Employee 4</h4>
+<p>The fourth row is employee 4:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: left;">EmployeeName</th>
+<th style="text-align: right;">DepartmentID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Dave</td>
+<td style="text-align: right;">2</td>
+</tr>
+</tbody>
+</table>
+<p>Their <code>DepartmentID</code> is also 2, so SQL will run the exact same subquery to find the <code>DepartmentName</code>; this means that Dave will also have <code>Marketing</code> as their <code>DepartmentName</code>.</p>
+<h4 id="employee-5">Employee 5</h4>
+<p>The fifth row is employee 5:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: left;">EmployeeName</th>
+<th style="text-align: right;">DepartmentID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Eve</td>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+<p>Their <code>DepartmentID</code> is 3, so SQL will run the following subquery to find the <code>DepartmentName</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="n">DepartmentName</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Department</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">Department</span><span class="p">.</span><span class="n">DepartmentID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span>
+<span class="p">;</span>
+</code></pre></div>
+<p>This subquery will return no rows, so the <code>NULL</code> value will be used for the <code>DepartmentName</code> for Eve.</p>
+<h4 id="putting-it-all-together">Putting it all together</h4>
+<p>When we put all of these rows together, we get the following result:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">EmployeeID</th>
+<th style="text-align: left;">EmployeeName</th>
+<th style="text-align: right;">DepartmentID</th>
+<th style="text-align: left;">DepartmentName</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Alice</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Bob</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Sales</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;">Charlie</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Marketing</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Dave</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">Marketing</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Eve</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: left;"><em>null</em></td>
+</tr>
+</tbody>
+</table>
+<p>This is indeed identical to the result we got from the <code>LEFT JOIN</code> query!</p>
+<h3 id="what-about-the-other-join-examples">What about the other join examples?</h3>
+<p>We saw two other join examples in <a href="../../main-concepts/join/">the joins section</a>:</p>
+<ul>
+<li>An inner join: <a href="../../main-concepts/join/#employee-inner-join-department">Employee INNER JOIN Department</a></li>
+<li>A left join with multiple matches: <a href="../../main-concepts/join/#employee-left-join-address">Employee LEFT JOIN Address</a></li>
+</ul>
+<p>Do you think we could convert these into correlated subqueries, too?</p>
+<h4 id="employee-inner-join-department">Employee INNER JOIN Department</h4>
+<p>If we try to convert the inner join into a correlated subquery, we get exactly the same result as the <code>LEFT JOIN</code> example unless we explicitly filter out the <code>NULL</code> values <em>after</em> the subquery.</p>
+<p>This means that correlated subqueries are more like <code>LEFT JOIN</code> than <code>INNER JOIN</code> in this context.</p>
+<h4 id="employee-left-join-address">Employee LEFT JOIN Address</h4>
+<p>If we try to convert the left join with multiple matches into a correlated subquery, we'd end up with an error.</p>
+<p>This is because the subquery would return <a href="../../main-concepts/join/#employee-5_1">two rows for Eve</a>, and subqueries used to define columns are only allowed to return a single value.</p>
+<p>This is a good example of why correlated subqueries are less appropriate for joins!</p>
+<h2 id="using-correlated-subqueries-for-filtering">Using correlated subqueries for filtering</h2>
+<p>The examples above were contrived to demonstrate the concept, but they're not the best use cases for correlated subqueries.</p>
+<p>The most common place that you'll see correlated subqueries being used is in the <code>WHERE</code> clause; these usually come in two forms:</p>
+<ul>
+<li>Relativity tests</li>
+<li>Existence tests</li>
+</ul>
+<h3 id="using-correlated-subqueries-for-relativity-tests">Using correlated subqueries for relativity tests</h3>
+<p>It's typical to see correlated subqueries to be used to get the latest position of a record in a table that holds historical data.</p>
+<p>For example, the <code>HumanResources.EmployeeDepartmentHistory</code> table holds the history of an employee's department. Let's take a look at the rows corresponding to employees 4, 16, 224, 234, and 250:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">BusinessEntityID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">DepartmentID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">StartDate</span><span class="p">,</span>
+<span class="w">    </span><span class="n">EndDate</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">HumanResources</span><span class="p">.</span><span class="n">EmployeeDepartmentHistory</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">BusinessEntityID</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">224</span><span class="p">,</span><span class="w"> </span><span class="mi">234</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">)</span>
+<span class="k">ORDER</span><span class="w"> </span><span class="k">BY</span><span class="w"> </span><span class="n">BusinessEntityID</span><span class="p">,</span><span class="w"> </span><span class="n">StartDate</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">BusinessEntityID</th>
+<th style="text-align: right;">DepartmentID</th>
+<th style="text-align: left;">StartDate</th>
+<th style="text-align: left;">EndDate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2007-12-05</td>
+<td style="text-align: left;">2010-05-30</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">2010-05-31</td>
+<td style="text-align: left;"><em>null</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">2007-12-20</td>
+<td style="text-align: left;">2009-07-14</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">2009-07-15</td>
+<td style="text-align: left;"><em>null</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">224</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: left;">2009-01-07</td>
+<td style="text-align: left;">2011-08-31</td>
+</tr>
+<tr>
+<td style="text-align: right;">224</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">2011-09-01</td>
+<td style="text-align: left;"><em>null</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">234</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: left;">2009-01-31</td>
+<td style="text-align: left;">2013-11-13</td>
+</tr>
+<tr>
+<td style="text-align: right;">234</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">2013-11-14</td>
+<td style="text-align: left;"><em>null</em></td>
+</tr>
+<tr>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">2011-02-25</td>
+<td style="text-align: left;">2011-07-30</td>
+</tr>
+<tr>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: left;">2011-07-31</td>
+<td style="text-align: left;">2012-07-14</td>
+</tr>
+<tr>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">2012-07-15</td>
+<td style="text-align: left;"><em>null</em></td>
+</tr>
+</tbody>
+</table>
+<p>This table is nice for finding the latest department for each employee because we can just filter the rows where <code>EndDate</code> is <code>NULL</code>, but what if we didn't have the <code>EndDate</code> column and had to rely on just the <code>StartDate</code>?</p>
+<p>We could use a correlated subquery to find the latest <code>StartDate</code> for each employee, and then use that to filter the rows:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">BusinessEntityID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">DepartmentID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">StartDate</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">HumanResources</span><span class="p">.</span><span class="n">EmployeeDepartmentHistory</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">History</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">BusinessEntityID</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">,</span><span class="w"> </span><span class="mi">224</span><span class="p">,</span><span class="w"> </span><span class="mi">234</span><span class="p">,</span><span class="w"> </span><span class="mi">250</span><span class="p">)</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">StartDate</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">StartDate</span><span class="p">)</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">HumanResources</span><span class="p">.</span><span class="n">EmployeeDepartmentHistory</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">InnerHistory</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">InnerHistory</span><span class="p">.</span><span class="n">BusinessEntityID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">History</span><span class="p">.</span><span class="n">BusinessEntityID</span>
+<span class="w">  </span><span class="p">)</span>
+<span class="p">;</span>
+</code></pre></div>
+<p>This is a bit more complex than the previous examples!</p>
+<p>Not only is the subquery correlated, but it's also using an aggregate function (<code>MAX</code>) to find the latest <code>StartDate</code> for each employee.</p>
+<p>Let's break down what's happening with each row in this table.</p>
+<h4 id="employee-4_1">Employee 4</h4>
+<p>The first employee is 4, and they have two rows:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">BusinessEntityID</th>
+<th style="text-align: right;">DepartmentID</th>
+<th style="text-align: left;">StartDate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">2007-12-05</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">2010-05-31</td>
+</tr>
+</tbody>
+</table>
+<p>We know that we want to keep the row with the latest <code>StartDate</code>.</p>
+<p>A correlated subquery is run <em>for each row</em> in the <code>EmployeeDepartmentHistory</code> table, so the subquery is run twice for employee 4.</p>
+<p>The subquery that is run for this employee (for <em>both</em> their rows) is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">StartDate</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">HumanResources</span><span class="p">.</span><span class="n">EmployeeDepartmentHistory</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">InnerHistory</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">InnerHistory</span><span class="p">.</span><span class="n">BusinessEntityID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">MAX(StartDate)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2010-05-31</td>
+</tr>
+</tbody>
+</table>
+<p>When the subquery is run for the first row, the <code>StartDate</code> is <code>2007-12-05</code>. This is not the result of the subquery, so the row is discarded.</p>
+<p>Conversely, when the subquery is run for the second row, the <code>StartDate</code> is <code>2010-05-31</code> so this second row is kept.</p>
+<h4 id="employee-16">Employee 16</h4>
+<p>The second employee is 16:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">BusinessEntityID</th>
+<th style="text-align: right;">DepartmentID</th>
+<th style="text-align: left;">StartDate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">2007-12-20</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">2009-07-15</td>
+</tr>
+</tbody>
+</table>
+<p>Similar to employee 4, a correlated subquery is run <em>for each row</em> in the <code>EmployeeDepartmentHistory</code> table, so the subquery is also run twice for employee 16.</p>
+<p>The subquery that is run for this employee (for <em>both</em> their rows) is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">StartDate</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">HumanResources</span><span class="p">.</span><span class="n">EmployeeDepartmentHistory</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">InnerHistory</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">InnerHistory</span><span class="p">.</span><span class="n">BusinessEntityID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">16</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">MAX(StartDate)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2009-07-15</td>
+</tr>
+</tbody>
+</table>
+<p>When the subquery is run for the first row, the <code>StartDate</code> is <code>2007-12-20</code>. This is not the result of the subquery, so the row is discarded.</p>
+<p>Conversely, when the subquery is run for the second row, the <code>StartDate</code> is <code>2010-05-31</code> so this second row is kept.</p>
+<h4 id="employees-224-and-234">Employees 224 and 234</h4>
+<p>Like the previous employees, employees 224 and 234 each have two rows, so the subquery is run twice for each of them too.</p>
+<p>In both cases, the second row per employee is kept because it has the latest <code>StartDate</code>.</p>
+<h4 id="employee-250">Employee 250</h4>
+<p>The fifth employee is 250:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">BusinessEntityID</th>
+<th style="text-align: right;">DepartmentID</th>
+<th style="text-align: left;">StartDate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">2011-02-25</td>
+</tr>
+<tr>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: left;">2011-07-31</td>
+</tr>
+<tr>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">2012-07-15</td>
+</tr>
+</tbody>
+</table>
+<p>This employee has three rows, so the subquery is run three times for them.</p>
+<p>The subquery that is run for this employee (for <em>all three</em> of their rows) is:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="k">MAX</span><span class="p">(</span><span class="n">StartDate</span><span class="p">)</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">HumanResources</span><span class="p">.</span><span class="n">EmployeeDepartmentHistory</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">InnerHistory</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">InnerHistory</span><span class="p">.</span><span class="n">BusinessEntityID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">250</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">MAX(StartDate)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2012-07-15</td>
+</tr>
+</tbody>
+</table>
+<p>When the subquery is run for the first row, the <code>StartDate</code> is <code>2011-02-25</code>. This is not the result of the subquery, so the row is discarded.</p>
+<p>When the subquery is run for the second row, the <code>StartDate</code> is <code>2011-07-31</code>. Again, this is not the result of the subquery, so the row is discarded.</p>
+<p>Finally, when the subquery is run for the third row, the <code>StartDate</code> is <code>2012-07-15</code> so this third row is kept.</p>
+<h4 id="putting-it-all-together_1">Putting it all together</h4>
+<p>When we put all of these rows together, we get the following result:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">BusinessEntityID</th>
+<th style="text-align: right;">DepartmentID</th>
+<th style="text-align: left;">StartDate</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">2010-05-31</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">2009-07-15</td>
+</tr>
+<tr>
+<td style="text-align: right;">224</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">2011-09-01</td>
+</tr>
+<tr>
+<td style="text-align: right;">234</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: left;">2013-11-14</td>
+</tr>
+<tr>
+<td style="text-align: right;">250</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">2012-07-15</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>There are other ways (not using correlated subqueries) to achieve this result, too. Can you think of any?</p>
+</div>
+<h3 id="using-correlated-subqueries-for-existence-tests">Using correlated subqueries for existence tests</h3>
+<p>Another common place that you'll see correlated subqueries being used is to check whether a record exists.</p>
+<p>In this case, the <code>EXISTS</code> keyword is used with the subquery to tell SQL to do the existence test.</p>
+<p>For example, we could check which people in the <code>Person.Person</code> table have a record in the <code>HumanResources.JobCandidate</code> table:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">BusinessEntityID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">FirstName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LastName</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">Person</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">HumanResources</span><span class="p">.</span><span class="n">JobCandidate</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">JobCandidate</span><span class="p">.</span><span class="n">BusinessEntityID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">BusinessEntityID</span>
+<span class="p">)</span>
+<span class="p">;</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">BusinessEntityID</th>
+<th style="text-align: left;">FirstName</th>
+<th style="text-align: left;">LastName</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">212</td>
+<td style="text-align: left;">Peng</td>
+<td style="text-align: left;">Wu</td>
+</tr>
+<tr>
+<td style="text-align: right;">274</td>
+<td style="text-align: left;">Stephen</td>
+<td style="text-align: left;">Jiang</td>
+</tr>
+</tbody>
+</table>
+<p>As per <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/subqueries#exists">the Microsoft documentation</a>:</p>
+<blockquote>
+<p>Notice that subqueries that are introduced with <code>EXISTS</code> are a bit different from other subqueries in the following ways:</p>
+<ul>
+<li>The keyword <code>EXISTS</code> isn't preceded by a column name, constant, or other expression.</li>
+<li>The select list of a subquery introduced by <code>EXISTS</code> almost always consists of an asterisk (<code>*</code>). There's no reason to list column names because you're just testing whether rows that meet the conditions specified in the subquery exist.</li>
+</ul>
+<p>The <code>EXISTS</code> keyword is important because frequently there's no alternative formulation without subqueries. Although some queries that are created with <code>EXISTS</code> can't be expressed any other way, many queries can use <code>IN</code> or a comparison operator modified by <code>ANY</code> or <code>ALL</code> to achieve similar results.</p>
+</blockquote>
+<p>Our example is, in fact, an example of a query that can be expressed using <code>IN</code> instead of <code>EXISTS</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">BusinessEntityID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">FirstName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LastName</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">Person</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">BusinessEntityID</span><span class="w"> </span><span class="k">IN</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="n">BusinessEntityID</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">HumanResources</span><span class="p">.</span><span class="n">JobCandidate</span>
+<span class="p">)</span>
+<span class="p">;</span>
+</code></pre></div>
+<p>So, what's an example of a query that <em>can't</em> be expressed using <code>IN</code> instead of <code>EXISTS</code>?</p>
+<p>It's rare, but you'd need <code>EXISTS</code> over <code>IN</code> to evaluate more complex conditions that can't be boiled down to an equality test.</p>
+<p>For example, the following query can't be expressed using <code>IN</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">BusinessEntityID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">FirstName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">LastName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">ModifiedDate</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">Person</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="k">EXISTS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="n">HumanResources</span><span class="p">.</span><span class="n">JobCandidate</span>
+<span class="w">    </span><span class="k">WHERE</span><span class="w"> </span><span class="n">JobCandidate</span><span class="p">.</span><span class="n">BusinessEntityID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">BusinessEntityID</span>
+<span class="w">      </span><span class="k">AND</span><span class="w"> </span><span class="n">JobCandidate</span><span class="p">.</span><span class="n">ModifiedDate</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">ModifiedDate</span>
+<span class="p">)</span>
+<span class="p">;</span>
+</code></pre></div>
+<p>This query checks for people who have a record in the <code>HumanResources.JobCandidate</code> table that was modified more recently than their record in the <code>Person.Person</code> table.</p>
+<p>This can't be expressed using <code>IN</code> because of the <code>JobCandidate.ModifiedDate &gt; Person.ModifiedDate</code> condition.</p>
+<p>This <em>could</em>, however, be expressed using a <code>LEFT JOIN</code> and a <code>WHERE</code> clause:</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span>
+<span class="w">    </span><span class="n">Person</span><span class="p">.</span><span class="n">BusinessEntityID</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Person</span><span class="p">.</span><span class="n">FirstName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Person</span><span class="p">.</span><span class="n">LastName</span><span class="p">,</span>
+<span class="w">    </span><span class="n">Person</span><span class="p">.</span><span class="n">ModifiedDate</span>
+<span class="k">FROM</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">Person</span>
+<span class="w">    </span><span class="k">LEFT</span><span class="w"> </span><span class="k">JOIN</span><span class="w"> </span><span class="n">HumanResources</span><span class="p">.</span><span class="n">JobCandidate</span>
+<span class="w">        </span><span class="k">ON</span><span class="w"> </span><span class="n">JobCandidate</span><span class="p">.</span><span class="n">BusinessEntityID</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">BusinessEntityID</span>
+<span class="k">WHERE</span><span class="w"> </span><span class="n">JobCandidate</span><span class="p">.</span><span class="n">BusinessEntityID</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="k">NOT</span><span class="w"> </span><span class="k">NULL</span>
+<span class="w">  </span><span class="k">AND</span><span class="w"> </span><span class="n">JobCandidate</span><span class="p">.</span><span class="n">ModifiedDate</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">Person</span><span class="p">.</span><span class="n">ModifiedDate</span>
+<span class="p">;</span>
+</code></pre></div>
+<p>Like with many SQL problems, the approach that you take will depend on the context, the performance of the approaches, and the readability of the code.</p>
+<p>In this particular case, the <code>LEFT JOIN</code> is more performant than the <code>EXISTS</code> approach (on my personal computer, averaging 100,000 runs):</p>
+<ul>
+<li>The <code>LEFT JOIN</code> approach takes approximately 0.88 milliseconds to run (44%)</li>
+<li>The <code>EXISTS</code> approach takes approximately 1.11 milliseconds to run (56%)</li>
+</ul>
+<p>However, the <code>EXISTS</code> approach is slightly more readable (in my opinion), so both approached have pros and cons.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>You'll encounter several ways to achieve the same output in SQL. There's rarely a "right" way to do something, so to figure out which approach you take, you should consider several things like:</p>
+<ul>
+<li>The performance of the code</li>
+<li>The readability of the code</li>
+<li>The extensibility of the code</li>
+<li>The preferences of your team/company</li>
+<li>The tools that you have available to you</li>
+</ul>
+<p>This is not a complete list and there are many other things to consider, but it's a good starting point.</p>
+</div>
+<h2 id="a-quick-note-for-the-programmers">A quick note for the programmers</h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>If you've never done any programming before, skip this bit!</p>
+</div>
+<p>If you've used other programming languages, you might be thinking that correlated subqueries are similar to loops. You'd be right!</p>
+<p>Correlated subqueries can be thought of as <a href="https://en.wikipedia.org/wiki/For_loop">for-loops</a> that run for each row in a table.</p>
+<p>This is why correlated subqueries can be slow if used inappropriately: they can run a lot of times!</p>
+<h2 id="an-extra-example-to-get-the-brain-juices-flowing">An extra example to get the brain juices flowing</h2>
+<blockquote>
+<p>This example is taken from the following article:</p>
+<ul>
+<li><a href="https://buttondown.email/jaffray/archive/sql-scoping-is-surprisingly-subtle-and-semantic/">https://buttondown.email/jaffray/archive/sql-scoping-is-surprisingly-subtle-and-semantic/</a></li>
+</ul>
+</blockquote>
+<p>Suppose we have the following tables:</p>
+<p><code>aa</code></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">a</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+<p><code>xx</code></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">x</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td style="text-align: right;">20</td>
+</tr>
+<tr>
+<td style="text-align: right;">30</td>
+</tr>
+</tbody>
+</table>
+<p>What do you think the results of the following queries are?</p>
+<div class="highlight"><pre><span></span><code><span class="k">SELECT</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">     </span><span class="k">FROM</span><span class="w"> </span><span class="n">xx</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">aa</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w">     </span><span class="k">FROM</span><span class="w"> </span><span class="n">xx</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">aa</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w">     </span><span class="k">FROM</span><span class="w"> </span><span class="n">xx</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">aa</span><span class="p">;</span>
+<span class="k">SELECT</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">xx</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">aa</span><span class="p">;</span>
+</code></pre></div>
+<p>Here are the results:</p>
+<!-- prettier-ignore -->
+<details class="note">
+<summary>Expand to show the results</summary>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"><code>SELECT (SELECT TOP 1 SUM(1) FROM xx) FROM aa</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"><code>SELECT (SELECT TOP 1 SUM(a) FROM xx) FROM aa</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">6</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"><code>SELECT (SELECT TOP 1 SUM(x) FROM xx) FROM aa</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">60</td>
+</tr>
+<tr>
+<td style="text-align: right;">60</td>
+</tr>
+<tr>
+<td style="text-align: right;">60</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"><code>SELECT (SELECT TOP 1 SUM(a + x) FROM xx) FROM aa</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">63</td>
+</tr>
+<tr>
+<td style="text-align: right;">66</td>
+</tr>
+<tr>
+<td style="text-align: right;">69</td>
+</tr>
+</tbody>
+</table>
+</details>
+<p>Weird, right? 🤯</p>
+<p>See if you can wrap your head around what's going on here, and then check out <a href="https://buttondown.email/jaffray/archive/sql-scoping-is-surprisingly-subtle-and-semantic/">the article linked above</a> for a great explanation of what's happening.</p>
+<h3 id="the-sql-for-running-this-example">The SQL for running this example</h3>
+<p>This data is not in the AdventureWorks database, so you can run this example using the SQL below (uncomment the line you want to run):</p>
+<div class="highlight"><pre><span></span><code><span class="k">WITH</span>
+
+<span class="n">aa</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">3</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="p">),</span>
+<span class="n">xx</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span>
+<span class="w">    </span><span class="k">FROM</span><span class="w"> </span><span class="p">(</span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">30</span><span class="p">))</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="n">t</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="k">SELECT</span><span class="w"> </span><span class="p">(</span><span class="k">SELECT</span><span class="w"> </span><span class="n">TOP</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">SUM</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w">     </span><span class="k">FROM</span><span class="w"> </span><span class="n">xx</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">aa</span>
+<span class="c1">-- SELECT (SELECT TOP 1 SUM(a)     FROM xx) FROM aa</span>
+<span class="c1">-- SELECT (SELECT TOP 1 SUM(x)     FROM xx) FROM aa</span>
+<span class="c1">-- SELECT (SELECT TOP 1 SUM(a + x) FROM xx) FROM aa</span>
+<span class="p">;</span>
+</code></pre></div>
+<h2 id="further-reading">Further reading</h2>
+<p>Check out the <a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/subqueries#correlated">official Microsoft documentation</a> for more information on correlated subqueries at:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/sql/relational-databases/performance/subqueries#correlated">https://learn.microsoft.com/en-us/sql/relational-databases/performance/subqueries#correlated</a></li>
+</ul>
+<h3 id="similarity-to-cross-apply">Similarity to <code>CROSS APPLY</code></h3>
+<p>There is a similarity between correlated subqueries and <code>CROSS APPLY</code>. This is outside the scope of this course, but you can read more about it at:</p>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql#using-apply">https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql#using-apply</a></li>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql#k-use-apply">https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql#k-use-apply</a></li>
+<li><a href="https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sql#l-use-cross-apply">https://learn.microsoft.com/en-us/sql/t-sql/queries/from-transact-sqll-use-cross-apply</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../advanced-aggregations/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Advanced aggregations 🥇">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Advanced aggregations 🥇
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../recursive-ctes/" class="md-footer__link md-footer__link--next" aria-label="Next: Recursive CTEs 🔁">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Recursive CTEs 🔁
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.footer", "navigation.tabs", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.f8cc74c7.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
