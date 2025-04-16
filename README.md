@@ -57,7 +57,7 @@ After installing the pre-requisites and cloning this repo, just run the `resourc
 
 ```bash
 uv sync --all-groups
-python -m resources
+python -m src.resources
 docker compose --profile build up --detach
 mkdocs build
 mkdocs serve

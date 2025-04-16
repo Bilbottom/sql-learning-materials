@@ -64,15 +64,18 @@ def _create_database__duckdb(
     """
     import duckdb
 
-    database, schema = database_file.name.split(":")
+    # database, schema = database_file.name.split(":")
+    #
+    # logging.info(f"Using DuckDB database '{database}'...")
+    # conn = duckdb.connect(str(database_file.parent / database))
+    #
+    # logging.info(f"Creating DuckDB schema '{schema}'...")
+    # conn.execute(f"drop schema if exists {schema} cascade")
+    # conn.execute(f"create schema {schema}")
+    # conn.execute(f"use {schema}; {sql_file.read_text()}")
 
-    logging.info(f"Using DuckDB database '{database}'...")
-    conn = duckdb.connect(str(database_file.parent / database))
-
-    logging.info(f"Creating DuckDB schema '{schema}'...")
-    conn.execute(f"drop schema if exists {schema} cascade")
-    conn.execute(f"create schema {schema}")
-    conn.execute(f"use {schema}; {sql_file.read_text()}")
+    logging.info(f"Creating DuckDB database '{database_file}'...")
+    duckdb.connect(database_file).sql(sql_file.read_text())
 
 
 class DatabaseType(enum.StrEnum):
