@@ -49,17 +49,3 @@ services:
       POSTGRES_PASSWORD: Test@12345
       POSTGRES_USER: postgres
     volumes: [*shared-volume]
-
-  metabase:
-    image: metabase/metabase:latest
-    container_name: Metabase
-    hostname: metabase
-    ports: ["3000:3000"] # http://localhost:3000/
-    profiles: ["skip"]
-    depends_on: ["mssql", "postgres"]
-    environment:
-      MB_DB_FILE: /metabase-data/metabase.db
-    volumes:
-      - type: bind
-        source: ./dockerfiles/metabase-data
-        target: /metabase-data/

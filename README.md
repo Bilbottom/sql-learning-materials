@@ -85,8 +85,6 @@ The SQLite and DuckDB databases are just files, so using Docker for these is ove
 | SQLite   | `src/resources/data/sqlite/loan.db`   |
 | DuckDB   | `src/resources/data/duckdb/duckdb.db` |
 
-The Metabase instance will be launched on [`localhost:3000`](http://localhost:3000) and you will have to configure your own login details.
-
 ## On an M1 mac...
 
 ...you will have to make sure that you have enabled the virtualisation framework and Rosetta for amd64 support, see the following GitHub issue and comment:
