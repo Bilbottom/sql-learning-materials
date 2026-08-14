@@ -27,7 +27,7 @@ def duckdb_connector() -> Connection:
 
 
 def mssql_connector() -> Connection:
-    # TODO: Grab from `src/metabase/databases.toml`
+    # TODO: Grab from `src/databases.toml`
     connection = pyodbc.connect(
         "Driver={SQL Server};"
         "Server=localhost;"
@@ -40,7 +40,7 @@ def mssql_connector() -> Connection:
 
 
 def postgres_connector() -> Connection:
-    # TODO: Grab from `src/metabase/databases.toml`
+    # TODO: Grab from `src/databases.toml`
     connection = psycopg2.connect(
         "dbname=postgres user=postgres password=Test@12345"
     )
